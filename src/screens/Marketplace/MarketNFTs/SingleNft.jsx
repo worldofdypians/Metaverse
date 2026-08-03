@@ -572,22 +572,24 @@ const SingleNft = ({
 
       setowner(owner);
       return owner;
-    } else if (nftType === "vanar") {
-      const owner = await readContract(wagmiClient, {
-        address: window.config.nft_vanar_address,
-        abi: window.VANAR_NFT_ABI,
-        functionName: "ownerOf",
-        args: [Id],
-        chainId: 204,
-      }).catch((e) => {
-        console.log(e);
-      });
+    } 
+    // else if (nftType === "vanar") {
+    //   const owner = await readContract(wagmiClient, {
+    //     address: window.config.nft_vanar_address,
+    //     abi: window.VANAR_NFT_ABI,
+    //     functionName: "ownerOf",
+    //     args: [Id],
+    //     chainId: 204,
+    //   }).catch((e) => {
+    //     console.log(e);
+    //   });
 
-      console.log(owner);
+    //   console.log(owner);
 
-      setowner(owner);
-      return owner;
-    } else if (nftType === "skale") {
+    //   setowner(owner);
+    //   return owner;
+    // } 
+    else if (nftType === "skale") {
       const owner = await readContract(wagmiClient, {
         address: window.config.nft_skale_address,
         abi: window.SKALE_NFT_ABI,
@@ -1677,11 +1679,13 @@ const SingleNft = ({
       window.config.nft_kucoin_address.toLowerCase()
     ) {
       setType("kucoin");
-    } else if (
-      nftAddress.toLowerCase() === window.config.nft_vanar_address.toLowerCase()
-    ) {
-      setType("vanar");
-    } else if (
+    } 
+    // else if (
+    //   nftAddress.toLowerCase() === window.config.nft_vanar_address.toLowerCase()
+    // ) {
+    //   setType("vanar");
+    // }
+     else if (
       nftAddress.toLowerCase() ===
       window.config.nft_teabnb_address.toLowerCase()
     ) {
@@ -1724,9 +1728,9 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_kucoin_address.toLowerCase()
         ? "kucoin"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_vanar_address.toLowerCase()
-        ? "vanar"
+        // : nftAddress.toLowerCase() ===
+        //   window.config.nft_vanar_address.toLowerCase()
+        // ? "vanar"
         : nftAddress.toLowerCase() ===
           window.config.nft_teabnb_address.toLowerCase()
         ? "tea-bnb"
@@ -2099,19 +2103,21 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
-            ) : type === "vanar" ? (
-              <>
-                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
-                  Vanar{" "}
-                  <h6
-                    className="market-banner-title m-0"
-                    style={{ color: "#8C56FF", lineHeight: "80%" }}
-                  >
-                    Beta Pass
-                  </h6>
-                </h6>
-              </>
-            ) : type === "immutable" ? (
+            ) 
+            // : type === "vanar" ? (
+            //   <>
+            //     <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+            //       Vanar{" "}
+            //       <h6
+            //         className="market-banner-title m-0"
+            //         style={{ color: "#8C56FF", lineHeight: "80%" }}
+            //       >
+            //         Beta Pass
+            //       </h6>
+            //     </h6>
+            //   </>
+            // ) 
+            : type === "immutable" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   Immutable
@@ -2270,8 +2276,8 @@ const SingleNft = ({
                         ? `https://cdn.worldofdypians.com/media/seibp400x400.png`
                         : type === "kucoin"
                         ? `https://cdn.worldofdypians.com/wod/kucoin-bp-400.png`
-                        : type === "vanar"
-                        ? `https://cdn.worldofdypians.com/wod/vanar-400.png`
+                        // : type === "vanar"
+                        // ? `https://cdn.worldofdypians.com/wod/vanar-400.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
                     alt=""
@@ -2332,8 +2338,8 @@ const SingleNft = ({
                           // ? "https://cdn.worldofdypians.com/wod/taraxa.svg"
                           : type === "sei" || type === "tea-sei"
                           ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
-                          : type === "vanar"
-                          ? "https://cdn.worldofdypians.com/wod/vanar.svg"
+                          // : type === "vanar"
+                          // ? "https://cdn.worldofdypians.com/wod/vanar.svg"
                           : "https://cdn.worldofdypians.com/wod/eth.svg"
                       }
                       alt=""
@@ -2374,8 +2380,8 @@ const SingleNft = ({
                       // ? "Matchain"
                       : type === "taiko"
                       ? "Taiko"
-                      : type === "vanar"
-                      ? "Vanar"
+                      // : type === "vanar"
+                      // ? "Vanar"
                       : type === "opbnb" ||
                         type === "kucoin" ||
                         type === "tea-opbnb" ||
@@ -2464,8 +2470,8 @@ const SingleNft = ({
                         ? "SEI Beta Pass"
                         : type === "kucoin"
                         ? "KuCoin Beta Pass"
-                        : type === "vanar"
-                        ? "Vanar Beta Pass"
+                        // : type === "vanar"
+                        // ? "Vanar Beta Pass"
                         : "CAWS Timepiece"}{" "}
                       {type === "immutable" ? "" : ` #${nftId}`}
                       <img
@@ -2607,7 +2613,7 @@ const SingleNft = ({
                       // type !== "mat" &&
                       type !== "sei" &&
                       type !== "kucoin" &&
-                      type !== "vanar" &&
+                      // type !== "vanar" &&
                       type !== "tea-bnb" &&
                       type !== "tea-opbnb" &&
                       type !== "tea-base" &&
@@ -2786,7 +2792,7 @@ const SingleNft = ({
                       // type !== "mat" &&
                       type !== "sei" &&
                       type !== "kucoin" &&
-                      type !== "vanar" &&
+                      // type !== "vanar" &&
                       type !== "tea-bnb" &&
                       type !== "tea-opbnb" &&
                       type !== "tea-base" &&
@@ -2996,7 +3002,7 @@ const SingleNft = ({
                         // type === "mat" ||
                         type === "sei" ||
                         type === "kucoin" ||
-                        type === "vanar" ||
+                        // type === "vanar" ||
                         type === "tea-bnb" ||
                         type === "tea-opbnb" ||
                         type === "tea-sei" ||
@@ -3051,8 +3057,8 @@ const SingleNft = ({
                                     type === "kucoin" ||
                                     type === "tea-opbnb"
                                   ? `https://opbnbscan.com/address/${owner}`
-                                  : type === "vanar"
-                                  ? `https://explorer.vanarchain.com/address/${owner}`
+                                  // : type === "vanar"
+                                  // ? `https://explorer.vanarchain.com/address/${owner}`
                                   // : type === "mat"
                                   // ? `https://matchscan.io/address/${owner}`
                                   // : type === "taraxa"
@@ -3265,7 +3271,7 @@ const SingleNft = ({
                         // type !== "mat" &&
                         type !== "sei" &&
                         type !== "kucoin" &&
-                        type !== "vanar" &&
+                        // type !== "vanar" &&
                         // type !== "taraxa" &&
                         type !== "tea-bnb" &&
                         type !== "tea-opbnb" &&
@@ -3357,7 +3363,7 @@ const SingleNft = ({
                         type !== "sei" &&
                         type !== "kucoin" &&
                         // type !== "taraxa" &&
-                        type !== "vanar" &&
+                        // type !== "vanar" &&
                         type !== "tea-bnb" &&
                         type !== "tea-opbnb" &&
                         type !== "tea-base" &&
@@ -3408,7 +3414,7 @@ const SingleNft = ({
                         // type !== "mat" &&
                         type !== "sei" &&
                         type !== "kucoin" &&
-                        type !== "vanar" &&
+                        // type !== "vanar" &&
                         // type !== "taraxa" &&
                         type !== "tea-bnb" &&
                         type !== "tea-opbnb" &&
@@ -3463,7 +3469,7 @@ const SingleNft = ({
             // type !== "mat" &&
             type !== "sei" &&
             type !== "kucoin" &&
-            type !== "vanar" &&
+            // type !== "vanar" &&
             // type !== "taraxa" &&
             type !== "tea-bnb" &&
             type !== "tea-opbnb" &&
@@ -3746,7 +3752,7 @@ const SingleNft = ({
             // type === "mat" ||
             type === "sei" ||
             type === "kucoin" ||
-            type === "vanar" ||
+            // type === "vanar" ||
             // type === "taraxa" ||
             type === "tea-bnb" ||
             type === "tea-opbnb" ||
@@ -3812,8 +3818,8 @@ const SingleNft = ({
                             ? "COOKIE"
                             : type === "sei" || type === "tea-sei"
                             ? "SEI"
-                            : type === "vanar"
-                            ? "VANRY"
+                            // : type === "vanar"
+                            // ? "VANRY"
                             : type === "taraxa"
                             ? "TARA"
                             : "BNB"}{" "}

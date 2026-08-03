@@ -80,7 +80,7 @@ const NewLeaderBoard = ({
   dailyplayerData,
   genesisData,
   allBnbData,
-  allVanarData,
+  // allVanarData,
   allCoreData,
   allSkaleData,
   allVictionData,
@@ -150,9 +150,9 @@ const NewLeaderBoard = ({
     if (allTaikoData && allTaikoData.length > 0 && optionText2 === "taiko") {
       setAllData(allTaikoData);
     }
-    if (allVanarData && allVanarData.length > 0 && optionText2 === "vanar") {
-      setAllData(allVanarData);
-    }
+    // if (allVanarData && allVanarData.length > 0 && optionText2 === "vanar") {
+    //   setAllData(allVanarData);
+    // }
     // if (allTaraxaData && allTaraxaData.length > 0 && optionText2 === "taraxa") {
     //   setAllData(allTaraxaData);
     // }
@@ -173,7 +173,7 @@ const NewLeaderBoard = ({
     allSkaleData,
     allTaikoData,
     allVictionData,
-    allVanarData,
+    // allVanarData,
     // allTaraxaData,
   ]);
 
@@ -396,7 +396,7 @@ const NewLeaderBoard = ({
                             : ""}
                       </button>
 
-                      <button
+                      {/* <button
                         onMouseEnter={() => handleMouseEnter("vanar")}
                         onMouseLeave={handleMouseLeave}
                         className={` 
@@ -434,7 +434,7 @@ const NewLeaderBoard = ({
                           : windowSize.width < 786 && optionText2 === "vanar"
                             ? "Vanar"
                             : ""}
-                      </button>
+                      </button> */}
                       {/* <button
                         onMouseEnter={() => handleMouseEnter("taraxa")}
                         onMouseLeave={handleMouseLeave}

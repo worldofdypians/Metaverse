@@ -48,7 +48,7 @@ import {
   // seiStars,
   // taraxaStars,
   // matStars,
-  vanarStars,
+  // vanarStars,
   // coreStars,
   // previous_baseStars,
   // previous_vanarStars,
@@ -336,7 +336,7 @@ function Dashboard({
   const [openedSeiChests, setOpenedSeiChests] = useState([]);
   const [openedMantaChests, setOpenedMantaChests] = useState([]);
   const [openedTaikoChests, setOpenedTaikoChests] = useState([]);
-  const [openedVanarChests, setOpenedVanarChests] = useState([]);
+  // const [openedVanarChests, setOpenedVanarChests] = useState([]);
   const [openedBaseChests, setOpenedBaseChests] = useState([]);
   // const [openedMatChests, setOpenedMatChests] = useState([]);
   // const [openedTaraxaChests, setOpenedTaraxaChests] = useState([]);
@@ -373,7 +373,7 @@ function Dashboard({
   const [claimedSeiChests, setclaimedSeiChests] = useState(0);
   const [claimedMantaChests, setclaimedMantaChests] = useState(0);
   const [claimedTaikoChests, setclaimedTaikoChests] = useState(0);
-  const [claimedVanarChests, setclaimedVanarChests] = useState(0);
+  // const [claimedVanarChests, setclaimedVanarChests] = useState(0);
   // const [claimedMatChests, setclaimedMatChests] = useState(0);
   // const [claimedTaraxaChests, setclaimedTaraxaChests] = useState(0);
 
@@ -382,7 +382,7 @@ function Dashboard({
   const [claimedSeiPremiumChests, setclaimedSeiPremiumChests] = useState(0);
   const [claimedMantaPremiumChests, setclaimedMantaPremiumChests] = useState(0);
   const [claimedTaikoPremiumChests, setclaimedTaikoPremiumChests] = useState(0);
-  const [claimedVanarPremiumChests, setclaimedVanarPremiumChests] = useState(0);
+  // const [claimedVanarPremiumChests, setclaimedVanarPremiumChests] = useState(0);
   // const [claimedMatPremiumChests, setclaimedMatPremiumChests] = useState(0);
   // const [claimedTaraxaPremiumChests, setclaimedTaraxaPremiumChests] =
   //   useState(0);
@@ -394,7 +394,7 @@ function Dashboard({
   const [allCoreChests, setallCoreChests] = useState([]);
   const [allVictionChests, setallVictionChests] = useState([]);
   const [allTaikoChests, setallTaikoChests] = useState([]);
-  const [allVanarChests, setallVanarChests] = useState([]);
+  // const [allVanarChests, setallVanarChests] = useState([]);
   const [allSeiChests, setallSeiChests] = useState([]);
   const [allMantaChests, setallMantaChests] = useState([]);
   const [allBaseChests, setallBaseChests] = useState([]);
@@ -412,7 +412,7 @@ function Dashboard({
   const [corecount, setcorecount] = useState(0);
   const [mantacount, setmantacount] = useState(0);
   const [taikocount, settaikocount] = useState(0);
-  const [vanarcount, setVanarcount] = useState(0);
+  // const [vanarcount, setVanarcount] = useState(0);
   const [basecount, setbasecount] = useState(0);
   // const [matcount, setmatcount] = useState(0);
   const [seicount, setseicount] = useState(0);
@@ -622,20 +622,20 @@ function Dashboard({
           : 0,
 
       // Vanar Chain
-      userRankVanar:
-        userDataVanar?.statValue !== undefined && userDataVanar?.statValue > 0
-          ? userDataVanar.position
-          : "---",
-      userVanarStars:
-        (userDataVanar?.statValue === 0
-          ? 0
-          : userDataVanar?.position > 100
-            ? 0
-            : vanarStars[userDataVanar?.position]) ?? 0,
-      userVanarScore:
-        userDataVanar?.statValue !== undefined && userDataVanar?.statValue > 0
-          ? userDataVanar?.statValue
-          : 0,
+      // userRankVanar:
+      //   userDataVanar?.statValue !== undefined && userDataVanar?.statValue > 0
+      //     ? userDataVanar.position
+      //     : "---",
+      // userVanarStars:
+      //   (userDataVanar?.statValue === 0
+      //     ? 0
+      //     : userDataVanar?.position > 100
+      //       ? 0
+      //       : vanarStars[userDataVanar?.position]) ?? 0,
+      // userVanarScore:
+      //   userDataVanar?.statValue !== undefined && userDataVanar?.statValue > 0
+      //     ? userDataVanar?.statValue
+      //     : 0,
 
       // Taraxa Chain
       // userRankTaraxa:
@@ -749,7 +749,7 @@ function Dashboard({
   const [allSkaleData, setAllSkaleData] = useState([]);
   const [allCoreData, setAllCoreData] = useState([]);
   const [allVictionData, setAllVictionData] = useState([]);
-  const [allVanarData, setAllVanarData] = useState([]);
+  // const [allVanarData, setAllVanarData] = useState([]);
   const [allMantaData, setAllMantaData] = useState([]);
   const [allTaikoData, setAllTaikoData] = useState([]);
   const [allBaseData, setAllBaseData] = useState([]);
@@ -759,11 +759,11 @@ function Dashboard({
 
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [activePlayerCore, setActivePlayerCore] = useState(false);
-  const [activePlayerVanar, setActivePlayerVanar] = useState(false);
+  // const [activePlayerVanar, setActivePlayerVanar] = useState(false);
   const [userDataCore, setUserDataCore] = useState({});
   const [prevDataCore, setPrevDataCore] = useState([]);
-  const [prevDataVanar, setPrevDataVanar] = useState([]);
-  const [userDataVanar, setUserDataVanar] = useState({});
+  // const [prevDataVanar, setPrevDataVanar] = useState([]);
+  // const [userDataVanar, setUserDataVanar] = useState({});
 
   const [dailyRecordsSkale, setDailyRecordsSkale] = useState([]);
 
@@ -782,7 +782,7 @@ function Dashboard({
   const [loadingTaiko, setloadingTaiko] = useState(false);
   const [loadingBase, setloadingBase] = useState(false);
   const [loadingSei, setloadingSei] = useState(false);
-  const [loadingVanar, setLoadingVanar] = useState(false);
+  // const [loadingVanar, setLoadingVanar] = useState(false);
   const [loadingStarWeekly, setloadingStarWeekly] = useState(false);
   const [loadingStarMonthly, setloadingStarMonthly] = useState(false);
 
@@ -864,7 +864,7 @@ function Dashboard({
   // const [prevDataMat, setPrevDataMat] = useState([]);
 
   const [dailyrecords, setRecords] = useState([]);
-  const [dailyRecordsVanar, setDailyRecordsVanar] = useState([]);
+  // const [dailyRecordsVanar, setDailyRecordsVanar] = useState([]);
   // const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
   const [activePlayer, setActivePlayer] = useState(false);
   // const [activePlayerWeekly, setActivePlayerWeekly] = useState(false);
@@ -883,7 +883,7 @@ function Dashboard({
     skale: 0,
     sei: 0,
     core: 0,
-    vanar: 0,
+    // vanar: 0,
     viction: 0,
     manta: 0,
     base: 0,
@@ -2496,247 +2496,247 @@ function Dashboard({
     }
   };
 
-  const fillRecordsVanar = (itemData) => {
-    if (itemData.length === 0) {
-      setDailyRecordsVanar(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setDailyRecordsVanar(finalData);
-    }
-  };
+  // const fillRecordsVanar = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setDailyRecordsVanar(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setDailyRecordsVanar(finalData);
+  //   }
+  // };
 
-  const previousWinnersVanarVersionRef = useRef(null);
-  const previousWinnersVanarFetchedVersionRef = useRef(null);
-  const previousWinnersVanarFetchingPromiseRef = useRef(null);
-  const fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef = useRef(null);
+  // const previousWinnersVanarVersionRef = useRef(null);
+  // const previousWinnersVanarFetchedVersionRef = useRef(null);
+  // const previousWinnersVanarFetchingPromiseRef = useRef(null);
+  // const fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef = useRef(null);
 
-  const previousWinnersVanarQuery = useReactQuery({
-    queryKey: ["previousWinnersVanar"],
-    enabled: false,
-    staleTime: getMillisecondsUntil0000UTC(),
-    cacheTime: getMillisecondsUntil0000UTC(),
-    refetchOnWindowFocus: false,
-    refetchInterval: false,
-    retry: false,
-    queryFn: async () => {
-      const version = previousWinnersVanarVersionRef.current;
-      if (!version || version === 0) {
-        return placeholderplayerData;
-      }
-      const data = {
-        StatisticName: "LeaderboardVanarDaily",
-        StartPosition: 0,
-        MaxResultsCount: 100,
-        Version: version - 1,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data,
-      );
-      return result.data.data.leaderboard;
-    },
-  });
+  // const previousWinnersVanarQuery = useReactQuery({
+  //   queryKey: ["previousWinnersVanar"],
+  //   enabled: false,
+  //   staleTime: getMillisecondsUntil0000UTC(),
+  //   cacheTime: getMillisecondsUntil0000UTC(),
+  //   refetchOnWindowFocus: false,
+  //   refetchInterval: false,
+  //   retry: false,
+  //   queryFn: async () => {
+  //     const version = previousWinnersVanarVersionRef.current;
+  //     if (!version || version === 0) {
+  //       return placeholderplayerData;
+  //     }
+  //     const data = {
+  //       StatisticName: "LeaderboardVanarDaily",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 100,
+  //       Version: version - 1,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
+  //       data,
+  //     );
+  //     return result.data.data.leaderboard;
+  //   },
+  // });
 
-  const dailyRecordsVanarQuery = useReactQuery({
-    queryKey: ["dailyRecordsVanar"],
-    enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
-    retry: false,
-    refetchOnWindowFocus: false,
-    refetchInterval: false, //LEADERBOARD_CACHE_MS,
-    queryFn: async () => {
-      const data = {
-        StatisticName: "LeaderboardVanarDaily",
-        StartPosition: 0,
-        MaxResultsCount: 100,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard`,
-        data,
-      );
-      return result.data.data;
-    },
-  });
+  // const dailyRecordsVanarQuery = useReactQuery({
+  //   queryKey: ["dailyRecordsVanar"],
+  //   enabled: false,
+  //   staleTime: LEADERBOARD_CACHE_MS,
+  //   cacheTime: 5 * LEADERBOARD_CACHE_MS,
+  //   retry: false,
+  //   refetchOnWindowFocus: false,
+  //   refetchInterval: false, //LEADERBOARD_CACHE_MS,
+  //   queryFn: async () => {
+  //     const data = {
+  //       StatisticName: "LeaderboardVanarDaily",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 100,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard`,
+  //       data,
+  //     );
+  //     return result.data.data;
+  //   },
+  // });
 
-  const dailyRecordsAroundPlayerVanarQuery = useReactQuery({
-    queryKey: ["dailyRecordsAroundPlayerVanar", userId],
-    enabled: Boolean(userId),
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
-    retry: false,
-    refetchOnWindowFocus: false,
-    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
-    queryFn: async () => {
-      if (!userId) return [];
-      const data = {
-        StatisticName: "LeaderboardVanarDaily",
-        MaxResultsCount: 1,
-        PlayerId: userId,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data,
-      );
-      return result.data.data.leaderboard || [];
-    },
-  });
+  // const dailyRecordsAroundPlayerVanarQuery = useReactQuery({
+  //   queryKey: ["dailyRecordsAroundPlayerVanar", userId],
+  //   enabled: Boolean(userId),
+  //   staleTime: LEADERBOARD_CACHE_MS,
+  //   cacheTime: 5 * LEADERBOARD_CACHE_MS,
+  //   retry: false,
+  //   refetchOnWindowFocus: false,
+  //   refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+  //   queryFn: async () => {
+  //     if (!userId) return [];
+  //     const data = {
+  //       StatisticName: "LeaderboardVanarDaily",
+  //       MaxResultsCount: 1,
+  //       PlayerId: userId,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //       data,
+  //     );
+  //     return result.data.data.leaderboard || [];
+  //   },
+  // });
 
-  const fetchPreviousWinnersVanar = async (version, forceRefresh = false) => {
-    if (version === 0) {
-      setPrevDataVanar(placeholderplayerData);
-      return;
-    }
+  // const fetchPreviousWinnersVanar = async (version, forceRefresh = false) => {
+  //   if (version === 0) {
+  //     setPrevDataVanar(placeholderplayerData);
+  //     return;
+  //   }
 
-    // Check if we already have the data for this version
-    if (
-      !forceRefresh &&
-      previousWinnersVanarFetchedVersionRef.current === version
-    ) {
-      return;
-    }
+  //   // Check if we already have the data for this version
+  //   if (
+  //     !forceRefresh &&
+  //     previousWinnersVanarFetchedVersionRef.current === version
+  //   ) {
+  //     return;
+  //   }
 
-    // If there's already a fetch in progress for the same version, wait for it
-    if (
-      previousWinnersVanarFetchingPromiseRef.current &&
-      previousWinnersVanarVersionRef.current === version
-    ) {
-      try {
-        await previousWinnersVanarFetchingPromiseRef.current;
-        // After waiting, check if the version was fetched
-        if (previousWinnersVanarFetchedVersionRef.current === version) {
-          return;
-        }
-      } catch (error) {
-        // If the previous fetch failed, just stop there
-        console.error("Previous fetch failed, stopping:", error);
-        return;
-      }
-    }
+  //   // If there's already a fetch in progress for the same version, wait for it
+  //   if (
+  //     previousWinnersVanarFetchingPromiseRef.current &&
+  //     previousWinnersVanarVersionRef.current === version
+  //   ) {
+  //     try {
+  //       await previousWinnersVanarFetchingPromiseRef.current;
+  //       // After waiting, check if the version was fetched
+  //       if (previousWinnersVanarFetchedVersionRef.current === version) {
+  //         return;
+  //       }
+  //     } catch (error) {
+  //       // If the previous fetch failed, just stop there
+  //       console.error("Previous fetch failed, stopping:", error);
+  //       return;
+  //     }
+  //   }
 
-    // Start a new fetch
-    previousWinnersVanarVersionRef.current = version;
+  //   // Start a new fetch
+  //   previousWinnersVanarVersionRef.current = version;
 
-    const fetchPromise = (async () => {
-      try {
-        const shouldForce = forceRefresh;
-        const { data, error, fromCache } = await fetchQueryData(
-          previousWinnersVanarQuery,
-          {
-            force: shouldForce,
-          },
-        );
-        if ((error && !fromCache) || !data) {
-          setPrevDataVanar(placeholderplayerData);
-          return;
-        }
-        setPrevDataVanar(data);
-        previousWinnersVanarFetchedVersionRef.current = version;
-      } finally {
-        // Clear the promise ref if this is still the current fetch
-        if (previousWinnersVanarFetchingPromiseRef.current === fetchPromise) {
-          previousWinnersVanarFetchingPromiseRef.current = null;
-        }
-      }
-    })();
+  //   const fetchPromise = (async () => {
+  //     try {
+  //       const shouldForce = forceRefresh;
+  //       const { data, error, fromCache } = await fetchQueryData(
+  //         previousWinnersVanarQuery,
+  //         {
+  //           force: shouldForce,
+  //         },
+  //       );
+  //       if ((error && !fromCache) || !data) {
+  //         setPrevDataVanar(placeholderplayerData);
+  //         return;
+  //       }
+  //       setPrevDataVanar(data);
+  //       previousWinnersVanarFetchedVersionRef.current = version;
+  //     } finally {
+  //       // Clear the promise ref if this is still the current fetch
+  //       if (previousWinnersVanarFetchingPromiseRef.current === fetchPromise) {
+  //         previousWinnersVanarFetchingPromiseRef.current = null;
+  //       }
+  //     }
+  //   })();
 
-    previousWinnersVanarFetchingPromiseRef.current = fetchPromise;
-    await fetchPromise;
-  };
+  //   previousWinnersVanarFetchingPromiseRef.current = fetchPromise;
+  //   await fetchPromise;
+  // };
 
-  const fetchDailyRecordsAroundPlayerVanar = async (forceRefresh = false) => {
-    if (!userId) return;
+  // const fetchDailyRecordsAroundPlayerVanar = async (forceRefresh = false) => {
+  //   if (!userId) return;
 
-    // If there's already a fetch in progress, wait for it
-    if (fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current) {
-      try {
-        await fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current;
-        return;
-      } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
-      }
-    }
+  //   // If there's already a fetch in progress, wait for it
+  //   if (fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current) {
+  //     try {
+  //       await fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current;
+  //       return;
+  //     } catch (error) {
+  //       // If the previous fetch failed, continue with a new fetch
+  //       console.error("Previous fetch failed, retrying:", error);
+  //     }
+  //   }
 
-    // Start a new fetch
-    const fetchPromise = (async () => {
-      try {
-        const { data, error, fromCache } = await fetchQueryData(
-          dailyRecordsAroundPlayerVanarQuery,
-          {
-            force: forceRefresh,
-          },
-        );
+  //   // Start a new fetch
+  //   const fetchPromise = (async () => {
+  //     try {
+  //       const { data, error, fromCache } = await fetchQueryData(
+  //         dailyRecordsAroundPlayerVanarQuery,
+  //         {
+  //           force: forceRefresh,
+  //         },
+  //       );
 
-        if ((error && !fromCache) || !data?.length) {
-          setActivePlayerVanar(false);
-          return;
-        }
+  //       if ((error && !fromCache) || !data?.length) {
+  //         setActivePlayerVanar(false);
+  //         return;
+  //       }
 
-        const [userRecord] = data;
-        setUserDataVanar(userRecord);
-        setActivePlayerVanar(
-          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99,
-        );
-      } finally {
-        // Clear the promise ref if this is still the current fetch
-        if (
-          fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current ===
-          fetchPromise
-        ) {
-          fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current = null;
-        }
-      }
-    })();
+  //       const [userRecord] = data;
+  //       setUserDataVanar(userRecord);
+  //       setActivePlayerVanar(
+  //         (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99,
+  //       );
+  //     } finally {
+  //       // Clear the promise ref if this is still the current fetch
+  //       if (
+  //         fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current ===
+  //         fetchPromise
+  //       ) {
+  //         fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current = null;
+  //       }
+  //     }
+  //   })();
 
-    fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current = fetchPromise;
-    await fetchPromise;
-  };
+  //   fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current = fetchPromise;
+  //   await fetchPromise;
+  // };
 
-  const fetchDailyRecordsVanar = async (forceRefresh = false) => {
-    const useCache = !forceRefresh && isQueryFresh(dailyRecordsVanarQuery);
-    if (!useCache) {
-      setLoadingVanar(true);
-    }
+  // const fetchDailyRecordsVanar = async (forceRefresh = false) => {
+  //   const useCache = !forceRefresh && isQueryFresh(dailyRecordsVanarQuery);
+  //   if (!useCache) {
+  //     setLoadingVanar(true);
+  //   }
 
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsVanarQuery,
-      {
-        force: forceRefresh,
-      },
-    );
+  //   const { data, error, fromCache } = await fetchQueryData(
+  //     dailyRecordsVanarQuery,
+  //     {
+  //       force: forceRefresh,
+  //     },
+  //   );
 
-    if ((error && !fromCache) || !data) {
-      fillRecordsVanar([]);
-      setPrevDataVanar(placeholderplayerData);
-      setLoadingVanar(false);
-      return;
-    }
+  //   if ((error && !fromCache) || !data) {
+  //     fillRecordsVanar([]);
+  //     setPrevDataVanar(placeholderplayerData);
+  //     setLoadingVanar(false);
+  //     return;
+  //   }
 
-    const leaderboard = data?.leaderboard ?? [];
-    setDailyRecordsVanar(leaderboard);
-    fillRecordsVanar(leaderboard);
+  //   const leaderboard = data?.leaderboard ?? [];
+  //   setDailyRecordsVanar(leaderboard);
+  //   fillRecordsVanar(leaderboard);
 
-    const version = parseInt(data?.version);
-    await fetchPreviousWinnersVanar(
-      Number.isNaN(version) ? 0 : version,
-      forceRefresh,
-    );
+  //   const version = parseInt(data?.version);
+  //   await fetchPreviousWinnersVanar(
+  //     Number.isNaN(version) ? 0 : version,
+  //     forceRefresh,
+  //   );
 
-    if (userId) {
-      await fetchDailyRecordsAroundPlayerVanar(forceRefresh);
-    }
+  //   if (userId) {
+  //     await fetchDailyRecordsAroundPlayerVanar(forceRefresh);
+  //   }
 
-    if (!useCache) {
-      setTimeout(() => {
-        setLoadingVanar(false);
-      }, 1000);
-    } else {
-      setLoadingVanar(false);
-    }
-  };
+  //   if (!useCache) {
+  //     setTimeout(() => {
+  //       setLoadingVanar(false);
+  //     }, 1000);
+  //   } else {
+  //     setLoadingVanar(false);
+  //   }
+  // };
 
   const fillRecordsTaiko = (itemData) => {
     if (itemData.length === 0) {
@@ -4636,11 +4636,11 @@ function Dashboard({
       getAllTaikoChests(email);
     }
   }, [taikocount, royaltyCount, chainId]);
-  useEffect(() => {
-    if (vanarcount !== 0) {
-      getAllVanarChests(email);
-    }
-  }, [vanarcount]);
+  // useEffect(() => {
+  //   if (vanarcount !== 0) {
+  //     getAllVanarChests(email);
+  //   }
+  // }, [vanarcount]);
 
   // useEffect(() => {
   //   if (matcount !== 0) {
@@ -4702,7 +4702,7 @@ function Dashboard({
       activePlayerTaiko,
       // activePlayerMat,
       activePlayerSei,
-      activePlayerVanar,
+      // activePlayerVanar,
       // activePlayerTaraxa,
     ];
 
@@ -4739,7 +4739,7 @@ function Dashboard({
     activePlayerTaiko,
     // activePlayerMat,
     activePlayerSei,
-    activePlayerVanar,
+    // activePlayerVanar,
     // activePlayerTaraxa,
   ]);
 
@@ -4759,28 +4759,28 @@ function Dashboard({
       },
     ]);
   }, [dailyrecords, dailyplayerData, userData, activePlayer, loadingBnb]);
-  useEffect(() => {
-    setAllVanarData([
-      {
-        title: "DAILY",
-        reset: "Daily (00:00 UTC)",
-        type: "stars",
-        rewards: vanarStars,
-        previous_rewards: vanarStars,
-        activeData: dailyRecordsVanar,
-        previousData: prevDataVanar,
-        player_data: userDataVanar,
-        is_active: activePlayerVanar,
-        loading: loadingVanar,
-      },
-    ]);
-  }, [
-    dailyRecordsVanar,
-    prevDataVanar,
-    userDataVanar,
-    activePlayerVanar,
-    loadingVanar,
-  ]);
+  // useEffect(() => {
+  //   setAllVanarData([
+  //     {
+  //       title: "DAILY",
+  //       reset: "Daily (00:00 UTC)",
+  //       type: "stars",
+  //       rewards: vanarStars,
+  //       previous_rewards: vanarStars,
+  //       activeData: dailyRecordsVanar,
+  //       previousData: prevDataVanar,
+  //       player_data: userDataVanar,
+  //       is_active: activePlayerVanar,
+  //       loading: loadingVanar,
+  //     },
+  //   ]);
+  // }, [
+  //   dailyRecordsVanar,
+  //   prevDataVanar,
+  //   userDataVanar,
+  //   activePlayerVanar,
+  //   loadingVanar,
+  // ]);
 
   useEffect(() => {
     setAllSkaleData([
@@ -4986,7 +4986,7 @@ function Dashboard({
     setDailyRecordsCore([]);
     setDailyRecordsViction([]);
     setDailyRecordsSkale([]);
-    setDailyRecordsVanar([]);
+    // setDailyRecordsVanar([]);
     // setDailyRecordsTaraxa([]);
   };
 
@@ -5014,11 +5014,12 @@ function Dashboard({
       // if (dailyRecordsTaiko.length === 0) {
       fetchDailyRecordsTaiko();
       // }
-    } else if (chain === "vanar") {
-      // if (dailyRecordsVanar.length === 0) {
-      fetchDailyRecordsVanar();
-      // }
     }
+    //  else if (chain === "vanar") {
+    //   // if (dailyRecordsVanar.length === 0) {
+    //   fetchDailyRecordsVanar();
+    //   // }
+    // }
     // else if (chain === "matchain") {
     // if (dailyRecordsMat.length === 0) {
     // fetchDailyRecordsMat();
@@ -5060,7 +5061,7 @@ function Dashboard({
       }
       fetchDailyRecordsAroundPlayer(false, dailyrecords);
       fetchDailyRecordsAroundPlayerTaiko(false);
-      fetchDailyRecordsAroundPlayerVanar(false);
+      // fetchDailyRecordsAroundPlayerVanar(false);
       // fetchDailyRecordsAroundPlayerMat(false);
       fetchDailyRecordsAroundPlayerSei(false);
       fetchDailyRecordsAroundPlayerManta(false);
@@ -5473,7 +5474,7 @@ function Dashboard({
           claimedMantaChests + claimedMantaPremiumChests < 20 ||
           claimedBaseChests + claimedBasePremiumChests < 20 ||
           claimedTaikoChests + claimedTaikoPremiumChests < 20 ||
-          claimedVanarChests + claimedVanarPremiumChests < 20 ||
+          // claimedVanarChests + claimedVanarPremiumChests < 20 ||
           // claimedMatChests + claimedMatPremiumChests < 20 ||
           claimedSeiChests + claimedSeiPremiumChests < 20
           // claimedTaraxaChests + claimedTaraxaPremiumChests < 20
@@ -5487,7 +5488,7 @@ function Dashboard({
           claimedMantaChests + claimedMantaPremiumChests === 20 &&
           claimedBaseChests + claimedBasePremiumChests === 20 &&
           claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
-          claimedVanarChests + claimedVanarPremiumChests === 20 &&
+          // claimedVanarChests + claimedVanarPremiumChests === 20 &&
           // claimedMatChests + claimedMatPremiumChests === 20 &&
           claimedSeiChests + claimedSeiPremiumChests === 20
           // claimedTaraxaChests + claimedTaraxaPremiumChests === 20
@@ -5503,7 +5504,7 @@ function Dashboard({
           claimedMantaChests < 10 ||
           claimedBaseChests < 10 ||
           claimedTaikoChests < 10 ||
-          claimedVanarChests < 10 ||
+          // claimedVanarChests < 10 ||
           // claimedMatChests < 10 ||
           claimedSeiChests < 10
           // claimedTaraxaChests < 10
@@ -5517,7 +5518,7 @@ function Dashboard({
           claimedMantaChests === 10 &&
           claimedBaseChests === 10 &&
           claimedTaikoChests === 10 &&
-          claimedVanarChests === 10 &&
+          // claimedVanarChests === 10 &&
           // claimedMatChests === 10 &&
           claimedSeiChests === 10
           // claimedTaraxaChests === 10
@@ -5836,47 +5837,47 @@ function Dashboard({
       }
     }
   };
-  const getAllVanarChests = async (userEmail) => {
-    if (userEmail) {
-      const emailData = { emailAddress: userEmail, chainId: "vanar" };
+  // const getAllVanarChests = async (userEmail) => {
+  //   if (userEmail) {
+  //     const emailData = { emailAddress: userEmail, chainId: "vanar" };
 
-      const result = await axios.post(
-        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-        emailData,
-      );
-      if (result.status === 200 && result.data) {
-        const chestOrder = result.data.chestOrder;
+  //     const result = await axios.post(
+  //       "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+  //       emailData,
+  //     );
+  //     if (result.status === 200 && result.data) {
+  //       const chestOrder = result.data.chestOrder;
 
-        let standardChestsArray = [];
-        let premiumChestsArray = [];
-        let openedChests = [];
-        let openedStandardChests = [];
-        let openedPremiumChests = [];
+  //       let standardChestsArray = [];
+  //       let premiumChestsArray = [];
+  //       let openedChests = [];
+  //       let openedStandardChests = [];
+  //       let openedPremiumChests = [];
 
-        if (chestOrder.length > 0) {
-          for (let item = 0; item < chestOrder.length; item++) {
-            if (chestOrder[item].chestType === "Standard") {
-              if (chestOrder[item].isOpened === true) {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
-              }
-              standardChestsArray.push(chestOrder[item]);
-            } else if (chestOrder[item].chestType === "Premium") {
-              if (chestOrder[item].isOpened === true) {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
-              }
-              premiumChestsArray.push(chestOrder[item]);
-            }
-          }
-          setOpenedVanarChests(openedChests);
-          setclaimedVanarChests(openedStandardChests.length);
-          setclaimedVanarPremiumChests(openedPremiumChests.length);
-          setallVanarChests(chestOrder);
-        }
-      }
-    }
-  };
+  //       if (chestOrder.length > 0) {
+  //         for (let item = 0; item < chestOrder.length; item++) {
+  //           if (chestOrder[item].chestType === "Standard") {
+  //             if (chestOrder[item].isOpened === true) {
+  //               openedChests.push(chestOrder[item]);
+  //               openedStandardChests.push(chestOrder[item]);
+  //             }
+  //             standardChestsArray.push(chestOrder[item]);
+  //           } else if (chestOrder[item].chestType === "Premium") {
+  //             if (chestOrder[item].isOpened === true) {
+  //               openedChests.push(chestOrder[item]);
+  //               openedPremiumChests.push(chestOrder[item]);
+  //             }
+  //             premiumChestsArray.push(chestOrder[item]);
+  //           }
+  //         }
+  //         setOpenedVanarChests(openedChests);
+  //         setclaimedVanarChests(openedStandardChests.length);
+  //         setclaimedVanarPremiumChests(openedPremiumChests.length);
+  //         setallVanarChests(chestOrder);
+  //       }
+  //     }
+  //   }
+  // };
 
   // const getAllMatChests = async (userEmail) => {
   //   if (userEmail) {
@@ -6250,7 +6251,7 @@ function Dashboard({
       manta: 0,
       base: 0,
       taiko: 0,
-      vanar: 0,
+      // vanar: 0,
       // mat: 0,
       sei: 0,
       // taraxa: 0,
@@ -6388,24 +6389,24 @@ function Dashboard({
         }
       });
     }
-    if (openedVanarChests && openedVanarChests.length > 0) {
-      openedVanarChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                temp.vanar += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
+    // if (openedVanarChests && openedVanarChests.length > 0) {
+    //   openedVanarChests.forEach((chest) => {
+    //     if (chest.isOpened === true) {
+    //       if (chest.rewards.length > 1) {
+    //         chest.rewards.forEach((innerChest) => {
+    //           if (
+    //             innerChest.rewardType === "Money" &&
+    //             innerChest.status !== "Unclaimed" &&
+    //             innerChest.status !== "Unclaimable" &&
+    //             innerChest.status === "Claimed"
+    //           ) {
+    //             temp.vanar += Number(innerChest.reward);
+    //           }
+    //         });
+    //       }
+    //     }
+    //   });
+    // }
 
     // if (openedMatChests && openedMatChests.length > 0) {
     //   openedMatChests.forEach((chest) => {
@@ -6527,8 +6528,8 @@ function Dashboard({
     // claimedTaraxaPremiumChests,
     claimedTaikoChests,
     claimedTaikoPremiumChests,
-    claimedVanarChests,
-    claimedVanarPremiumChests,
+    // claimedVanarChests,
+    // claimedVanarPremiumChests,
     // claimedMatChests,
     // claimedMatPremiumChests,
   ]);
@@ -6569,7 +6570,7 @@ function Dashboard({
       userDataTaiko ||
       // userDataMat ||
       userDataSei ||
-      userDataVanar ||
+      // userDataVanar ||
       // userDataTaraxa ||
       userDataStar
     ) {
@@ -6585,7 +6586,7 @@ function Dashboard({
     userDataTaiko,
     // userDataMat,
     userDataSei,
-    userDataVanar,
+    // userDataVanar,
     // userDataTaraxa,
     userDataStar,
     userDataStarWeekly,
@@ -6632,7 +6633,7 @@ function Dashboard({
       getAllMantaChests(email);
       getAllBaseChests(email);
       getAllTaikoChests(email);
-      getAllVanarChests(email);
+      // getAllVanarChests(email);
       // getAllMatChests(email);
       getAllSeiChests(email);
       // getAllTaraxaChests(email);
@@ -6672,7 +6673,7 @@ function Dashboard({
     openedSeiChests,
     openedBaseChests,
     openedTaikoChests,
-    openedVanarChests,
+    // openedVanarChests,
     // openedTaraxaChests,
   ]);
 
@@ -6695,7 +6696,7 @@ function Dashboard({
       fetchDailyRecordsAroundPlayerManta(false, []);
       fetchDailyRecordsAroundPlayerSei(false, []);
       fetchDailyRecordsAroundPlayerTaiko(false, []);
-      fetchDailyRecordsAroundPlayerVanar(false, []);
+      // fetchDailyRecordsAroundPlayerVanar(false, []);
       // fetchDailyRecordsAroundPlayerMat(false, []);
       fetchDailyRecordsAroundPlayerViction(false, []);
       fetchDailyRecordsAroundPlayerSkale(false, []);
@@ -6814,7 +6815,7 @@ function Dashboard({
                 // openedTaraxaChests.length +
                 openedSkaleChests.length +
                 openedTaikoChests.length +
-                openedVanarChests.length +
+                // openedVanarChests.length +
                 // openedMatChests.length +
                 openedVictionChests.length
               }
@@ -6826,7 +6827,7 @@ function Dashboard({
                 // claimedTaraxaPremiumChests +
                 // claimedMatPremiumChests +
                 claimedTaikoPremiumChests +
-                claimedVanarPremiumChests +
+                // claimedVanarPremiumChests +
                 claimedVictionPremiumChests +
                 claimedSkalePremiumChests +
                 claimedPremiumChests
@@ -6839,7 +6840,7 @@ function Dashboard({
                 // claimedTaraxaChests +
                 // claimedMatChests +
                 claimedTaikoChests +
-                claimedVanarChests +
+                // claimedVanarChests +
                 claimedVictionChests +
                 claimedSkaleChests +
                 claimedChests
@@ -6981,8 +6982,8 @@ function Dashboard({
             claimedBasePremiumChests={claimedBasePremiumChests}
             claimedTaikoChests={claimedTaikoChests}
             claimedTaikoPremiumChests={claimedTaikoPremiumChests}
-            claimedVanarChests={claimedVanarChests}
-            claimedVanarPremiumChests={claimedVanarPremiumChests}
+            // claimedVanarChests={claimedVanarChests}
+            // claimedVanarPremiumChests={claimedVanarPremiumChests}
             // claimedMatChests={claimedMatChests}
             // claimedMatPremiumChests={claimedMatPremiumChests}
             claimedSeiChests={claimedSeiChests}
@@ -6997,7 +6998,7 @@ function Dashboard({
             openedMantaChests={openedMantaChests}
             openedBaseChests={openedBaseChests}
             openedTaikoChests={openedTaikoChests}
-            openedVanarChests={openedVanarChests}
+            // openedVanarChests={openedVanarChests}
             // openedMatChests={openedMatChests}
             openedSeiChests={openedSeiChests}
             // openedTaraxaChests={openedTaraxaChests}
@@ -7009,7 +7010,7 @@ function Dashboard({
             allMantaChests={allMantaChests}
             allBaseChests={allBaseChests}
             allTaikoChests={allTaikoChests}
-            allVanarChests={allVanarChests}
+            // allVanarChests={allVanarChests}
             // allMatChests={allMatChests}
             allSeiChests={allSeiChests}
             // allTaraxaChests={allTaraxaChests}
@@ -7028,9 +7029,9 @@ function Dashboard({
             onMantaChestClaimed={() => {
               setmantacount(mantacount + 1);
             }}
-            onVanarChestClaimed={() => {
-              setVanarcount(vanarcount + 1);
-            }}
+            // onVanarChestClaimed={() => {
+            //   setVanarcount(vanarcount + 1);
+            // }}
             onBaseChestClaimed={() => {
               setbasecount(basecount + 1);
             }}
@@ -7105,7 +7106,7 @@ function Dashboard({
                 // allMatData={allMatData}
                 allSeiData={allSeiData}
                 // allTaraxaData={allTaraxaData}
-                allVanarData={allVanarData}
+                // allVanarData={allVanarData}
                 dailyplayerData={dailyplayerData}
                 genesisData={genesisData}
                 onPremiumClick={() => {

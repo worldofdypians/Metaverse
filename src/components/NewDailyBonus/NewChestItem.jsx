@@ -390,13 +390,13 @@ const NewChestItem = ({
             abi: window.DAILY_BONUS_VICTION_ABI,
             chainText: "viction",
           };
-        case 2040:
-          // Vanar uses the same ABI as SEI in existing code
-          return {
-            address: window.config.daily_bonus_vanar_address,
-            abi: window.DAILY_BONUS_SEI_ABI,
-            chainText: "vanar",
-          };
+        // case 2040:
+        //   // Vanar uses the same ABI as SEI in existing code
+        //   return {
+        //     address: window.config.daily_bonus_vanar_address,
+        //     abi: window.DAILY_BONUS_SEI_ABI,
+        //     chainText: "vanar",
+        //   };
         case 169:
           return {
             address: window.config.daily_bonus_manta_address,

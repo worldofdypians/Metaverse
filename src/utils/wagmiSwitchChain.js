@@ -14,8 +14,8 @@ import {
   skaleNebula,
   immutableZkEvm,
   confluxESpace,
-  vanar,
-  taraxa,
+  // vanar,
+  // taraxa,
 } from "wagmi/chains";
 
 /**
@@ -36,8 +36,8 @@ const getChainById = (chainId) => {
     169: manta,
     167000: taiko,
     1329: sei,
-    2040: vanar,
-    841: taraxa,
+    // 2040: vanar,
+    // 841: taraxa,
   };
   return chainMap[chainId];
 };

@@ -119,14 +119,14 @@ const NewDailyBonus = ({
   taikoImages,
   claimedTaikoChests,
   claimedTaikoPremiumChests,
-  claimedVanarChests,
-  claimedVanarPremiumChests,
-  openedVanarChests,
-  allVanarChests,
+  // claimedVanarChests,
+  // claimedVanarPremiumChests,
+  // openedVanarChests,
+  // allVanarChests,
   openedTaikoChests,
   allTaikoChests,
   onTaikoChestClaimed,
-  onVanarChestClaimed,
+  // onVanarChestClaimed,
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
   // matImages,
@@ -167,8 +167,8 @@ const NewDailyBonus = ({
   const taikoClaimed = claimedTaikoChests + claimedTaikoPremiumChests;
   const taikoPercentage = (taikoClaimed / 20) * 100;
 
-  const vanarClaimed = claimedVanarChests + claimedVanarPremiumChests;
-  const vanarPercentage = (vanarClaimed / 20) * 100;
+  // const vanarClaimed = claimedVanarChests + claimedVanarPremiumChests;
+  // const vanarPercentage = (vanarClaimed / 20) * 100;
 
   // const matClaimed = claimedMatChests + claimedMatPremiumChests;
   // const matPercentage = (matClaimed / 20) * 100;
@@ -353,7 +353,7 @@ const NewDailyBonus = ({
   // const [totalTaraxaStars, settotalTaraxaStars] = useState(0);
   const [totalBaseStars, settotalBaseStars] = useState(0);
   const [totalTaikoStars, settotalTaikoStars] = useState(0);
-  const [totalVanarStars, settotalVanarStars] = useState(0);
+  // const [totalVanarStars, settotalVanarStars] = useState(0);
   // const [totalMatStars, settotalMatStars] = useState(0);
 
   const [totalPoints, settotalPoints] = useState(0);
@@ -374,8 +374,8 @@ const NewDailyBonus = ({
   const [totalBaseUsd, settotalBaseUsd] = useState(0);
   const [totalTaikoPoints, settotalTaikoPoints] = useState(0);
   const [totalTaikoUsd, settotalTaikoUsd] = useState(0);
-  const [totalVanarPoints, settotalVanarPoints] = useState(0);
-  const [totalVanarUsd, settotalVanarUsd] = useState(0);
+  // const [totalVanarPoints, settotalVanarPoints] = useState(0);
+  // const [totalVanarUsd, settotalVanarUsd] = useState(0);
   // const [totalMatPoints, settotalMatPoints] = useState(0);
   // const [totalMatUsd, settotalMatUsd] = useState(0);
 
@@ -713,44 +713,44 @@ const NewDailyBonus = ({
       settotalTaikoPoints(resultTaikoPoints);
       settotalTaikoUsd(resultTaikoUsd);
     }
-    if (allVanarChests && allVanarChests.length > 0) {
-      let resultVanarPoints = 0;
-      let resultVanarUsd = 0;
-      let resultstars = 0;
+    // if (allVanarChests && allVanarChests.length > 0) {
+    //   let resultVanarPoints = 0;
+    //   let resultVanarUsd = 0;
+    //   let resultstars = 0;
 
-      allVanarChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (innerChest.rewardType === "Points") {
-                resultVanarPoints += Number(innerChest.reward);
-              }
-              if (innerChest.rewardType === "Stars") {
-                resultstars += Number(innerChest.reward);
-              }
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                resultVanarUsd += Number(innerChest.reward);
-              }
-            });
-          } else if (chest.rewards.length === 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (innerChest.rewardType === "Points") {
-                resultVanarPoints += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-      settotalVanarStars(resultstars);
+    //   allVanarChests.forEach((chest) => {
+    //     if (chest.isOpened === true) {
+    //       if (chest.rewards.length > 1) {
+    //         chest.rewards.forEach((innerChest) => {
+    //           if (innerChest.rewardType === "Points") {
+    //             resultVanarPoints += Number(innerChest.reward);
+    //           }
+    //           if (innerChest.rewardType === "Stars") {
+    //             resultstars += Number(innerChest.reward);
+    //           }
+    //           if (
+    //             innerChest.rewardType === "Money" &&
+    //             innerChest.status !== "Unclaimed" &&
+    //             innerChest.status !== "Unclaimable" &&
+    //             innerChest.status === "Claimed"
+    //           ) {
+    //             resultVanarUsd += Number(innerChest.reward);
+    //           }
+    //         });
+    //       } else if (chest.rewards.length === 1) {
+    //         chest.rewards.forEach((innerChest) => {
+    //           if (innerChest.rewardType === "Points") {
+    //             resultVanarPoints += Number(innerChest.reward);
+    //           }
+    //         });
+    //       }
+    //     }
+    //   });
+    //   settotalVanarStars(resultstars);
 
-      settotalVanarPoints(resultVanarPoints);
-      settotalVanarUsd(resultVanarUsd);
-    }
+    //   settotalVanarPoints(resultVanarPoints);
+    //   settotalVanarUsd(resultVanarUsd);
+    // }
 
     // if (allMatChests && allMatChests.length > 0) {
     //   let resultMatPoints = 0;
@@ -938,11 +938,11 @@ const NewDailyBonus = ({
       supportsBinance: false,
     });
   };
-  const handleVanarPool = async () => {
-    await handleSwitchChainPool("0x7f8", 2040, {
-      supportsBinance: false,
-    });
-  };
+  // const handleVanarPool = async () => {
+  //   await handleSwitchChainPool("0x7f8", 2040, {
+  //     supportsBinance: false,
+  //   });
+  // };
 
   // const handleMatPool = async () => {
   //   await handleSwitchChainPool("0x2ba", 698, {
@@ -1736,86 +1736,86 @@ const NewDailyBonus = ({
       setLiveRewardData([]);
     }
   };
-  const showSingleRewardDataVanar = (chestID, chestIndex) => {
-    const filteredResult = openedVanarChests.find(
-      (el) =>
-        el.chestId === chestID && allVanarChests.indexOf(el) === chestIndex,
-    );
-    setIsActive(chestID);
-    setIsActiveIndex(chestIndex + 1);
-    if (filteredResult) {
-      const resultPoints = filteredResult.rewards.length === 1;
-      const resultPointsStars =
-        filteredResult.rewards.length === 2 &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points";
-        }) !== undefined &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money";
-        }) === undefined;
+  // const showSingleRewardDataVanar = (chestID, chestIndex) => {
+  //   const filteredResult = openedVanarChests.find(
+  //     (el) =>
+  //       el.chestId === chestID && allVanarChests.indexOf(el) === chestIndex,
+  //   );
+  //   setIsActive(chestID);
+  //   setIsActiveIndex(chestIndex + 1);
+  //   if (filteredResult) {
+  //     const resultPoints = filteredResult.rewards.length === 1;
+  //     const resultPointsStars =
+  //       filteredResult.rewards.length === 2 &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return obj.rewardType === "Stars" || obj.rewardType === "Points";
+  //       }) !== undefined &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return obj.rewardType === "Money";
+  //       }) === undefined;
 
-      const resultPointsMoney =
-        filteredResult.rewards.length === 2 &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money" || obj.rewardType === "Points";
-        }) !== undefined &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money" && obj.status === "Claimed";
-        }) !== undefined;
+  //     const resultPointsMoney =
+  //       filteredResult.rewards.length === 2 &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return obj.rewardType === "Money" || obj.rewardType === "Points";
+  //       }) !== undefined &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return obj.rewardType === "Money" && obj.status === "Claimed";
+  //       }) !== undefined;
 
-      const resultWonMoneyNoLand =
-        filteredResult.rewards.length === 3 &&
-        filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Stars" ||
-            (obj.rewardType === "Money" &&
-              obj.status === "Unclaimable" &&
-              obj.details ===
-                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
-            obj.rewardType === "Points"
-          );
-        }) !== undefined;
+  //     const resultWonMoneyNoLand =
+  //       filteredResult.rewards.length === 3 &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return (
+  //           obj.rewardType === "Stars" ||
+  //           (obj.rewardType === "Money" &&
+  //             obj.status === "Unclaimable" &&
+  //             obj.details ===
+  //               "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+  //           obj.rewardType === "Points"
+  //         );
+  //       }) !== undefined;
 
-      const resultWonMoneyNoCaws =
-        filteredResult.rewards.length === 3 &&
-        filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Stars" ||
-            (obj.rewardType === "Money" &&
-              obj.status === "Unclaimable" &&
-              obj.details ===
-                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
-            obj.rewardType === "Points"
-          );
-        }) !== undefined;
+  //     const resultWonMoneyNoCaws =
+  //       filteredResult.rewards.length === 3 &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return (
+  //           obj.rewardType === "Stars" ||
+  //           (obj.rewardType === "Money" &&
+  //             obj.status === "Unclaimable" &&
+  //             obj.details ===
+  //               "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+  //           obj.rewardType === "Points"
+  //         );
+  //       }) !== undefined;
 
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
+  //     const resultPremium = filteredResult.rewards.find((obj) => {
+  //       return (
+  //         obj.rewardType === "Money" &&
+  //         obj.status === "Unclaimed" &&
+  //         obj.claimType === "PREMIUM"
+  //       );
+  //     });
 
-      if (resultPoints) {
-        setMessage("wonPoints");
-      } else if (resultPointsStars) {
-        setMessage("wonPointsStars");
-      } else if (resultWonMoneyNoLand) {
-        setMessage("winDangerLand");
-      } else if (resultPointsMoney) {
-        setMessage("won");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
-      } else if (resultPremium) {
-        setMessage("needPremium");
-      }
-      setLiveRewardData(filteredResult);
-      setRewardData(filteredResult);
-    } else {
-      setLiveRewardData([]);
-    }
-  };
+  //     if (resultPoints) {
+  //       setMessage("wonPoints");
+  //     } else if (resultPointsStars) {
+  //       setMessage("wonPointsStars");
+  //     } else if (resultWonMoneyNoLand) {
+  //       setMessage("winDangerLand");
+  //     } else if (resultPointsMoney) {
+  //       setMessage("won");
+  //     } else if (resultWonMoneyNoCaws) {
+  //       setMessage("winDangerCaws");
+  //     } else if (resultPremium) {
+  //       setMessage("needPremium");
+  //     }
+  //     setLiveRewardData(filteredResult);
+  //     setRewardData(filteredResult);
+  //   } else {
+  //     setLiveRewardData([]);
+  //   }
+  // };
 
   // const showSingleRewardDataMat = (chestID, chestIndex) => {
   //   const filteredResult = openedMatChests.find(
@@ -2064,7 +2064,7 @@ const NewDailyBonus = ({
     { chainId: [1116], chainName: "core" },
     { chainId: [1329], chainName: "sei" },
     { chainId: [167000], chainName: "taiko" },
-    { chainId: [2040], chainName: "vanar" },
+    // { chainId: [2040], chainName: "vanar" },
     // { chainId: [841], chainName: "taraxa" },
 
     { chainId: [169], chainName: "manta" },
@@ -2083,7 +2083,7 @@ const NewDailyBonus = ({
     allMantaChests,
     allBaseChests,
     allTaikoChests,
-    allVanarChests,
+    // allVanarChests,
     // allMatChests,
     allCoreChests,
     allSeiChests,
@@ -2596,80 +2596,81 @@ const NewDailyBonus = ({
       ) {
         setMessage("notsupported");
       }
-    } else if (chain === "vanar") {
-      if (window.WALLET_TYPE !== "binance") {
-        if (!email) {
-          setMessage("login");
-          setDisable(true);
-        } else if (email && coinbase && address) {
-          if (coinbase.toLowerCase() === address.toLowerCase()) {
-            if (isPremium) {
-              if (
-                claimedVanarChests + claimedVanarPremiumChests === 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase()
-              ) {
-                setMessage("complete");
-              } else if (
-                claimedVanarChests + claimedVanarPremiumChests < 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 2040
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedVanarChests + claimedVanarPremiumChests < 20 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 2040
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            } else if (!isPremium) {
-              if (
-                claimedVanarChests === 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 2040
-              ) {
-                setMessage("premium");
-                setDisable(true);
-              } else if (
-                claimedVanarChests < 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 2040
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedVanarChests < 10 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 2040
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            }
-          } else {
-            setMessage("switchAccount");
-            setDisable(true);
-          }
-        } else {
-          setMessage("connect");
-          setDisable(true);
-        }
-      } else if (
-        window.WALLET_TYPE === "binance" ||
-        window.ethereum?.isBinance
-      ) {
-        setMessage("notsupported");
-      }
-      // setMessage("comingsoon");
-    }
+    } 
+    // else if (chain === "vanar") {
+    //   if (window.WALLET_TYPE !== "binance") {
+    //     if (!email) {
+    //       setMessage("login");
+    //       setDisable(true);
+    //     } else if (email && coinbase && address) {
+    //       if (coinbase.toLowerCase() === address.toLowerCase()) {
+    //         if (isPremium) {
+    //           if (
+    //             claimedVanarChests + claimedVanarPremiumChests === 20 &&
+    //             rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase()
+    //           ) {
+    //             setMessage("complete");
+    //           } else if (
+    //             claimedVanarChests + claimedVanarPremiumChests < 20 &&
+    //             rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId === 2040
+    //           ) {
+    //             setMessage("");
+    //             setDisable(false);
+    //           } else if (
+    //             claimedVanarChests + claimedVanarPremiumChests < 20 &&
+    //             // rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId !== 2040
+    //           ) {
+    //             setMessage("switch");
+    //             setDisable(true);
+    //           }
+    //         } else if (!isPremium) {
+    //           if (
+    //             claimedVanarChests === 10 &&
+    //             rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId === 2040
+    //           ) {
+    //             setMessage("premium");
+    //             setDisable(true);
+    //           } else if (
+    //             claimedVanarChests < 10 &&
+    //             rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId === 2040
+    //           ) {
+    //             setMessage("");
+    //             setDisable(false);
+    //           } else if (
+    //             claimedVanarChests < 10 &&
+    //             // rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId !== 2040
+    //           ) {
+    //             setMessage("switch");
+    //             setDisable(true);
+    //           }
+    //         }
+    //       } else {
+    //         setMessage("switchAccount");
+    //         setDisable(true);
+    //       }
+    //     } else {
+    //       setMessage("connect");
+    //       setDisable(true);
+    //     }
+    //   } else if (
+    //     window.WALLET_TYPE === "binance" ||
+    //     window.ethereum?.isBinance
+    //   ) {
+    //     setMessage("notsupported");
+    //   }
+    //   // setMessage("comingsoon");
+    // }
     // else if (chain === "matchain") {
     //   if (window.WALLET_TYPE !== "binance") {
     //     if (!email) {
@@ -2914,8 +2915,8 @@ const NewDailyBonus = ({
     claimedBasePremiumChests,
     claimedTaikoChests,
     claimedTaikoPremiumChests,
-    claimedVanarChests,
-    claimedVanarPremiumChests,
+    // claimedVanarChests,
+    // claimedVanarPremiumChests,
     // claimedMatChests,
     // claimedMatPremiumChests,
     claimedSeiChests,
@@ -3070,8 +3071,8 @@ const NewDailyBonus = ({
                               ? totalBasePoints
                               : chain === "taiko"
                                 ? totalTaikoPoints
-                                : chain === "vanar"
-                                  ? totalVanarPoints
+                                // : chain === "vanar"
+                                //   ? totalVanarPoints
                                   : // : chain === "matchain"
                                     // ? totalMatPoints
                                     chain === "sei"
@@ -3099,8 +3100,8 @@ const NewDailyBonus = ({
                               ? totalBaseStars
                               : chain === "taiko"
                                 ? totalTaikoStars
-                                : chain === "vanar"
-                                  ? totalVanarStars
+                                // : chain === "vanar"
+                                //   ? totalVanarStars
                                   : // : chain === "matchain"
                                     // ? totalMatStars
                                     chain === "sei"
@@ -3131,8 +3132,8 @@ const NewDailyBonus = ({
                               ? totalBaseUsd
                               : chain === "taiko"
                                 ? totalTaikoUsd
-                                : chain === "vanar"
-                                  ? totalVanarUsd
+                                // : chain === "vanar"
+                                //   ? totalVanarUsd
                                   : // : chain === "matchain"
                                     // ? totalMatUsd
                                     chain === "sei"
@@ -3737,7 +3738,7 @@ const NewDailyBonus = ({
                           </div>
                         </div>
 
-                        <div
+                        {/* <div
                           className={`position-relative chain-item ${
                             chain === "vanar" && "chain-item-active"
                           } w-100`}
@@ -3840,7 +3841,7 @@ const NewDailyBonus = ({
                               </span>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         {/* <div
                           className={`position-relative chain-item ${
                             chain === "taraxa" && "chain-item-active"
@@ -4413,6 +4414,24 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
+                         <div className={`position-relative chain-item w-100`}>
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon3.png"
+                            }
+                            className={`chain-img`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
+                          >
+                            <div className="d-flex align-items-center gap-2">
+                              <span className="percentage-span">
+                                Coming Soon
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     ) : windowSize.width && windowSize.width <= 992 ? (
                       <Slider {...settings} ref={sliderRef}>
@@ -4711,7 +4730,7 @@ const NewDailyBonus = ({
                           </div>
                         </div>
 
-                        <div
+                        {/* <div
                           className={`position-relative chain-item ${
                             chain === "vanar" && "chain-item-active"
                           }`}
@@ -4756,7 +4775,7 @@ const NewDailyBonus = ({
                               Vanar
                             </button>
                           </div>
-                        </div>
+                        </div> */}
                         {/* <div
                           className={`position-relative chain-item ${
                             chain === "taraxa" && "chain-item-active"
@@ -5686,134 +5705,134 @@ const NewDailyBonus = ({
                                           }
                                         />
                                       ))
-                                  : chain === "vanar"
-                                    ? allVanarChests &&
-                                      allVanarChests.length > 0
-                                      ? allVanarChests.map((item, index) => (
-                                          <NewChestItem
-                                            closeDaily={onclose}
-                                            openKickstarter={openKickstarter}
-                                            coinbase={coinbase}
-                                            claimingChest={claimingChest}
-                                            setClaimingChest={setClaimingChest}
-                                            buyNftPopup={buyNftPopup}
-                                            chainId={chainId}
-                                            image={taikoImages[index]} //RETURN HERE
-                                            chain={chain}
-                                            key={index}
-                                            item={item}
-                                            username={username}
-                                            // openChest={openChest}
-                                            selectedChest={selectedChest}
-                                            isPremium={isPremium}
-                                            onClaimRewards={(value) => {
-                                              console.log("vanar", value);
-                                              // setRewardData(value);
-                                              setLiveRewardData(value);
-                                              onVanarChestClaimed();
-                                              showLiveRewardData(value);
-                                              setIsActive(item.chestId);
-                                              setIsActiveIndex(index + 1);
-                                            }}
-                                            handleShowRewards={(
-                                              value,
-                                              value2,
-                                            ) => {
-                                              showSingleRewardDataVanar(
-                                                value,
-                                                value2,
-                                              );
-                                              setIsActive(value);
-                                              setIsActiveIndex(index + 1);
-                                            }}
-                                            onLoadingChest={(value) => {
-                                              // setDisable(value);
-                                            }}
-                                            onChestStatus={(val) => {
-                                              setMessage(val);
-                                            }}
-                                            address={address}
-                                            email={email}
-                                            rewardTypes={item.chestType?.toLowerCase()}
-                                            chestId={item.chestId}
-                                            chestIndex={index + 1}
-                                            open={item.isOpened}
-                                            disableBtn={disable}
-                                            isActive={isActive}
-                                            isActiveIndex={isActiveIndex}
-                                            dummypremiumChests={
-                                              dummypremiumChests[index - 10]
-                                                ?.closedImg
-                                            }
-                                          />
-                                        ))
-                                      : window
-                                          .range(0, 19)
-                                          .map((item, index) => (
-                                            <NewChestItem
-                                              closeDaily={onclose}
-                                              openKickstarter={openKickstarter}
-                                              coinbase={coinbase}
-                                              claimingChest={claimingChest}
-                                              setClaimingChest={
-                                                setClaimingChest
-                                              }
-                                              buyNftPopup={buyNftPopup}
-                                              chainId={chainId}
-                                              chain={chain}
-                                              key={index}
-                                              item={item}
-                                              username={username}
-                                              image={taikoImages[index]}
-                                              // openChest={openChest}
-                                              selectedChest={selectedChest}
-                                              isPremium={isPremium}
-                                              onClaimRewards={(value) => {
-                                                // setRewardData(value);
-                                                setLiveRewardData(value);
-                                                onVanarChestClaimed();
-                                                showLiveRewardData(value);
-                                                setIsActive(item.chestId);
-                                                // setIsActiveIndex(index + 1);
-                                              }}
-                                              handleShowRewards={(
-                                                value,
-                                                value2,
-                                              ) => {
-                                                showSingleRewardDataVanar(
-                                                  value,
-                                                  value2,
-                                                );
-                                                setIsActive(value);
-                                                // setIsActiveIndex(index + 1);
-                                              }}
-                                              onLoadingChest={(value) => {
-                                                // setDisable(value);
-                                              }}
-                                              onChestStatus={(val) => {
-                                                setMessage(val);
-                                              }}
-                                              address={address}
-                                              email={email}
-                                              rewardTypes={
-                                                index + 1 <= 10
-                                                  ? "standard"
-                                                  : "premium"
-                                              }
-                                              chestId={item.chestId}
-                                              chestIndex={index + 1}
-                                              open={item.opened}
-                                              disableBtn={true}
-                                              isActive={isActive}
-                                              openChest={() => {
-                                                console.log("test");
-                                              }}
-                                              dummypremiumChests={
-                                                dummypremiumChests[index - 10]
-                                                  ?.closedImg
-                                              }
-                                            />
-                                          ))
+                                  // : chain === "vanar"
+                                  //   ? allVanarChests &&
+                                  //     allVanarChests.length > 0
+                                  //     ? allVanarChests.map((item, index) => (
+                                  //         <NewChestItem
+                                  //           closeDaily={onclose}
+                                  //           openKickstarter={openKickstarter}
+                                  //           coinbase={coinbase}
+                                  //           claimingChest={claimingChest}
+                                  //           setClaimingChest={setClaimingChest}
+                                  //           buyNftPopup={buyNftPopup}
+                                  //           chainId={chainId}
+                                  //           image={taikoImages[index]} //RETURN HERE
+                                  //           chain={chain}
+                                  //           key={index}
+                                  //           item={item}
+                                  //           username={username}
+                                  //           // openChest={openChest}
+                                  //           selectedChest={selectedChest}
+                                  //           isPremium={isPremium}
+                                  //           onClaimRewards={(value) => {
+                                  //             console.log("vanar", value);
+                                  //             // setRewardData(value);
+                                  //             setLiveRewardData(value);
+                                  //             onVanarChestClaimed();
+                                  //             showLiveRewardData(value);
+                                  //             setIsActive(item.chestId);
+                                  //             setIsActiveIndex(index + 1);
+                                  //           }}
+                                  //           handleShowRewards={(
+                                  //             value,
+                                  //             value2,
+                                  //           ) => {
+                                  //             showSingleRewardDataVanar(
+                                  //               value,
+                                  //               value2,
+                                  //             );
+                                  //             setIsActive(value);
+                                  //             setIsActiveIndex(index + 1);
+                                  //           }}
+                                  //           onLoadingChest={(value) => {
+                                  //             // setDisable(value);
+                                  //           }}
+                                  //           onChestStatus={(val) => {
+                                  //             setMessage(val);
+                                  //           }}
+                                  //           address={address}
+                                  //           email={email}
+                                  //           rewardTypes={item.chestType?.toLowerCase()}
+                                  //           chestId={item.chestId}
+                                  //           chestIndex={index + 1}
+                                  //           open={item.isOpened}
+                                  //           disableBtn={disable}
+                                  //           isActive={isActive}
+                                  //           isActiveIndex={isActiveIndex}
+                                  //           dummypremiumChests={
+                                  //             dummypremiumChests[index - 10]
+                                  //               ?.closedImg
+                                  //           }
+                                  //         />
+                                  //       ))
+                                  //     : window
+                                  //         .range(0, 19)
+                                  //         .map((item, index) => (
+                                  //           <NewChestItem
+                                  //             closeDaily={onclose}
+                                  //             openKickstarter={openKickstarter}
+                                  //             coinbase={coinbase}
+                                  //             claimingChest={claimingChest}
+                                  //             setClaimingChest={
+                                  //               setClaimingChest
+                                  //             }
+                                  //             buyNftPopup={buyNftPopup}
+                                  //             chainId={chainId}
+                                  //             chain={chain}
+                                  //             key={index}
+                                  //             item={item}
+                                  //             username={username}
+                                  //             image={taikoImages[index]}
+                                  //             // openChest={openChest}
+                                  //             selectedChest={selectedChest}
+                                  //             isPremium={isPremium}
+                                  //             onClaimRewards={(value) => {
+                                  //               // setRewardData(value);
+                                  //               setLiveRewardData(value);
+                                  //               onVanarChestClaimed();
+                                  //               showLiveRewardData(value);
+                                  //               setIsActive(item.chestId);
+                                  //               // setIsActiveIndex(index + 1);
+                                  //             }}
+                                  //             handleShowRewards={(
+                                  //               value,
+                                  //               value2,
+                                  //             ) => {
+                                  //               showSingleRewardDataVanar(
+                                  //                 value,
+                                  //                 value2,
+                                  //               );
+                                  //               setIsActive(value);
+                                  //               // setIsActiveIndex(index + 1);
+                                  //             }}
+                                  //             onLoadingChest={(value) => {
+                                  //               // setDisable(value);
+                                  //             }}
+                                  //             onChestStatus={(val) => {
+                                  //               setMessage(val);
+                                  //             }}
+                                  //             address={address}
+                                  //             email={email}
+                                  //             rewardTypes={
+                                  //               index + 1 <= 10
+                                  //                 ? "standard"
+                                  //                 : "premium"
+                                  //             }
+                                  //             chestId={item.chestId}
+                                  //             chestIndex={index + 1}
+                                  //             open={item.opened}
+                                  //             disableBtn={true}
+                                  //             isActive={isActive}
+                                  //             openChest={() => {
+                                  //               console.log("test");
+                                  //             }}
+                                  //             dummypremiumChests={
+                                  //               dummypremiumChests[index - 10]
+                                  //                 ?.closedImg
+                                  //             }
+                                  //           />
+                                  //         ))
                                     : chain === "sei"
                                       ? allSeiChests && allSeiChests.length > 0
                                         ? allSeiChests.map((item, index) => (
@@ -6366,22 +6385,22 @@ const NewDailyBonus = ({
                                 Taiko Chain
                               </span>
                             </h6>
-                          ) : chain === "vanar" ? (
-                            <h6
-                              className="loader-text mb-0"
-                              style={{ color: "#ce5d1b" }}
-                            >
-                              Switch to{" "}
-                              <span
-                                style={{
-                                  textDecoration: "underline",
-                                  cursor: "pointer",
-                                }}
-                                onClick={handleVanarPool}
-                              >
-                                Vanar Chain
-                              </span>
-                            </h6>
+                          // ) : chain === "vanar" ? (
+                          //   <h6
+                          //     className="loader-text mb-0"
+                          //     style={{ color: "#ce5d1b" }}
+                          //   >
+                          //     Switch to{" "}
+                          //     <span
+                          //       style={{
+                          //         textDecoration: "underline",
+                          //         cursor: "pointer",
+                          //       }}
+                          //       onClick={handleVanarPool}
+                          //     >
+                          //       Vanar Chain
+                          //     </span>
+                          //   </h6>
                           ) : chain === "core" ? (
                             <h6
                               className="loader-text mb-0"
@@ -8909,7 +8928,7 @@ const NewDailyBonus = ({
             onCoreChestClaimed();
             onMantaChestClaimed();
             onTaikoChestClaimed();
-            onVanarChestClaimed();
+            // onVanarChestClaimed();
             onBaseChestClaimed();
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
@@ -8931,11 +8950,11 @@ const NewDailyBonus = ({
                           rewardData.chestId,
                           isActiveIndex - 1,
                         )
-                      : chain === "vanar"
-                        ? showSingleRewardDataVanar(
-                            rewardData.chestId,
-                            isActiveIndex - 1,
-                          )
+                      // : chain === "vanar"
+                      //   ? showSingleRewardDataVanar(
+                      //       rewardData.chestId,
+                      //       isActiveIndex - 1,
+                      //     )
                         : chain === "viction"
                           ? showSingleRewardDataViction(
                               rewardData.chestId,

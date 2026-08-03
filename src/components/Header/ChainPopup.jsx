@@ -223,7 +223,7 @@ const ChainPopup = ({
               />
               Conflux
             </Dropdown.Item>
-            {
+            {/* {
               window.WALLET_TYPE !== "binance" &&
               !window.ethereum?.isBinance && (
                 <Dropdown.Item
@@ -238,7 +238,7 @@ const ChainPopup = ({
                   />
                   Vanar
                 </Dropdown.Item>
-              )}
+              )} */}
              
           </div>
         </div>

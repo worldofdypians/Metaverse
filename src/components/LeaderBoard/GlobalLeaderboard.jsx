@@ -129,7 +129,7 @@ const GlobalLeaderboard = ({
                   <br />
                   <br />
                   Participate in Daily Chain Leaderboards from BNB Chain, Skale,
-                  Core, Manta, Base, Sei, Vanar, Taiko and Viction to earn STARS that will boost your global ranking.
+                  Core, Manta, Base, Sei, Taiko and Viction to earn STARS that will boost your global ranking.
                   <br />
                   <br />
                   Prime Users earn extra STARS from Daily Leaderboards,
@@ -820,11 +820,11 @@ const GlobalLeaderboard = ({
                 style={{ width: 20, height: 20 }}
                 alt=""
               />
-              <img
+              {/* <img
                 src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
                 style={{ width: 20, height: 20 }}
                 alt=""
-              />
+              /> */}
             </div>
 
             <img

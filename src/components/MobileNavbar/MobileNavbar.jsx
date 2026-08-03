@@ -75,9 +75,11 @@ const MobileNavbar = ({
         setchainState("taiko");
       } else if (chainId === 1329) {
         setchainState("sei");
-      } else if (chainId === 2040) {
-        setchainState("vanar");
-      } else {
+      }
+      //  else if (chainId === 2040) {
+      //   setchainState("vanar");
+      // }
+       else {
         setchainState("");
       }
     }
@@ -209,8 +211,8 @@ const MobileNavbar = ({
                          
                           : chainState === "sei"
                           ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
-                          : chainState === "vanar"
-                          ? "https://cdn.worldofdypians.com/wod/vanar.svg"
+                          // : chainState === "vanar"
+                          // ? "https://cdn.worldofdypians.com/wod/vanar.svg"
                            
                           : "https://cdn.worldofdypians.com/wod/error.svg"
                       }

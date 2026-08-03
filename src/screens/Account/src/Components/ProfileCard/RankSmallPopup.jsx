@@ -61,14 +61,14 @@ const RankSmallPopup = ({ onClose, onPrimeClick }) => {
       score: userProgress.userTaikoScore,
       stars: userProgress.userTaikoStars,
     },
-    {
-      id: "vanar",
-      name: "Vanar",
-      icon: "https://cdn.worldofdypians.com/wod/vanar.svg",
-      rank: userProgress.userRankVanar,
-      score: userProgress.userVanarScore,
-      stars: userProgress.userVanarStars,
-    },
+    // {
+    //   id: "vanar",
+    //   name: "Vanar",
+    //   icon: "https://cdn.worldofdypians.com/wod/vanar.svg",
+    //   rank: userProgress.userRankVanar,
+    //   score: userProgress.userVanarScore,
+    //   stars: userProgress.userVanarStars,
+    // },
     // {
     //   id: 'taraxa',
     //   name: 'Taraxa',
