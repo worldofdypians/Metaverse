@@ -86,6 +86,7 @@ import TradingComp from "./screens/Community/Campaigns/TradingComp/TradingComp.j
 import WodBitGet from "./screens/Community/Campaigns/WodBitGet/WodBitGet.jsx";
 import Kickstarter from "./components/Kickstarter/Kickstarter.jsx";
 import KickstarterPage from "./components/Kickstarter/KickstarterPage.jsx";
+import WodlCampaignModal from "./components/WodlCampaignModal/WodlCampaignModal.jsx";
 // ... add other screens here
 
 import "@aws-amplify/ui-react/styles.css";
@@ -797,6 +798,7 @@ function AppRoutes() {
   // const [isCheckedNewsLetter, setisCheckedNewsLetter] = useState(false);
 
   const [kickstarter, setKickstarter] = useState(false);
+  const [wodlCampaignModalOpen, setWodlCampaignModalOpen] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -5677,6 +5679,14 @@ function AppRoutes() {
           !location.pathname.includes("governance") &&
           !location.pathname.includes("liquidity-catalyst") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
+
+        {location.pathname === "/" && (
+          <WodlCampaignModal
+            open={wodlCampaignModalOpen}
+            onClose={() => setWodlCampaignModalOpen(false)}
+          />
+        )}
+
         <Header
           authToken={authToken}
           handleSignUp={handleShowWalletModal}
