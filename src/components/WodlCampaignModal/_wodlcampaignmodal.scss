@@ -1,0 +1,85 @@
+.wodl-campaign-popup-wrapper {
+  border-radius: 10px;
+  border: 1px solid #525469;
+  background: rgba(8, 11, 42, 1);
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  top: -10000px;
+  left: 0%;
+  bottom: 0%;
+  right: 0%;
+  margin: auto;
+  z-index: 1000;
+  border-radius: 16px;
+  pointer-events: auto !important;
+  transition: all 1s ease-in-out;
+  width: 35%;
+
+  @media screen and (max-width: 1455px) {
+    width: 55%;
+  }
+
+  @media screen and (max-width: 1300px) {
+    width: 70%;
+  }
+
+  @media screen and (max-width: 786px) {
+    width: 92%;
+  }
+}
+
+.wodl-campaign-popup-active {
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
+  top: 0% !important;
+}
+
+.wodl-campaign-banner {
+  width: 100%;
+  border-radius: 16px 16px 0 0;
+  max-height: 320px;
+  object-fit: cover;
+}
+
+.wodl-campaign-close-wrapper {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(8, 11, 42, 1);
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  cursor: pointer;
+}
+
+.wodl-campaign-title {
+  color: #edeeff;
+  font-family: "Montserrat";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 28px;
+
+  @media screen and (max-width: 786px) {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+.wodl-campaign-desc {
+  color: #828fbb;
+  font-family: "Poppins";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+
+  @media screen and (max-width: 786px) {
+    font-size: 11px;
+    line-height: 18px;
+  }
+}
+
+.wodl-campaign-cta {
+  min-width: 200px;
+}

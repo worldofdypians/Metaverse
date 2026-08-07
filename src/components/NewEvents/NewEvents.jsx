@@ -199,7 +199,7 @@ const NewEvents = ({
   const [showPopup, setshowPopup] = useState("");
   const [countdown, setcountdown] = useState();
   const [status, setStatus] = useState(
-    "Please make sure you're on BNB Chain and using the wallet address associated to your game profile."
+    "Please make sure you're on BNB Chain and using the wallet address associated to your game profile.",
   );
   const [statusColor, setStatusColor] = useState("#FE7A00");
   const [currentWeek, setCurrentWeek] = useState([]);
@@ -349,12 +349,12 @@ const NewEvents = ({
       ? 7
       : utcDayIndex
     : utcHours === 0
-    ? utcDayIndex === 0
-      ? 6
-      : utcDayIndex - 1
-    : utcDayIndex === 0
-    ? 7
-    : utcDayIndex;
+      ? utcDayIndex === 0
+        ? 6
+        : utcDayIndex - 1
+      : utcDayIndex === 0
+        ? 7
+        : utcDayIndex;
 
   const midnightUTC = new Date(
     Date.UTC(
@@ -363,8 +363,8 @@ const NewEvents = ({
       now.getUTCDate() + 1,
       0,
       30,
-      0
-    )
+      0,
+    ),
   );
 
   const getMonday = (date) => {
@@ -492,7 +492,7 @@ const NewEvents = ({
     }
 
     const activeTimestamp = [purchaseTimestamp, purchaseTimestamp2].find(
-      (ts) => Number(ts) > now
+      (ts) => Number(ts) > now,
     );
 
     if (activeTimestamp) {
@@ -670,12 +670,12 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedPurchaseDay2 =
       purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
@@ -683,26 +683,26 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedPurchaseDate =
       purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
         ? purchaseDate.getUTCDate()
         : utcHours === 0
-        ? purchaseDate.getUTCDate() - 1
-        : purchaseDate.getUTCDate();
+          ? purchaseDate.getUTCDate() - 1
+          : purchaseDate.getUTCDate();
 
     const adjustedPurchaseDate2 =
       purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? purchaseDate2.getUTCDate()
         : utcHours === 0
-        ? purchaseDate2.getUTCDate() - 1
-        : purchaseDate2.getUTCDate();
+          ? purchaseDate2.getUTCDate() - 1
+          : purchaseDate2.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -713,19 +713,19 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedCurrentDate =
       currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
         ? currentUTCDate.getUTCDate()
         : utcHours === 0
-        ? currentUTCDate.getUTCDate() - 1
-        : currentUTCDate.getUTCDate();
+          ? currentUTCDate.getUTCDate() - 1
+          : currentUTCDate.getUTCDate();
 
     // Check if the purchase was made on the same UTC day
     const isToday =
@@ -906,12 +906,12 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedPurchaseDay2 =
       purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
@@ -919,25 +919,25 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedPurchaseDate =
       purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
         ? purchaseDate.getUTCDate()
         : utcHours === 0
-        ? purchaseDate.getUTCDate() - 1
-        : purchaseDate.getUTCDate();
+          ? purchaseDate.getUTCDate() - 1
+          : purchaseDate.getUTCDate();
     const adjustedPurchaseDate2 =
       purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? purchaseDate2.getUTCDate()
         : utcHours === 0
-        ? purchaseDate2.getUTCDate() - 1
-        : purchaseDate2.getUTCDate();
+          ? purchaseDate2.getUTCDate() - 1
+          : purchaseDate2.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -948,19 +948,19 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedCurrentDate =
       currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
         ? currentUTCDate.getUTCDate()
         : utcHours === 0
-        ? currentUTCDate.getUTCDate() - 1
-        : currentUTCDate.getUTCDate();
+          ? currentUTCDate.getUTCDate() - 1
+          : currentUTCDate.getUTCDate();
 
     // Check if the purchase was made on the same UTC day
     const isToday =
@@ -1138,37 +1138,37 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
     const adjustedPurchaseDay2 =
       purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? utcDayIndex === 0
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedPurchaseDate =
       purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
         ? purchaseDate.getUTCDate()
         : utcHours === 0
-        ? purchaseDate.getUTCDate() - 1
-        : purchaseDate.getUTCDate();
+          ? purchaseDate.getUTCDate() - 1
+          : purchaseDate.getUTCDate();
     const adjustedPurchaseDate2 =
       purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? purchaseDate2.getUTCDate()
         : utcHours === 0
-        ? purchaseDate2.getUTCDate() - 1
-        : purchaseDate2.getUTCDate();
+          ? purchaseDate2.getUTCDate() - 1
+          : purchaseDate2.getUTCDate();
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
 
@@ -1178,19 +1178,19 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedCurrentDate =
       currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
         ? currentUTCDate.getUTCDate()
         : utcHours === 0
-        ? currentUTCDate.getUTCDate() - 1
-        : currentUTCDate.getUTCDate();
+          ? currentUTCDate.getUTCDate() - 1
+          : currentUTCDate.getUTCDate();
 
     // Check if the purchase was made on the same UTC day
     const isToday =
@@ -1367,12 +1367,12 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedPurchaseDay2 =
       purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
@@ -1380,26 +1380,26 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedPurchaseDate =
       purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
         ? purchaseDate.getUTCDate()
         : utcHours === 0
-        ? purchaseDate.getUTCDate() - 1
-        : purchaseDate.getUTCDate();
+          ? purchaseDate.getUTCDate() - 1
+          : purchaseDate.getUTCDate();
 
     const adjustedPurchaseDate2 =
       purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? purchaseDate2.getUTCDate()
         : utcHours === 0
-        ? purchaseDate2.getUTCDate() - 1
-        : purchaseDate2.getUTCDate();
+          ? purchaseDate2.getUTCDate() - 1
+          : purchaseDate2.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -1410,19 +1410,19 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedCurrentDate =
       currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
         ? currentUTCDate.getUTCDate()
         : utcHours === 0
-        ? currentUTCDate.getUTCDate() - 1
-        : currentUTCDate.getUTCDate();
+          ? currentUTCDate.getUTCDate() - 1
+          : currentUTCDate.getUTCDate();
 
     // Check if the purchase was made on the same UTC day
     const isToday =
@@ -1599,12 +1599,12 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedPurchaseDay2 =
       purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
@@ -1612,26 +1612,26 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedPurchaseDate =
       purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
         ? purchaseDate.getUTCDate()
         : utcHours === 0
-        ? purchaseDate.getUTCDate() - 1
-        : purchaseDate.getUTCDate();
+          ? purchaseDate.getUTCDate() - 1
+          : purchaseDate.getUTCDate();
 
     const adjustedPurchaseDate2 =
       purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? purchaseDate2.getUTCDate()
         : utcHours === 0
-        ? purchaseDate2.getUTCDate() - 1
-        : purchaseDate2.getUTCDate();
+          ? purchaseDate2.getUTCDate() - 1
+          : purchaseDate2.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -1642,19 +1642,19 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedCurrentDate =
       currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
         ? currentUTCDate.getUTCDate()
         : utcHours === 0
-        ? currentUTCDate.getUTCDate() - 1
-        : currentUTCDate.getUTCDate();
+          ? currentUTCDate.getUTCDate() - 1
+          : currentUTCDate.getUTCDate();
 
     // Check if the purchase was made on the same UTC day
 
@@ -1833,12 +1833,12 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedPurchaseDay2 =
       purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
@@ -1846,26 +1846,26 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedPurchaseDate =
       purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
         ? purchaseDate.getUTCDate()
         : utcHours === 0
-        ? purchaseDate.getUTCDate() - 1
-        : purchaseDate.getUTCDate();
+          ? purchaseDate.getUTCDate() - 1
+          : purchaseDate.getUTCDate();
 
     const adjustedPurchaseDate2 =
       purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? purchaseDate2.getUTCDate()
         : utcHours === 0
-        ? purchaseDate2.getUTCDate() - 1
-        : purchaseDate2.getUTCDate();
+          ? purchaseDate2.getUTCDate() - 1
+          : purchaseDate2.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -1876,19 +1876,19 @@ const NewEvents = ({
           ? 7
           : utcDayIndex
         : utcHours === 0
-        ? utcDayIndex === 0
-          ? 6
-          : utcDayIndex - 1
-        : utcDayIndex === 0
-        ? 7
-        : utcDayIndex;
+          ? utcDayIndex === 0
+            ? 6
+            : utcDayIndex - 1
+          : utcDayIndex === 0
+            ? 7
+            : utcDayIndex;
 
     const adjustedCurrentDate =
       currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
         ? currentUTCDate.getUTCDate()
         : utcHours === 0
-        ? currentUTCDate.getUTCDate() - 1
-        : currentUTCDate.getUTCDate();
+          ? currentUTCDate.getUTCDate() - 1
+          : currentUTCDate.getUTCDate();
 
     // Check if the purchase was made on the same UTC day
     const isToday =
@@ -2006,7 +2006,7 @@ const NewEvents = ({
       if (binancePay === true && window.WALLET_TYPE !== "binance") {
         setCheckWallet(false);
         setStatus(
-          "Please connect with Binance wallet in order to activate the event."
+          "Please connect with Binance wallet in order to activate the event.",
         );
       } else if (
         coinbase?.toLowerCase() === wallet?.toLowerCase() &&
@@ -2015,7 +2015,7 @@ const NewEvents = ({
       ) {
         setCheckWallet(false);
         setStatus(
-          "Please make sure you're on BNB Chain in order to activate the event."
+          "Please make sure you're on BNB Chain in order to activate the event.",
         );
       } else if (
         coinbase?.toLowerCase() === wallet?.toLowerCase() &&
@@ -2030,7 +2030,7 @@ const NewEvents = ({
       ) {
         setCheckWallet(false);
         setStatus(
-          "Please make sure you're using the wallet address associated to your game profile."
+          "Please make sure you're using the wallet address associated to your game profile.",
         );
       } else if (
         coinbase?.toLowerCase() === wallet?.toLowerCase() &&
@@ -2061,8 +2061,11 @@ const NewEvents = ({
   }, [statusbinance]);
 
   useEffect(() => {
+    const isCoinbaseWalletMatch =
+      wallet && coinbase && wallet.toLowerCase() === coinbase.toLowerCase();
+
     if (
-      (email !== undefined && wallet !== undefined && coinbase !== undefined && coinbase.toLowerCase() === wallet.toLowerCase()) ||
+      (email !== undefined && isCoinbaseWalletMatch) ||
       statusbinance === "success"
     ) {
       // Event handler mapping - only call functions for the active event
@@ -2731,7 +2734,7 @@ const NewEvents = ({
     setActiveEvent(
       eventinfos.find((item) => {
         return item.day === adjustedDay;
-      }) ?? eventinfos[0]
+      }) ?? eventinfos[0],
     );
     setActiveThumb(
       eventinfos.find((item) => {
@@ -2740,7 +2743,7 @@ const NewEvents = ({
         ? eventinfos.find((item) => {
             return item.day === adjustedDay;
           }).id
-        : eventinfos[0].id
+        : eventinfos[0].id,
     );
     setChallenge(
       eventinfos.find((item) => {
@@ -2749,7 +2752,7 @@ const NewEvents = ({
         ? eventinfos.find((item) => {
             return item.day === adjustedDay;
           }).challange
-        : eventinfos[0].challange
+        : eventinfos[0].challange,
     );
   }, []);
 
@@ -2773,12 +2776,12 @@ const NewEvents = ({
         if (sliderRef.current) {
           sliderRef?.current?.innerSlider?.slickGoTo(
             eventinfos.findIndex(
-              (item) => item.challange === filteredEvent.challange
+              (item) => item.challange === filteredEvent.challange,
             ) === 5
               ? 3.5
               : eventinfos.findIndex(
-                  (item) => item.challange === filteredEvent.challange
-                ) - 0.5
+                  (item) => item.challange === filteredEvent.challange,
+                ) - 0.5,
           );
         }
         setChallenge(filteredEvent.challange);
@@ -2796,18 +2799,18 @@ const NewEvents = ({
       setActiveEvent(
         eventinfos.find((item) => {
           return item.challange === eventId;
-        })
+        }),
       );
       setActiveThumb(
         eventinfos.find((item) => {
           return item.challange === eventId;
-        }).id
+        }).id,
       );
       if (sliderRef.current) {
         sliderRef?.current?.innerSlider?.slickGoTo(
           eventinfos.findIndex((item) => item.challange === eventId) === 5
             ? 3.5
-            : eventinfos.findIndex((item) => item.challange === eventId) - 0.5
+            : eventinfos.findIndex((item) => item.challange === eventId) - 0.5,
         );
       }
     } else if (eventId !== "" && eventId === "maze-day") {
@@ -2931,12 +2934,12 @@ const NewEvents = ({
                                   ? eventinfos.find((item) => {
                                       return item.day === adjustedDay;
                                     }).challange
-                                  : eventinfos[0].challange
+                                  : eventinfos[0].challange,
                               );
                               setActiveEvent(
                                 eventinfos.find((item) => {
                                   return item.day === adjustedDay;
-                                }) ?? eventinfos[0]
+                                }) ?? eventinfos[0],
                               );
                             }}
                           >
@@ -3388,7 +3391,7 @@ const NewEvents = ({
                                                       {getFormattedNumber(
                                                         binancePay === false
                                                           ? dragonRuinsWodAmount
-                                                          : activeEvent.usdPrice
+                                                          : activeEvent.usdPrice,
                                                       )}{" "}
                                                       {binancePay === false
                                                         ? "WOD"
@@ -3397,7 +3400,7 @@ const NewEvents = ({
                                                     <span className="event-price-usd">
                                                       ($
                                                       {getFormattedNumber(
-                                                        activeEvent.usdPrice
+                                                        activeEvent.usdPrice,
                                                       )}
                                                       )
                                                     </span>
@@ -3493,14 +3496,14 @@ const NewEvents = ({
                                           <div className="d-flex flex-column align-items-start gap-1">
                                             <span className="beast-siege-wod-price">
                                               {getFormattedNumber(
-                                                dragonRuinsWodAmount
+                                                dragonRuinsWodAmount,
                                               )}{" "}
                                               WOD
                                             </span>
                                             <span className="beast-siege-usd-price">
                                               ($
                                               {getFormattedNumber(
-                                                activeEvent.usdPrice
+                                                activeEvent.usdPrice,
                                               )}
                                               )
                                             </span>
@@ -3541,7 +3544,7 @@ const NewEvents = ({
                                                       {getFormattedNumber(
                                                         binancePay === false
                                                           ? coldBiteWodAmount
-                                                          : activeEvent.usdPrice
+                                                          : activeEvent.usdPrice,
                                                       )}{" "}
                                                       {binancePay === false
                                                         ? "WOD"
@@ -3550,7 +3553,7 @@ const NewEvents = ({
                                                     <span className="event-price-usd">
                                                       ($
                                                       {getFormattedNumber(
-                                                        activeEvent.usdPrice
+                                                        activeEvent.usdPrice,
                                                       )}
                                                       )
                                                     </span>
@@ -3646,14 +3649,14 @@ const NewEvents = ({
                                           <div className="d-flex flex-column align-items-start gap-1">
                                             <span className="beast-siege-wod-price">
                                               {getFormattedNumber(
-                                                coldBiteWodAmount
+                                                coldBiteWodAmount,
                                               )}{" "}
                                               WOD
                                             </span>
                                             <span className="beast-siege-usd-price">
                                               ($
                                               {getFormattedNumber(
-                                                activeEvent.usdPrice
+                                                activeEvent.usdPrice,
                                               )}
                                               )
                                             </span>
@@ -3694,7 +3697,7 @@ const NewEvents = ({
                                                       {getFormattedNumber(
                                                         binancePay === false
                                                           ? furyBeastWodAmount
-                                                          : activeEvent.usdPrice
+                                                          : activeEvent.usdPrice,
                                                       )}{" "}
                                                       {binancePay === false
                                                         ? "WOD"
@@ -3703,7 +3706,7 @@ const NewEvents = ({
                                                     <span className="event-price-usd">
                                                       ($
                                                       {getFormattedNumber(
-                                                        activeEvent.usdPrice
+                                                        activeEvent.usdPrice,
                                                       )}
                                                       )
                                                     </span>
@@ -3799,14 +3802,14 @@ const NewEvents = ({
                                           <div className="d-flex flex-column align-items-start gap-1">
                                             <span className="beast-siege-wod-price">
                                               {getFormattedNumber(
-                                                furyBeastWodAmount
+                                                furyBeastWodAmount,
                                               )}{" "}
                                               WOD
                                             </span>
                                             <span className="beast-siege-usd-price">
                                               ($
                                               {getFormattedNumber(
-                                                activeEvent.usdPrice
+                                                activeEvent.usdPrice,
                                               )}
                                               )
                                             </span>
@@ -3985,7 +3988,7 @@ const NewEvents = ({
                                                         {getFormattedNumber(
                                                           binancePay === false
                                                             ? wingStormWodAmount
-                                                            : activeEvent.usdPrice
+                                                            : activeEvent.usdPrice,
                                                         )}{" "}
                                                         {binancePay === false
                                                           ? "WOD"
@@ -3994,7 +3997,7 @@ const NewEvents = ({
                                                       <span className="event-price-usd">
                                                         ($
                                                         {getFormattedNumber(
-                                                          activeEvent.usdPrice
+                                                          activeEvent.usdPrice,
                                                         )}
                                                         )
                                                       </span>
@@ -4091,14 +4094,14 @@ const NewEvents = ({
                                           <div className="d-flex flex-column align-items-start gap-1">
                                             <span className="beast-siege-wod-price">
                                               {getFormattedNumber(
-                                                wingStormWodAmount
+                                                wingStormWodAmount,
                                               )}{" "}
                                               WOD
                                             </span>
                                             <span className="beast-siege-usd-price">
                                               ($
                                               {getFormattedNumber(
-                                                activeEvent.usdPrice
+                                                activeEvent.usdPrice,
                                               )}
                                               )
                                             </span>
@@ -4139,7 +4142,7 @@ const NewEvents = ({
                                                       {getFormattedNumber(
                                                         binancePay === false
                                                           ? scorpionKingWodAmount
-                                                          : activeEvent.usdPrice
+                                                          : activeEvent.usdPrice,
                                                       )}{" "}
                                                       {binancePay === false
                                                         ? "WOD"
@@ -4148,7 +4151,7 @@ const NewEvents = ({
                                                     <span className="event-price-usd">
                                                       ($
                                                       {getFormattedNumber(
-                                                        activeEvent.usdPrice
+                                                        activeEvent.usdPrice,
                                                       )}
                                                       )
                                                     </span>
@@ -4244,14 +4247,14 @@ const NewEvents = ({
                                           <div className="d-flex flex-column align-items-start gap-1">
                                             <span className="beast-siege-wod-price">
                                               {getFormattedNumber(
-                                                scorpionKingWodAmount
+                                                scorpionKingWodAmount,
                                               )}{" "}
                                               WOD
                                             </span>
                                             <span className="beast-siege-usd-price">
                                               ($
                                               {getFormattedNumber(
-                                                activeEvent.usdPrice
+                                                activeEvent.usdPrice,
                                               )}
                                               )
                                             </span>
@@ -4292,7 +4295,7 @@ const NewEvents = ({
                                                       {getFormattedNumber(
                                                         binancePay === false
                                                           ? stoneEyeWodAmount
-                                                          : activeEvent.usdPrice
+                                                          : activeEvent.usdPrice,
                                                       )}{" "}
                                                       {binancePay === false
                                                         ? "WOD"
@@ -4301,7 +4304,7 @@ const NewEvents = ({
                                                     <span className="event-price-usd">
                                                       ($
                                                       {getFormattedNumber(
-                                                        activeEvent.usdPrice
+                                                        activeEvent.usdPrice,
                                                       )}
                                                       )
                                                     </span>
@@ -4397,14 +4400,14 @@ const NewEvents = ({
                                           <div className="d-flex flex-column align-items-start gap-1">
                                             <span className="beast-siege-wod-price">
                                               {getFormattedNumber(
-                                                stoneEyeWodAmount
+                                                stoneEyeWodAmount,
                                               )}{" "}
                                               WOD
                                             </span>
                                             <span className="beast-siege-usd-price">
                                               ($
                                               {getFormattedNumber(
-                                                activeEvent.usdPrice
+                                                activeEvent.usdPrice,
                                               )}
                                               )
                                             </span>
@@ -4498,10 +4501,10 @@ const NewEvents = ({
                                                   checkWallet === true
                                                     ? "beast-siege-btn-inactive d-none"
                                                     : dragonShowApproval ===
-                                                        false &&
-                                                      checkWallet === true
-                                                    ? "beast-siege-btn dragon-button"
-                                                    : "beast-siege-btn-inactive"
+                                                          false &&
+                                                        checkWallet === true
+                                                      ? "beast-siege-btn dragon-button"
+                                                      : "beast-siege-btn-inactive"
                                                 }  py-2 px-4`}
                                                 onClick={() =>
                                                   handleDepositDragon()
@@ -4596,13 +4599,13 @@ const NewEvents = ({
                                                     "loading-deposit"
                                                     ? false
                                                     : statusbinance !==
-                                                        "idle" &&
-                                                      statusbinance !==
-                                                        "failed" &&
-                                                      statusbinance !==
-                                                        "success"
-                                                    ? true
-                                                    : true
+                                                          "idle" &&
+                                                        statusbinance !==
+                                                          "failed" &&
+                                                        statusbinance !==
+                                                          "success"
+                                                      ? true
+                                                      : true
                                                 }
                                                 className={` ${
                                                   dragonShowApproval2 ===
@@ -4615,7 +4618,7 @@ const NewEvents = ({
                                                   // handleDepositDragon()
                                                   handleBuy(
                                                     coinbase,
-                                                    activeEvent.title
+                                                    activeEvent.title,
                                                   )
                                                 }
                                               >
@@ -4709,10 +4712,10 @@ const NewEvents = ({
                                                   checkWallet === true
                                                     ? "beast-siege-btn-inactive d-none"
                                                     : bearShowApproval ===
-                                                        false &&
-                                                      checkWallet === true
-                                                    ? "beast-siege-btn bear-button"
-                                                    : "beast-siege-btn-inactive"
+                                                          false &&
+                                                        checkWallet === true
+                                                      ? "beast-siege-btn bear-button"
+                                                      : "beast-siege-btn-inactive"
                                                 }  py-2 px-4`}
                                                 onClick={() =>
                                                   handleDepositBear()
@@ -4811,13 +4814,13 @@ const NewEvents = ({
                                                     "loading-deposit"
                                                     ? false
                                                     : statusbinance !==
-                                                        "idle" &&
-                                                      statusbinance !==
-                                                        "failed" &&
-                                                      statusbinance !==
-                                                        "success"
-                                                    ? true
-                                                    : true
+                                                          "idle" &&
+                                                        statusbinance !==
+                                                          "failed" &&
+                                                        statusbinance !==
+                                                          "success"
+                                                      ? true
+                                                      : true
                                                 }
                                                 className={` ${
                                                   // bearShowApproval2 === true &&
@@ -4832,7 +4835,7 @@ const NewEvents = ({
                                                 onClick={() =>
                                                   handleBuy(
                                                     coinbase,
-                                                    activeEvent.title
+                                                    activeEvent.title,
                                                   )
                                                 }
                                               >
@@ -4926,10 +4929,10 @@ const NewEvents = ({
                                                   checkWallet === true
                                                     ? "beast-siege-btn-inactive d-none"
                                                     : beastShowApproval ===
-                                                        false &&
-                                                      checkWallet === true
-                                                    ? "beast-siege-btn beast-button"
-                                                    : "beast-siege-btn-inactive"
+                                                          false &&
+                                                        checkWallet === true
+                                                      ? "beast-siege-btn beast-button"
+                                                      : "beast-siege-btn-inactive"
                                                 }  py-2 px-4`}
                                                 onClick={() =>
                                                   handleDepositBeast()
@@ -5027,13 +5030,13 @@ const NewEvents = ({
                                                     "loading-deposit"
                                                     ? false
                                                     : statusbinance !==
-                                                        "idle" &&
-                                                      statusbinance !==
-                                                        "failed" &&
-                                                      statusbinance !==
-                                                        "success"
-                                                    ? true
-                                                    : true
+                                                          "idle" &&
+                                                        statusbinance !==
+                                                          "failed" &&
+                                                        statusbinance !==
+                                                          "success"
+                                                      ? true
+                                                      : true
                                                 }
                                                 className={` ${
                                                   // beastShowApproval2 === true &&
@@ -5049,7 +5052,7 @@ const NewEvents = ({
                                                 onClick={() =>
                                                   handleBuy(
                                                     coinbase,
-                                                    activeEvent.title
+                                                    activeEvent.title,
                                                   )
                                                 }
                                               >
@@ -5143,10 +5146,10 @@ const NewEvents = ({
                                                   checkWallet === true
                                                     ? "beast-siege-btn-inactive d-none"
                                                     : eagleShowApproval ===
-                                                        false &&
-                                                      checkWallet === true
-                                                    ? "beast-siege-btn eagle-button"
-                                                    : "beast-siege-btn-inactive"
+                                                          false &&
+                                                        checkWallet === true
+                                                      ? "beast-siege-btn eagle-button"
+                                                      : "beast-siege-btn-inactive"
                                                 }  py-2 px-4`}
                                                 onClick={() =>
                                                   handleDepositEagle()
@@ -5237,13 +5240,13 @@ const NewEvents = ({
                                                     "loading-deposit"
                                                     ? false
                                                     : statusbinance !==
-                                                        "idle" &&
-                                                      statusbinance !==
-                                                        "failed" &&
-                                                      statusbinance !==
-                                                        "success"
-                                                    ? true
-                                                    : true
+                                                          "idle" &&
+                                                        statusbinance !==
+                                                          "failed" &&
+                                                        statusbinance !==
+                                                          "success"
+                                                      ? true
+                                                      : true
                                                 }
                                                 className={` ${
                                                   // eagleShowApproval2 === true &&
@@ -5259,7 +5262,7 @@ const NewEvents = ({
                                                 onClick={() =>
                                                   handleBuy(
                                                     coinbase,
-                                                    activeEvent.title
+                                                    activeEvent.title,
                                                   )
                                                 }
                                               >
@@ -5353,10 +5356,10 @@ const NewEvents = ({
                                                     true && checkWallet === true
                                                     ? "beast-siege-btn-inactive d-none"
                                                     : scorpionShowApproval ===
-                                                        false &&
-                                                      checkWallet === true
-                                                    ? "beast-siege-btn scorpion-button"
-                                                    : "beast-siege-btn-inactive"
+                                                          false &&
+                                                        checkWallet === true
+                                                      ? "beast-siege-btn scorpion-button"
+                                                      : "beast-siege-btn-inactive"
                                                 }  py-2 px-4`}
                                                 onClick={() =>
                                                   handleDepositScorpion()
@@ -5454,13 +5457,13 @@ const NewEvents = ({
                                                     "loading-deposit"
                                                     ? false
                                                     : statusbinance !==
-                                                        "idle" &&
-                                                      statusbinance !==
-                                                        "failed" &&
-                                                      statusbinance !==
-                                                        "success"
-                                                    ? true
-                                                    : true
+                                                          "idle" &&
+                                                        statusbinance !==
+                                                          "failed" &&
+                                                        statusbinance !==
+                                                          "success"
+                                                      ? true
+                                                      : true
                                                 }
                                                 className={` ${
                                                   // scorpionShowApproval2 ===
@@ -5476,7 +5479,7 @@ const NewEvents = ({
                                                 onClick={() =>
                                                   handleBuy(
                                                     coinbase,
-                                                    activeEvent.title
+                                                    activeEvent.title,
                                                   )
                                                 }
                                               >
@@ -5570,10 +5573,10 @@ const NewEvents = ({
                                                     true && checkWallet === true
                                                     ? "beast-siege-btn-inactive d-none"
                                                     : cyclopsShowApproval ===
-                                                        false &&
-                                                      checkWallet === true
-                                                    ? "beast-siege-btn cyclops-button"
-                                                    : "beast-siege-btn-inactive"
+                                                          false &&
+                                                        checkWallet === true
+                                                      ? "beast-siege-btn cyclops-button"
+                                                      : "beast-siege-btn-inactive"
                                                 }  py-2 px-4`}
                                                 onClick={() =>
                                                   handleDepositCyclops()
@@ -5671,13 +5674,13 @@ const NewEvents = ({
                                                     "loading-deposit"
                                                     ? false
                                                     : statusbinance !==
-                                                        "idle" &&
-                                                      statusbinance !==
-                                                        "failed" &&
-                                                      statusbinance !==
-                                                        "success"
-                                                    ? true
-                                                    : true
+                                                          "idle" &&
+                                                        statusbinance !==
+                                                          "failed" &&
+                                                        statusbinance !==
+                                                          "success"
+                                                      ? true
+                                                      : true
                                                 }
                                                 className={` ${
                                                   // cyclopsShowApproval2 ===
@@ -5693,7 +5696,7 @@ const NewEvents = ({
                                                 onClick={() =>
                                                   handleBuy(
                                                     coinbase,
-                                                    activeEvent.title
+                                                    activeEvent.title,
                                                   )
                                                 }
                                               >
@@ -5747,7 +5750,7 @@ const NewEvents = ({
                                               {work}
                                             </span>
                                           </div>
-                                        )
+                                        ),
                                       )}
                                     </div>
                                   </div>
@@ -5890,10 +5893,10 @@ const NewEvents = ({
                                           {getFormattedNumber(
                                             wodBalance,
                                             hasNoMoreThanTwoDecimalPlaces(
-                                              Number(wodBalance)
+                                              Number(wodBalance),
                                             )
                                               ? 0
-                                              : 2
+                                              : 2,
                                           )}{" "}
                                           WOD
                                         </span>
@@ -5979,7 +5982,7 @@ const NewEvents = ({
                                               $
                                               {getFormattedNumber(
                                                 genesisUsd ?? 0,
-                                                0
+                                                0,
                                               )}
                                             </span>
                                           </div>
@@ -6018,7 +6021,7 @@ const NewEvents = ({
                                               {getFormattedNumber(
                                                 greatCollectionData[0]
                                                   ?.statValue,
-                                                0
+                                                0,
                                               )}
                                             </span>
                                           </div>
@@ -6039,7 +6042,7 @@ const NewEvents = ({
                                             <span className="beast-siege-wod-price">
                                               {getFormattedNumber(
                                                 explorerHuntData[0]?.statValue,
-                                                0
+                                                0,
                                               )}
                                             </span>
                                           </div>
@@ -6074,7 +6077,7 @@ const NewEvents = ({
                                                         (prevStatus) => ({
                                                           ...prevStatus,
                                                           puzzleMadness: false,
-                                                        })
+                                                        }),
                                                       );
                                                     }}
                                                   />
@@ -6093,7 +6096,7 @@ const NewEvents = ({
                                                       {getFormattedNumber(
                                                         binancePay === false
                                                           ? puzzleMadnessWodAmount
-                                                          : activeEvent.usdPrice
+                                                          : activeEvent.usdPrice,
                                                       )}{" "}
                                                       {binancePay === false
                                                         ? "WOD"
@@ -6102,7 +6105,7 @@ const NewEvents = ({
                                                     <span className="event-price-usd">
                                                       ($
                                                       {getFormattedNumber(
-                                                        activeEvent.usdPrice
+                                                        activeEvent.usdPrice,
                                                       )}
                                                       )
                                                     </span>
@@ -6276,10 +6279,10 @@ const NewEvents = ({
                                                     checkWallet === true
                                                       ? "beast-siege-btn-inactive d-none"
                                                       : puzzleMadnessShowApproval ===
-                                                          false &&
-                                                        checkWallet === true
-                                                      ? "beast-siege-btn"
-                                                      : "beast-siege-btn-inactive"
+                                                            false &&
+                                                          checkWallet === true
+                                                        ? "beast-siege-btn"
+                                                        : "beast-siege-btn-inactive"
                                                   }  py-2 px-4`}
                                                   onClick={() =>
                                                     handleDepositPuzzle()
@@ -6345,7 +6348,7 @@ const NewEvents = ({
                                                   onClick={() =>
                                                     handleBuy(
                                                       coinbase,
-                                                      activeEvent.title
+                                                      activeEvent.title,
                                                     )
                                                   }
                                                 >
@@ -6395,7 +6398,7 @@ const NewEvents = ({
                                                   {work}
                                                 </span>
                                               </div>
-                                            )
+                                            ),
                                           )}
                                         </div>
                                       </div>
@@ -6421,7 +6424,7 @@ const NewEvents = ({
                                                   {tip}
                                                 </span>
                                               </div>
-                                            )
+                                            ),
                                           )}
                                           {activeEvent?.binanceTip &&
                                             binancePay === true &&
