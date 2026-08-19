@@ -71,7 +71,7 @@ const BetaPassNFT = ({
       userEarned: userTreasureHuntStats.bnbEarnUsd,
       eventType: "Explore & Mine",
       eventStartDate: "Apr. 28, 2026",
-      eventEndDate: "Aug. 26, 2026",
+      eventEndDate: "Sep. 15, 2026",
     },
     {
       id: "vanar",
