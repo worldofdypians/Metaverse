@@ -446,6 +446,14 @@ const WodPartners = ({ full }) => {
       name: "World Mobile",
       icon: "worldMobile.svg",
     },
+    {
+      name: "Guarda Wallet",
+      icon: "guardaWallet.jpg",
+    },
+    {
+      name: "Topaz Dex",
+      icon: "topazDex.jpg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
@@ -482,7 +490,7 @@ const WodPartners = ({ full }) => {
                   style={{ width: "103px" }}
                 >
                   <div className="partner-logo-container">
-                    {partner.name === "World Mobile" ||
+                    {/* {partner.name === "World Mobile" ||
                     partner.name === "Mansory" ||
                     partner.name === "AlloX" ? (
                       <img
@@ -493,7 +501,7 @@ const WodPartners = ({ full }) => {
                           height: "60px",
                         }}
                       />
-                    ) : (
+                    ) : ( */}
                       <img
                         src={`https://cdn.worldofdypians.com/wod/${partner.icon}`}
                         alt=""
@@ -501,8 +509,13 @@ const WodPartners = ({ full }) => {
                           width: "60px",
                           height: "60px",
                         }}
+                        className={
+                          (partner.name === "Guarda Wallet" ||
+                            partner.name === "Topaz Dex") &&
+                          "rounded-circle"
+                        }
                       />
-                    )}
+                    {/* )} */}
                   </div>
                   <h6 className="mb-0 small-partners-title">{partner.name}</h6>
                 </div>
