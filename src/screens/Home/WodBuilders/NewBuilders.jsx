@@ -567,6 +567,14 @@ const NewBuilders = () => {
       name: "World Mobile",
       icon: "worldMobile.svg",
     },
+    {
+      name: "Guarda Wallet",
+      icon: "guardaWallet.jpg",
+    },
+    {
+      name: "Topaz Dex",
+      icon: "topazDex.jpg",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
@@ -582,7 +590,7 @@ const NewBuilders = () => {
                   key={index}
                   className={`d-flex flex-column align-items-center gap-2`}
                 >
-                  {item.name === "World Mobile" ||
+                  {/* {item.name === "World Mobile" ||
                   item.name === "Mansory" ||
                   item.name === "AlloX" ? (
                     <img
@@ -591,14 +599,19 @@ const NewBuilders = () => {
                       height={45}
                       alt=""
                     />
-                  ) : (
+                  ) : ( */}
                     <img
                       src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
                       width={45}
                       height={45}
                       alt=""
+                      className={
+                        (item.name === "Guarda Wallet" ||
+                          item.name === "Topaz Dex") &&
+                        "rounded-circle"
+                      }
                     />
-                  )}
+                  {/* )} */}
 
                   <span
                     className={`new-builder-title mb-0`}

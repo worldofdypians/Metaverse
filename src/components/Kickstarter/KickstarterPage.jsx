@@ -456,6 +456,14 @@ const KickstarterPage = ({ monthlyPlayers, totalVolumeNew, wodHolders }) => {
       name: "World Mobile",
       icon: "worldMobile.svg",
     },
+    {
+      name: "Guarda Wallet",
+      icon: "guardaWallet.jpg",
+    },
+    {
+      name: "Topaz Dex",
+      icon: "topazDex.jpg",
+    },
   ];
 
   const location = useLocation();

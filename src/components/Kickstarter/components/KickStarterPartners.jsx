@@ -1,9 +1,7 @@
 import "../_kickstarter.scss";
 import "./kickstarter_newcss.scss";
 
-const KickstarterPartners = ({partners}) => {
- 
-
+const KickstarterPartners = ({ partners }) => {
   return (
     <section
       className="py-20 px-lg-6 px-2 relative overflow-hidden bordertw-3 border-black"
@@ -50,18 +48,22 @@ const KickstarterPartners = ({partners}) => {
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-yellow-400/20 opacitytw-0 group-hover:opacitytw-100 rounded-xl blur-lg transition-all duration-500 scale-150"></div>
 
                   <div className="relative w-12 h-12 rounded-xl bg-black/40 backdrop-blur-sm bordertw border-orange-400/50 transition-all duration-300 hover:scale-110 flex items-center justify-center overflow-hidden group-hover:bg-black/60">
-                    {partner.name === "World Mobile"  || partner.name === "Mansory" || partner.name === "AlloX" ? (
+                    {/* {partner.name === "World Mobile"  || partner.name === "Mansory" || partner.name === "AlloX" ? (
                       <img
                       src={require(`../../../assets/${partner.icon}`).default}
                       alt={partner.name}
                       className="w-8 h-8 object-contain transition-all duration-300 group-hover:scale-110"
-                    />) : (
-                      <img
+                    />) : ( */}
+                    <img
                       src={`https://cdn.worldofdypians.com/wod/${partner.icon}`}
                       alt={partner.name}
-                      className="w-8 h-8 object-contain transition-all duration-300 group-hover:scale-110"
+                      className={`${
+                        (partner.name === "Guarda Wallet" ||
+                          partner.name === "Topaz Dex") &&
+                        "rounded-circle"
+                      } w-8 h-8 object-contain transition-all duration-300 group-hover:scale-110`}
                     />
-                    )}
+                    {/* )} */}
                   </div>
 
                   {/* Enhanced tooltip */}
