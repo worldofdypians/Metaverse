@@ -16,6 +16,9 @@ import {
 } from "@wagmi/core";
 import { wagmiClient } from "../../../../../wagmiConnectors.js";
 
+const PREMIUM_OFFER_END_MS = Date.parse("2026-09-03T10:00:00.000Z");
+const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
 const GetPremiumPopup = ({
   isEOA,
   coinbase,
@@ -365,6 +368,10 @@ const GetPremiumPopup = ({
   // const [nftPremium_totalTaraxa, setnftPremium_totalTaraxa] = useState(0);
 
   const [chainState, setchainState] = useState("");
+  const premiumOfferDaysRemaining = Math.max(
+    0,
+    Math.ceil((PREMIUM_OFFER_END_MS - Date.now()) / MS_PER_DAY),
+  );
 
   const switchNetwork = async (hexChainId, chain) => {
     // Extract chainId from hex or use chain number directly
@@ -416,7 +423,7 @@ const GetPremiumPopup = ({
         setchainState("taiko");
       } else if (chainId === 1329) {
         setchainState("sei");
-      } 
+      }
       // else if (chainId === 2040) {
       //   setchainState("vanar");
       // }
@@ -654,7 +661,7 @@ const GetPremiumPopup = ({
       }
       setnftPremium_tokenIdViction(tokenId);
       setnftPremium_totalViction(parseInt(result_viction));
-    } 
+    }
     // else if (result_vanar && parseInt(result_vanar) > 0) {
     //   const tokenId = await getFirstTokenId(nftVanar);
     //   if (nftObject_vanar) {
@@ -664,7 +671,7 @@ const GetPremiumPopup = ({
     //   }
     //   setnftPremium_tokenIdVanar(tokenId);
     //   setnftPremium_totalVanar(parseInt(result_vanar));
-    // } 
+    // }
     else if (result_taiko && parseInt(result_taiko) > 0) {
       const tokenId = await getFirstTokenId(nftTaiko);
       if (nftObject_taiko) {
@@ -1413,7 +1420,7 @@ const GetPremiumPopup = ({
       );
       handleSubscriptionTokenChange(wvictionAddress);
       handleCheckIfAlreadyApproved(wvictionAddress);
-    } 
+    }
     // else if (chainId === 2040) {
     //   setChainDropdown(
     //     chainDropdowns.find((item) => {
@@ -1428,7 +1435,7 @@ const GetPremiumPopup = ({
     //   handleSubscriptionTokenChange(wvanarAddress);
     //   handleCheckIfAlreadyApproved(wvanarAddress);
     // }
-     else if (chainId === 169) {
+    else if (chainId === 169) {
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
@@ -1579,7 +1586,7 @@ const GetPremiumPopup = ({
     //     window.config.subscriptionvanar_tokens[selectedSubscriptionToken]
     //       ?.decimals,
     //   );
-    // } 
+    // }
     else if (chainId === 169 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionmanta_tokens[selectedSubscriptionToken]
@@ -1711,17 +1718,17 @@ const GetPremiumPopup = ({
                           ? discountPercentage
                           : discountPercentageViction > 0
                             ? discountPercentageViction
-                            // : discountPercentageVanar > 0
-                            //   ? discountPercentageVanar
-                              : discountPercentageTaiko > 0
-                                ? discountPercentageTaiko
-                                : discountPercentageManta > 0
-                                  ? discountPercentageManta
-                                  : // : discountPercentageMat > 0
-                                    // ? discountPercentageMat
-                                    // : discountPercentageTaraxa > 0
-                                    // ? discountPercentageTaraxa
-                                    discountPercentage}
+                            : // : discountPercentageVanar > 0
+                              //   ? discountPercentageVanar
+                              discountPercentageTaiko > 0
+                              ? discountPercentageTaiko
+                              : discountPercentageManta > 0
+                                ? discountPercentageManta
+                                : // : discountPercentageMat > 0
+                                  // ? discountPercentageMat
+                                  // : discountPercentageTaraxa > 0
+                                  // ? discountPercentageTaraxa
+                                  discountPercentage}
                         %
                       </span>
                       <span className="discount-price-bottom">Discount</span>
@@ -1748,8 +1755,8 @@ const GetPremiumPopup = ({
                                   // nftPremium_totalVanar > 0
                                   // ? Number(nftDiscountObjectVanar[2]) * 1000
                                   //: nftPremium_totalTaraxa > 0
-                                    // ? nftDiscountObjectTaraxa.expiration * 1000
-                                    Number(nftDiscountObjectViction[2]) * 1000,
+                                  // ? nftDiscountObjectTaraxa.expiration * 1000
+                                  Number(nftDiscountObjectViction[2]) * 1000,
                           )
                             .toDateString()
                             .slice(
@@ -1763,10 +1770,10 @@ const GetPremiumPopup = ({
                                       // ? nftDiscountObjectMat.expiration * 1000
                                       // nftPremium_totalVanar > 0
                                       // ? Number(nftDiscountObjectVanar[2]) * 1000
-                                       // : nftPremium_totalTaraxa > 0
-                                        // ? nftDiscountObjectTaraxa.expiration * 1000
-                                        Number(nftDiscountObjectViction[2]) *
-                                        1000,
+                                      // : nftPremium_totalTaraxa > 0
+                                      // ? nftDiscountObjectTaraxa.expiration * 1000
+                                      Number(nftDiscountObjectViction[2]) *
+                                      1000,
                               ).toDateString().length,
                             )}
                         </h6>
@@ -1787,13 +1794,13 @@ const GetPremiumPopup = ({
                                   ? discountPercentage
                                   : discountPercentageViction > 0
                                     ? discountPercentageViction
-                                    // : discountPercentageVanar > 0
-                                    //   ? discountPercentageVanar
-                                      : discountPercentageTaiko > 0
-                                        ? discountPercentageTaiko
-                                        : discountPercentageManta > 0
-                                          ? discountPercentageManta
-                                          : discountPercentage,
+                                    : // : discountPercentageVanar > 0
+                                      //   ? discountPercentageVanar
+                                      discountPercentageTaiko > 0
+                                      ? discountPercentageTaiko
+                                      : discountPercentageManta > 0
+                                        ? discountPercentageManta
+                                        : discountPercentage,
                               ))}
                       </h6>
                       <h6 className="old-price-text">$100</h6>
@@ -1806,9 +1813,16 @@ const GetPremiumPopup = ({
                     {discountPercentage > 0 &&
                       isConnected &&
                       nftPremium_total === 0 && (
-                        <span className="subscription-chain mb-0">
-                          Valid until March 30, 2026
-                        </span>
+                        <div className="d-flex align-items-center gap-2">
+                          {/* <span className="subscription-chain mb-0">
+                            Valid until September 03, 2026
+                          </span> */}
+                          {premiumOfferDaysRemaining > 0 && (
+                            <span className="premium-offer-days-badge">
+                             Offer Valid For {premiumOfferDaysRemaining} days
+                            </span>
+                          )}
+                        </div>
                       )}
                     {(nftPremium_total > 0 ||
                       nftPremium_totalViction > 0 ||
@@ -1828,8 +1842,8 @@ const GetPremiumPopup = ({
                                 // nftPremium_totalVanar > 0
                                 // ? Number(nftDiscountObjectVanar[2]) * 1000
                                 // : nftPremium_totalTaraxa > 0
-                                  // ? nftDiscountObjectTaraxa.expiration * 1000
-                                  Number(nftDiscountObjectViction[2]) * 1000,
+                                // ? nftDiscountObjectTaraxa.expiration * 1000
+                                Number(nftDiscountObjectViction[2]) * 1000,
                         )
                           .toDateString()
                           .slice(
@@ -1844,9 +1858,8 @@ const GetPremiumPopup = ({
                                     // nftPremium_totalVanar > 0
                                     // ? Number(nftDiscountObjectVanar[2]) * 1000
                                     // : nftPremium_totalTaraxa > 0
-                                      // ? nftDiscountObjectTaraxa.expiration * 1000
-                                      Number(nftDiscountObjectViction[2]) *
-                                      1000,
+                                    // ? nftDiscountObjectTaraxa.expiration * 1000
+                                    Number(nftDiscountObjectViction[2]) * 1000,
                             ).toDateString().length,
                           )}
                       </h6>
@@ -2068,13 +2081,13 @@ const GetPremiumPopup = ({
                                   ? discountPercentage
                                   : discountPercentageViction > 0
                                     ? discountPercentageViction
-                                    // : discountPercentageVanar > 0
-                                    //   ? discountPercentageVanar
-                                      : discountPercentageTaiko > 0
-                                        ? discountPercentageTaiko
-                                        : discountPercentageManta > 0
-                                          ? discountPercentageManta
-                                          : discountPercentage,
+                                    : // : discountPercentageVanar > 0
+                                      //   ? discountPercentageVanar
+                                      discountPercentageTaiko > 0
+                                      ? discountPercentageTaiko
+                                      : discountPercentageManta > 0
+                                        ? discountPercentageManta
+                                        : discountPercentage,
                               )}
                           </h3>
                         </div>
@@ -2240,28 +2253,28 @@ const GetPremiumPopup = ({
                                                   : chainId === 88
                                                     ? window.config
                                                         .subscriptionviction_tokens
-                                                    // : chainId === 2040
-                                                    //   ? window.config
-                                                    //       .subscriptionvanar_tokens
-                                                      : chainId === 169
+                                                    : // : chainId === 2040
+                                                      //   ? window.config
+                                                      //       .subscriptionvanar_tokens
+                                                      chainId === 169
+                                                      ? window.config
+                                                          .subscriptionmanta_tokens
+                                                      : chainId === 167000
                                                         ? window.config
-                                                            .subscriptionmanta_tokens
-                                                        : chainId === 167000
+                                                            .subscriptiontaiko_tokens
+                                                        : // : chainId === 698
+                                                          // ? window.config.subscriptionmat_tokens
+                                                          chainId === 1116
                                                           ? window.config
-                                                              .subscriptiontaiko_tokens
-                                                          : // : chainId === 698
-                                                            // ? window.config.subscriptionmat_tokens
-                                                            chainId === 1116
+                                                              .subscriptioncore_tokens
+                                                          : // : chainId === 841
+                                                            // ? window.config
+                                                            //     .subscriptiontaraxa_tokens
+                                                            chainId === 1329
                                                             ? window.config
-                                                                .subscriptioncore_tokens
-                                                            : // : chainId === 841
-                                                              // ? window.config
-                                                              //     .subscriptiontaraxa_tokens
-                                                              chainId === 1329
-                                                              ? window.config
-                                                                  .subscriptionsei_tokens
-                                                              : window.config
-                                                                  .subscriptioneth_tokens,
+                                                                .subscriptionsei_tokens
+                                                            : window.config
+                                                                .subscriptioneth_tokens,
                                     ).map((t, i) => (
                                       <li
                                         key={i}
@@ -2303,53 +2316,50 @@ const GetPremiumPopup = ({
                                                                 .subscriptionviction_tokens[
                                                                 t
                                                               ]?.symbol
-                                                            // : chainId === 2040
-                                                            //   ? window.config
-                                                            //       .subscriptionvanar_tokens[
-                                                            //       t
-                                                            //     ]?.symbol
-                                                              : chainId === 169
+                                                            : // : chainId === 2040
+                                                              //   ? window.config
+                                                              //       .subscriptionvanar_tokens[
+                                                              //       t
+                                                              //     ]?.symbol
+                                                              chainId === 169
+                                                              ? window.config
+                                                                  .subscriptionmanta_tokens[
+                                                                  t
+                                                                ]?.symbol
+                                                              : chainId ===
+                                                                  167000
                                                                 ? window.config
-                                                                    .subscriptionmanta_tokens[
+                                                                    .subscriptiontaiko_tokens[
                                                                     t
                                                                   ]?.symbol
-                                                                : chainId ===
-                                                                    167000
+                                                                : // : chainId === 698
+                                                                  // ? window.config
+                                                                  //     .subscriptionmat_tokens[t]
+                                                                  //     ?.symbol
+                                                                  // : chainId === 841
+                                                                  // ? window.config
+                                                                  //     .subscriptiontaraxa_tokens[
+                                                                  //     t
+                                                                  //   ]?.symbol
+                                                                  chainId ===
+                                                                    1116
                                                                   ? window
                                                                       .config
-                                                                      .subscriptiontaiko_tokens[
+                                                                      .subscriptioncore_tokens[
                                                                       t
                                                                     ]?.symbol
-                                                                  : // : chainId === 698
-                                                                    // ? window.config
-                                                                    //     .subscriptionmat_tokens[t]
-                                                                    //     ?.symbol
-                                                                    // : chainId === 841
-                                                                    // ? window.config
-                                                                    //     .subscriptiontaraxa_tokens[
-                                                                    //     t
-                                                                    //   ]?.symbol
-                                                                    chainId ===
-                                                                      1116
+                                                                  : chainId ===
+                                                                      1329
                                                                     ? window
                                                                         .config
-                                                                        .subscriptioncore_tokens[
+                                                                        .subscriptionsei_tokens[
                                                                         t
                                                                       ]?.symbol
-                                                                    : chainId ===
-                                                                        1329
-                                                                      ? window
-                                                                          .config
-                                                                          .subscriptionsei_tokens[
-                                                                          t
-                                                                        ]
-                                                                          ?.symbol
-                                                                      : window
-                                                                          .config
-                                                                          .subscriptioneth_tokens[
-                                                                          t
-                                                                        ]
-                                                                          ?.symbol,
+                                                                    : window
+                                                                        .config
+                                                                        .subscriptioneth_tokens[
+                                                                        t
+                                                                      ]?.symbol,
                                             );
                                             setdropdownTitle(
                                               chainId === 1
@@ -2394,44 +2404,41 @@ const GetPremiumPopup = ({
                                                               //     .subscriptionvanar_tokens[
                                                               //     t
                                                               //   ]?.symbol
-                                                              // : 
+                                                              // :
                                                               chainId === 169
+                                                              ? window.config
+                                                                  .subscriptionmanta_tokens[
+                                                                  t
+                                                                ]?.symbol
+                                                              : chainId ===
+                                                                  167000
                                                                 ? window.config
-                                                                    .subscriptionmanta_tokens[
+                                                                    .subscriptiontaiko_tokens[
                                                                     t
                                                                   ]?.symbol
-                                                                : chainId ===
-                                                                    167000
+                                                                : // : chainId === 698
+                                                                  // ? window.config
+                                                                  //     .subscriptionmat_tokens[t]
+                                                                  //     ?.symbol
+                                                                  chainId ===
+                                                                    1329
                                                                   ? window
                                                                       .config
-                                                                      .subscriptiontaiko_tokens[
+                                                                      .subscriptionsei_tokens[
                                                                       t
                                                                     ]?.symbol
-                                                                  : // : chainId === 698
-                                                                    // ? window.config
-                                                                    //     .subscriptionmat_tokens[t]
-                                                                    //     ?.symbol
-                                                                    chainId ===
-                                                                      1329
+                                                                  : chainId ===
+                                                                      1116
                                                                     ? window
                                                                         .config
                                                                         .subscriptionsei_tokens[
                                                                         t
                                                                       ]?.symbol
-                                                                    : chainId ===
-                                                                        1116
-                                                                      ? window
-                                                                          .config
-                                                                          .subscriptionsei_tokens[
-                                                                          t
-                                                                        ]
-                                                                          ?.symbol
-                                                                      : window
-                                                                          .config
-                                                                          .subscriptioneth_tokens[
-                                                                          t
-                                                                        ]
-                                                                          ?.symbol,
+                                                                    : window
+                                                                        .config
+                                                                        .subscriptioneth_tokens[
+                                                                        t
+                                                                      ]?.symbol,
                                             );
 
                                             // console.log(t);
@@ -2474,35 +2481,35 @@ const GetPremiumPopup = ({
                                                             ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionviction_tokens[
                                                                 t
                                                               ]?.symbol.toLowerCase()}IconPremium.svg`
-                                                            // : chainId === 2040
-                                                            //   ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionvanar_tokens[
-                                                            //       t
-                                                            //     ]?.symbol.toLowerCase()}IconPremium.svg`
-                                                              : chainId === 169
-                                                                ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmanta_tokens[
+                                                            : // : chainId === 2040
+                                                              //   ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionvanar_tokens[
+                                                              //       t
+                                                              //     ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                              chainId === 169
+                                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmanta_tokens[
+                                                                  t
+                                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                              : chainId ===
+                                                                  167000
+                                                                ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaiko_tokens[
                                                                     t
                                                                   ]?.symbol.toLowerCase()}IconPremium.svg`
-                                                                : chainId ===
-                                                                    167000
-                                                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaiko_tokens[
+                                                                : // : chainId === 698
+                                                                  // ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmat_tokens[
+                                                                  //     t
+                                                                  //   ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                                  // : chainId === 841
+                                                                  // ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaraxa_tokens[
+                                                                  //     t
+                                                                  //   ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                                  chainId ===
+                                                                    1329
+                                                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionsei_tokens[
                                                                       t
                                                                     ]?.symbol.toLowerCase()}IconPremium.svg`
-                                                                  : // : chainId === 698
-                                                                    // ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmat_tokens[
-                                                                    //     t
-                                                                    //   ]?.symbol.toLowerCase()}IconPremium.svg`
-                                                                    // : chainId === 841
-                                                                    // ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaraxa_tokens[
-                                                                    //     t
-                                                                    //   ]?.symbol.toLowerCase()}IconPremium.svg`
-                                                                    chainId ===
-                                                                      1329
-                                                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionsei_tokens[
-                                                                        t
-                                                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                                                    : `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
-                                                                        t
-                                                                      ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                                  : `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
+                                                                      t
+                                                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                                           }
                                           alt=""
                                           style={{
@@ -2545,37 +2552,37 @@ const GetPremiumPopup = ({
                                                             .subscriptionviction_tokens[
                                                             t
                                                           ]?.symbol
-                                                        // : chainId === 2040
-                                                        //   ? window.config
-                                                        //       .subscriptionvanar_tokens[
-                                                        //       t
-                                                        //     ]?.symbol
-                                                          : chainId === 169
+                                                        : // : chainId === 2040
+                                                          //   ? window.config
+                                                          //       .subscriptionvanar_tokens[
+                                                          //       t
+                                                          //     ]?.symbol
+                                                          chainId === 169
+                                                          ? window.config
+                                                              .subscriptionmanta_tokens[
+                                                              t
+                                                            ]?.symbol
+                                                          : chainId === 167000
                                                             ? window.config
-                                                                .subscriptionmanta_tokens[
+                                                                .subscriptiontaiko_tokens[
                                                                 t
                                                               ]?.symbol
-                                                            : chainId === 167000
+                                                            : // : chainId === 698
+                                                              // ? window.config
+                                                              //     .subscriptionmat_tokens[t]?.symbol
+                                                              // : chainId === 841
+                                                              // ? window.config
+                                                              //     .subscriptiontaraxa_tokens[t]
+                                                              //     ?.symbol
+                                                              chainId === 1329
                                                               ? window.config
-                                                                  .subscriptiontaiko_tokens[
+                                                                  .subscriptionsei_tokens[
                                                                   t
                                                                 ]?.symbol
-                                                              : // : chainId === 698
-                                                                // ? window.config
-                                                                //     .subscriptionmat_tokens[t]?.symbol
-                                                                // : chainId === 841
-                                                                // ? window.config
-                                                                //     .subscriptiontaraxa_tokens[t]
-                                                                //     ?.symbol
-                                                                chainId === 1329
-                                                                ? window.config
-                                                                    .subscriptionsei_tokens[
-                                                                    t
-                                                                  ]?.symbol
-                                                                : window.config
-                                                                    .subscriptioneth_tokens[
-                                                                    t
-                                                                  ]?.symbol}
+                                                              : window.config
+                                                                  .subscriptioneth_tokens[
+                                                                  t
+                                                                ]?.symbol}
                                       </li>
                                     ))}
                                   </ul>
@@ -2597,15 +2604,15 @@ const GetPremiumPopup = ({
                                       ? discountPercentage
                                       : discountPercentageViction != 0
                                         ? discountPercentageViction
-                                        // : discountPercentageVanar != 0
-                                        //   ? discountPercentageVanar
-                                          : discountPercentageTaiko != 0
-                                            ? discountPercentageTaiko
-                                            : discountPercentageManta != 0
-                                              ? discountPercentageManta
-                                              : // : discountPercentageTaraxa != 0
-                                                // ? discountPercentageTaraxa
-                                                discountPercentage,
+                                        : // : discountPercentageVanar != 0
+                                          //   ? discountPercentageVanar
+                                          discountPercentageTaiko != 0
+                                          ? discountPercentageTaiko
+                                          : discountPercentageManta != 0
+                                            ? discountPercentageManta
+                                            : // : discountPercentageTaraxa != 0
+                                              // ? discountPercentageTaraxa
+                                              discountPercentage,
                                   )}
                               </span>
                             </div>
@@ -2894,8 +2901,7 @@ const GetPremiumPopup = ({
                       </div>
                     ) : null}
                   </div>
-                ) 
-                // : isConnected &&
+                ) : // : isConnected &&
                 //   discountPercentageVanar > 0 &&
                 //   chainId === 2040 ? (
                 //   <div className="d-flex align-items-center gap-3 justify-content-center">
@@ -3036,8 +3042,8 @@ const GetPremiumPopup = ({
                 //       </div>
                 //     ) : null}
                 //   </div>
-                // ) 
-                : isConnected &&
+                // )
+                isConnected &&
                   discountPercentageTaiko > 0 &&
                   chainId === 167000 ? (
                   <div className="d-flex align-items-center gap-3 justify-content-center">
@@ -3216,8 +3222,7 @@ const GetPremiumPopup = ({
                       Switch to Viction
                     </button>
                   </div>
-                ) 
-                // : isConnected &&
+                ) : // : isConnected &&
                 //   discountPercentageVanar > 0 &&
                 //   chainId !== 2040 ? (
                 //   <div
@@ -3237,8 +3242,8 @@ const GetPremiumPopup = ({
                 //       Switch to Vanar
                 //     </button>
                 //   </div>
-                // ) 
-                : isConnected &&
+                // )
+                isConnected &&
                   discountPercentageTaiko > 0 &&
                   chainId !== 167000 ? (
                   <div

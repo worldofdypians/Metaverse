@@ -130,6 +130,24 @@ line-height: 32px;
     }
 }
 
+.premium-offer-days-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, rgba(243, 191, 9, 0.28) 0%, rgba(243, 191, 9, 0.12) 100%);
+    border: 1px solid #F3BF09;
+    color: #F3BF09;
+    font-family: "Oxanium", "Montserrat", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
 .bgwrapper { 
 background: linear-gradient(180deg, rgba(18, 18, 53, 0.80) 0%, rgba(18, 18, 53, 0.00) 133.46%);
 }
