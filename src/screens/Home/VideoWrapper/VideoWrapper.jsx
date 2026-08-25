@@ -103,9 +103,14 @@ const VideoWrapper = ({
       link: "https://short.trustwallet.com/app-download",
     },
     {
-      title: "BingX",
-      logo: "bingx.svg",
-      link: "https://bingx.com/en/spot/WODUSDT",
+      title: "Guarda Wallet",
+      link: "https://guarda.com/?refId=e77e78e5",
+      logo: "guardaWallet.jpg",
+    },
+    {
+      title: "Topaz Dex",
+      link: "https://app.topazdex.com/explore/tokens/bnb/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
+      logo: "topazDex.jpg",
     },
     {
       title: "CoinDCX",

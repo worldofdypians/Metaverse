@@ -65,9 +65,14 @@ const MainHero = ({ scrollInto }) => {
       link: "https://short.trustwallet.com/app-download",
     },
     {
-      title: "BingX",
-      logo: "bingx-exchange.svg",
-      link: "https://bingx.com/en/spot/WODUSDT",
+      title: "Guarda Wallet",
+      logo: "guardaExchange.svg",
+      link: "https://guarda.com/?refId=e77e78e5",
+    },
+    {
+      title: "Topaz Dex",
+      logo: "topazExchange.webp",
+      link: "https://app.topazdex.com/explore/tokens/bnb/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
     },
     {
       title: "Uphold",
@@ -226,7 +231,7 @@ const MainHero = ({ scrollInto }) => {
                 >
                   <img
                     src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
-                    className={` exchange-grid-image ${
+                    className={` exchange-grid-image ${item.title === "Guarda Wallet" && "h-14"}  ${
                       (index === 0 ||
                         item.title === "KCEX" ||
                         item.title === "HiBt" ||

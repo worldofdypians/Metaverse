@@ -17,11 +17,15 @@ const BuyWodCard = ({ item }) => {
     >
       <div className="d-flex flex-column align-items-center gap-2">
         <img
-          src={
-             `https://cdn.worldofdypians.com/wod/${item.logo}`
-          }
+          src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
           alt=""
-          style={{ width: 32, height: 32 }}
+          style={{
+            width: 32,
+            height: 32,
+            borderRadius:
+              (item.title === "Topaz Dex" || item.title === "Guarda Wallet") &&
+              "50%",
+          }}
         />
         <h6 className="mb-0 buy-wod-title">{item.title}</h6>
       </div>

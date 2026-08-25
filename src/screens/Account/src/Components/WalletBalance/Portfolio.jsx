@@ -839,7 +839,7 @@ const Portfolio = ({
       href: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
       img: "https://cdn.worldofdypians.com/wod/binance-alpha.png",
     },
-        {
+    {
       name: "Binance US",
       img: "https://cdn.worldofdypians.com/wod/binanceUsLogo.png",
       href: "https://www.binance.us/spot-trade/wod_usdt",
@@ -890,9 +890,14 @@ const Portfolio = ({
       img: "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg",
     },
     {
-      name: "BingX",
-      href: "https://bingx.com/en/spot/WODUSDT",
-      img: "https://cdn.worldofdypians.com/wod/bingx.svg",
+      name: "Guarda Wallet",
+      href: "https://guarda.com/?refId=e77e78e5",
+      img: "https://cdn.worldofdypians.com/wod/guardaWallet.jpg",
+    },
+    {
+      name: "Topaz Dex",
+      href: "https://app.topazdex.com/explore/tokens/bnb/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
+      img: "https://cdn.worldofdypians.com/wod/topazDex.jpg",
     },
     {
       name: "CoinDCX",
@@ -1117,7 +1122,11 @@ const Portfolio = ({
                         <h6 className="bottomitems buy-wod-portfolio-text mb-0">
                           <img
                             src={item.img}
-                            className="buywodimg"
+                            className={`buywodimg ${
+                              (item.name === "Guarda Wallet" ||
+                                item.name === "Topaz Dex") &&
+                              "rounded-circle"
+                            }`}
                             alt={item.name}
                           />
                           {item.name}
@@ -2260,57 +2269,56 @@ const Portfolio = ({
                                                                 window.config
                                                                   .nft_kucoin_address
                                                               ? `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`
-                                                              // : nft.nftAddress ===
-                                                              //     window.config
-                                                              //       .nft_vanar_address
-                                                              //   ? `https://cdn.worldofdypians.com/wod/vanar-50.png`
+                                                              : // : nft.nftAddress ===
+                                                                //     window.config
+                                                                //       .nft_vanar_address
+                                                                //   ? `https://cdn.worldofdypians.com/wod/vanar-50.png`
+                                                                nft.nftAddress ===
+                                                                  window.config
+                                                                    .nft_immutable_address
+                                                                ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                                                 : nft.nftAddress ===
                                                                     window
                                                                       .config
-                                                                      .nft_immutable_address
-                                                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
+                                                                      .nft_multivers_address
+                                                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
                                                                   : nft.nftAddress ===
                                                                       window
                                                                         .config
-                                                                        .nft_multivers_address
-                                                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
+                                                                        .nft_manta_address
+                                                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
                                                                     : nft.nftAddress ===
                                                                         window
                                                                           .config
-                                                                          .nft_manta_address
-                                                                      ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
-                                                                      : nft.nftAddress ===
+                                                                          .nft_taiko_address
+                                                                      ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                                                      : // : nft.nftAddress ===
+                                                                        //   window.config.nft_mat_address
+                                                                        // ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
+                                                                        nft.nftAddress ===
                                                                           window
                                                                             .config
-                                                                            .nft_taiko_address
-                                                                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
-                                                                        : // : nft.nftAddress ===
-                                                                          //   window.config.nft_mat_address
-                                                                          // ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
-                                                                          nft.nftAddress ===
+                                                                            .nft_cookie3_address
+                                                                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
+                                                                        : nft.nftAddress ===
                                                                             window
                                                                               .config
-                                                                              .nft_cookie3_address
-                                                                          ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
+                                                                              .nft_sei_address
+                                                                          ? `https://cdn.worldofdypians.com/media/seibp50x50.png`
                                                                           : nft.nftAddress ===
                                                                               window
                                                                                 .config
-                                                                                .nft_sei_address
-                                                                            ? `https://cdn.worldofdypians.com/media/seibp50x50.png`
-                                                                            : nft.nftAddress ===
+                                                                                .nft_coingecko_address
+                                                                            ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
+                                                                            : // : nft.nftAddress ===
+                                                                              //   window.config.nft_taraxa_address
+                                                                              // ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
+                                                                              nft.nftAddress ===
                                                                                 window
                                                                                   .config
-                                                                                  .nft_coingecko_address
-                                                                              ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
-                                                                              : // : nft.nftAddress ===
-                                                                                //   window.config.nft_taraxa_address
-                                                                                // ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
-                                                                                nft.nftAddress ===
-                                                                                  window
-                                                                                    .config
-                                                                                    .nft_bnb5ya_address
-                                                                                ? `https://cdn.worldofdypians.com/wod/5ya-50.png`
-                                                                                : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                                                                  .nft_bnb5ya_address
+                                                                              ? `https://cdn.worldofdypians.com/wod/5ya-50.png`
+                                                                              : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
                                 className="account-card-img"
@@ -2393,53 +2401,53 @@ const Portfolio = ({
                                                                   window.config
                                                                     .nft_kucoin_address
                                                                 ? "KCBP"
-                                                                // : nft.nftAddress ===
-                                                                //     window
-                                                                //       .config
-                                                                //       .nft_vanar_address
-                                                                //   ? "VNBP"
+                                                                : // : nft.nftAddress ===
+                                                                  //     window
+                                                                  //       .config
+                                                                  //       .nft_vanar_address
+                                                                  //   ? "VNBP"
+                                                                  nft.nftAddress ===
+                                                                    window
+                                                                      .config
+                                                                      .nft_immutable_address
+                                                                  ? "IMXBP"
                                                                   : nft.nftAddress ===
                                                                       window
                                                                         .config
-                                                                        .nft_immutable_address
-                                                                    ? "IMXBP"
+                                                                        .nft_multivers_address
+                                                                    ? "MXBP"
                                                                     : nft.nftAddress ===
                                                                         window
                                                                           .config
-                                                                          .nft_multivers_address
-                                                                      ? "MXBP"
+                                                                          .nft_manta_address
+                                                                      ? "MNBP"
                                                                       : nft.nftAddress ===
                                                                           window
                                                                             .config
-                                                                            .nft_manta_address
-                                                                        ? "MNBP"
-                                                                        : nft.nftAddress ===
+                                                                            .nft_taiko_address
+                                                                        ? "TKBP"
+                                                                        : // : nft.nftAddress ===
+                                                                          //   window.config.nft_mat_address
+                                                                          // ? "MCBP"
+                                                                          nft.nftAddress ===
                                                                             window
                                                                               .config
-                                                                              .nft_taiko_address
-                                                                          ? "TKBP"
-                                                                          : // : nft.nftAddress ===
-                                                                            //   window.config.nft_mat_address
-                                                                            // ? "MCBP"
-                                                                            nft.nftAddress ===
+                                                                              .nft_cookie3_address
+                                                                          ? "CKBP"
+                                                                          : nft.nftAddress ===
                                                                               window
                                                                                 .config
-                                                                                .nft_cookie3_address
-                                                                            ? "CKBP"
-                                                                            : nft.nftAddress ===
+                                                                                .nft_sei_address
+                                                                            ? "SEBP"
+                                                                            : // : nft.nftAddress ===
+                                                                              //   window.config.nft_taraxa_address
+                                                                              // ? "TXBP"
+                                                                              nft.nftAddress ===
                                                                                 window
                                                                                   .config
-                                                                                  .nft_sei_address
-                                                                              ? "SEBP"
-                                                                              : // : nft.nftAddress ===
-                                                                                //   window.config.nft_taraxa_address
-                                                                                // ? "TXBP"
-                                                                                nft.nftAddress ===
-                                                                                  window
-                                                                                    .config
-                                                                                    .nft_bnb5ya_address
-                                                                                ? "5YABP"
-                                                                                : "CAWS Timepiece"}{" "}
+                                                                                  .nft_bnb5ya_address
+                                                                              ? "5YABP"
+                                                                              : "CAWS Timepiece"}{" "}
                                   {nft.nftAddress ===
                                   window.config.nft_immutable_address
                                     ? ""
