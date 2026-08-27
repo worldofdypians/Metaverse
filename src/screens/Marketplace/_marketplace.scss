@@ -4661,6 +4661,20 @@
   }
 }
 
+.homepage-prime-tag {
+  width: fit-content !important;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #322fd4 -10.16%, #b53883 129.3%);
+  backdrop-filter: blur(13px);
+  span {
+    color: #fff;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
 .homepage-minting-title {
   color: #fff;
   font-size: 20px;

@@ -237,7 +237,7 @@ const WoDNFT = ({
 
   const [displayFilters, setDisplayFilters] = useState([]);
   const [filterIds, setFilterIds] = useState(
-    searchNFTsByTraits(selectedFilters, landmetadata)
+    searchNFTsByTraits(selectedFilters, landmetadata),
   );
   const initialLoadDone = useRef(false);
   let emptyFilters = [
@@ -530,7 +530,7 @@ const WoDNFT = ({
 
   const removeTrait = (trait) => {
     setSelectedFilters((current) =>
-      current.filter((item) => item.value !== trait)
+      current.filter((item) => item.value !== trait),
     );
     setCount(count + 1);
   };
@@ -556,17 +556,17 @@ const WoDNFT = ({
           .sort(
             (a, b) =>
               new Date(b.lastSoldTimeStamp || 0) -
-              new Date(a.lastSoldTimeStamp || 0)
+              new Date(a.lastSoldTimeStamp || 0),
           );
         setLandNfts(sorted);
       } else if (sortValue === "lto") {
         const sorted = [...initialNfts].sort(
-          (a, b) => (b.date || 0) - (a.date || 0)
+          (a, b) => (b.date || 0) - (a.date || 0),
         );
         setLandNfts(sorted);
       }
     },
-    [initialNfts]
+    [initialNfts],
   );
 
   const getListedWod = useCallback(async () => {
@@ -577,7 +577,7 @@ const WoDNFT = ({
     const wodBoughtMap = new Map(wodBought.map((item) => [item.tokenId, item]));
 
     let uniquewod = wodArray.filter(
-      (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
+      (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i,
     );
 
     if (uniquewod && uniquewod.length > 0) {
@@ -674,11 +674,12 @@ const WoDNFT = ({
             chain: 1,
             // attributes: attributes.attributes,
           };
-        })
+        }),
       );
 
       const objArrFiltered = objArr.filter(
-        ({ tokenId: id1 }) => !allwodNfts.some(({ tokenId: id2 }) => id2 == id1)
+        ({ tokenId: id1 }) =>
+          !allwodNfts.some(({ tokenId: id2 }) => id2 == id1),
       );
 
       const finalUnique = [...allwodNfts, ...objArrFiltered];
@@ -690,7 +691,7 @@ const WoDNFT = ({
   const fetchInitialWod = useCallback(async () => {
     const collectionItems = finalData;
     const uniqueArray = collectionItems.filter(
-      ({ tokenId: id1 }) => !allwodNfts.some(({ tokenId: id2 }) => id2 === id1)
+      ({ tokenId: id1 }) => !allwodNfts.some(({ tokenId: id2 }) => id2 === id1),
     );
     const finalUnique = [...allwodNfts, ...uniqueArray];
 
@@ -710,7 +711,7 @@ const WoDNFT = ({
       });
       const data = await response.json();
       console.log(
-        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`
+        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`,
       );
     } catch (error) {
       console.error("Error updating view count:", error);
@@ -866,7 +867,12 @@ const WoDNFT = ({
                     <b> NFT Staking Pool,</b> ranking on <b>Leaderboard</b>, and
                     earn multiple <b>Rewards</b> by playing the game.
                   </p>
-                  <NavLink to="/land" style={{ width: "fit-content" }}>
+                  <NavLink
+                    to="https://opensea.io/collection/worldofdypians"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ width: "fit-content" }}
+                  >
                     <button className="pill-btn2 px-3 py-2">Explore</button>
                   </NavLink>
                 </div>
@@ -946,8 +952,8 @@ const WoDNFT = ({
                       priceCount === 0
                         ? "https://cdn.worldofdypians.com/wod/priceIconNeutral.svg"
                         : priceCount % 2 == 0
-                        ? "https://cdn.worldofdypians.com/wod/priceIconDown.svg"
-                        : "https://cdn.worldofdypians.com/wod/priceIconUp.svg"
+                          ? "https://cdn.worldofdypians.com/wod/priceIconDown.svg"
+                          : "https://cdn.worldofdypians.com/wod/priceIconUp.svg"
                     }
                     alt=""
                   />
@@ -958,8 +964,8 @@ const WoDNFT = ({
                         priceCount === 0
                           ? "#EEEDFF"
                           : priceCount % 2 == 0
-                          ? "#FF6232"
-                          : "#09F3D2",
+                            ? "#FF6232"
+                            : "#09F3D2",
                     }}
                   >
                     Price
@@ -1153,7 +1159,7 @@ const WoDNFT = ({
                             onClick={() => {
                               updateViewCount(
                                 nft.tokenId,
-                                window.config.nft_address
+                                window.config.nft_address,
                               );
                             }}
                           >
@@ -1314,7 +1320,7 @@ const WoDNFT = ({
                       selectedFilters={selectedFilters}
                       count={count}
                     />
-                  )
+                  ),
                 )}
             </div>
           ) : null}
@@ -1339,7 +1345,7 @@ const WoDNFT = ({
                       selectedFilters={selectedFilters}
                       count={count}
                     />
-                  )
+                  ),
                 )}
             </div>
           ) : null}
@@ -1364,7 +1370,7 @@ const WoDNFT = ({
                       selectedFilters={selectedFilters}
                       count={count}
                     />
-                  )
+                  ),
                 )}
             </div>
           ) : null}
@@ -1389,7 +1395,7 @@ const WoDNFT = ({
                       selectedFilters={selectedFilters}
                       count={count}
                     />
-                  )
+                  ),
                 )}
             </div>
           ) : null}
@@ -1414,7 +1420,7 @@ const WoDNFT = ({
                       selectedFilters={selectedFilters}
                       count={count}
                     />
-                  )
+                  ),
                 )}
             </div>
           ) : null}
@@ -1439,7 +1445,7 @@ const WoDNFT = ({
                       selectedFilters={selectedFilters}
                       count={count}
                     />
-                  )
+                  ),
                 )}
             </div>
           ) : null}
@@ -1464,7 +1470,7 @@ const WoDNFT = ({
                       selectedFilters={selectedFilters}
                       count={count}
                     />
-                  )
+                  ),
                 )}
             </div>
           ) : null}
@@ -1489,7 +1495,7 @@ const WoDNFT = ({
                       selectedFilters={selectedFilters}
                       count={count}
                     />
-                  )
+                  ),
                 )}
             </div>
           ) : null}
@@ -1514,7 +1520,7 @@ const WoDNFT = ({
                       selectedFilters={selectedFilters}
                       count={count}
                     />
-                  )
+                  ),
                 )}
             </div>
           ) : null}
@@ -1539,7 +1545,7 @@ const WoDNFT = ({
                       selectedFilters={selectedFilters}
                       count={count}
                     />
-                  )
+                  ),
                 )}
             </div>
           ) : null}
@@ -1564,7 +1570,7 @@ const WoDNFT = ({
                       selectedFilters={selectedFilters}
                       count={count}
                     />
-                  )
+                  ),
                 )}
             </div>
           ) : null}
