@@ -676,21 +676,21 @@ const Marketplace = ({
       let cawsFilter = filteredDateSales.filter(
         (item) =>
           item.nftAddress === window.config.nft_caws_address ||
-          item.nftAddress === window.config.nft_cawsold_address
+          item.nftAddress === window.config.nft_cawsold_address,
       );
       // setTopSold(cawsFilter);
     } else if (topSalesFilter === "land") {
       setTopSalesFilter("land");
 
       let wodFilter = filteredDateSales.filter(
-        (item) => item.nftAddress === window.config.nft_land_address
+        (item) => item.nftAddress === window.config.nft_land_address,
       );
       // setTopSold(wodFilter);
     } else if (topSalesFilter === "timepiece") {
       setTopSalesFilter("timepiece");
 
       let timepieceFilter = filteredDateSales.filter(
-        (item) => item.nftAddress === window.config.nft_timepiece_address
+        (item) => item.nftAddress === window.config.nft_timepiece_address,
       );
       // setTopSold(timepieceFilter);
     } else if (topSalesFilter === "all") {
@@ -715,19 +715,19 @@ const Marketplace = ({
         let cawsFilter = latest20RecentListedNFTS.filter(
           (item) =>
             item.nftAddress === window.config.nft_caws_address ||
-            item.nftAddress === window.config.nft_cawsold_address
+            item.nftAddress === window.config.nft_cawsold_address,
         );
         setRecentListed(cawsFilter);
       } else if (filter === "land") {
         setRecentListingsFilter("land");
         let wodFilter = latest20RecentListedNFTS.filter(
-          (item) => item.nftAddress === window.config.nft_land_address
+          (item) => item.nftAddress === window.config.nft_land_address,
         );
         setRecentListed(wodFilter);
       } else if (filter === "timepiece") {
         setRecentListingsFilter("timepiece");
         let timepieceFilter = latest20RecentListedNFTS.filter(
-          (item) => item.nftAddress === window.config.nft_timepiece_address
+          (item) => item.nftAddress === window.config.nft_timepiece_address,
         );
         setRecentListed(timepieceFilter);
       } else if (filter === "all") {
@@ -740,19 +740,19 @@ const Marketplace = ({
         let cawsFilter = dummyData.filter(
           (item) =>
             item.nftAddress === window.config.nft_caws_address ||
-            item.nftAddress === window.config.nft_cawsold_address
+            item.nftAddress === window.config.nft_cawsold_address,
         );
         setRecentListed(cawsFilter);
       } else if (filter === "land") {
         setRecentListingsFilter("land");
         let wodFilter = dummyData.filter(
-          (item) => item.nftAddress === window.config.nft_land_address
+          (item) => item.nftAddress === window.config.nft_land_address,
         );
         setRecentListed(wodFilter);
       } else if (filter === "timepiece") {
         setRecentListingsFilter("timepiece");
         let timepieceFilter = dummyData.filter(
-          (item) => item.nftAddress === window.config.nft_timepiece_address
+          (item) => item.nftAddress === window.config.nft_timepiece_address,
         );
         setRecentListed(timepieceFilter);
       } else if (filter === "all") {
@@ -773,19 +773,19 @@ const Marketplace = ({
         let cawsFilter = recentSales.filter(
           (item) =>
             item.nftAddress === window.config.nft_caws_address ||
-            item.nftAddress === window.config.nft_cawsold_address
+            item.nftAddress === window.config.nft_cawsold_address,
         );
         setRecentSold(cawsFilter);
       } else if (filter === "land") {
         setRecentSalesFilter("land");
         let wodFilter = recentSales.filter(
-          (item) => item.nftAddress === window.config.nft_land_address
+          (item) => item.nftAddress === window.config.nft_land_address,
         );
         setRecentSold(wodFilter);
       } else if (filter === "timepiece") {
         setRecentSalesFilter("timepiece");
         let timepieceFilter = recentSales.filter(
-          (item) => item.nftAddress === window.config.nft_timepiece_address
+          (item) => item.nftAddress === window.config.nft_timepiece_address,
         );
         setRecentSold(timepieceFilter);
       } else if (filter === "all") {
@@ -798,19 +798,19 @@ const Marketplace = ({
         let cawsFilter = dummyDataSales.filter(
           (item) =>
             item.nftAddress === window.config.nft_caws_address ||
-            item.nftAddress === window.config.nft_cawsold_address
+            item.nftAddress === window.config.nft_cawsold_address,
         );
         setRecentSold(cawsFilter);
       } else if (filter === "land") {
         setRecentSalesFilter("land");
         let wodFilter = dummyDataSales.filter(
-          (item) => item.nftAddress === window.config.nft_land_address
+          (item) => item.nftAddress === window.config.nft_land_address,
         );
         setRecentSold(wodFilter);
       } else if (filter === "timepiece") {
         setRecentSalesFilter("timepiece");
         let timepieceFilter = dummyDataSales.filter(
-          (item) => item.nftAddress === window.config.nft_timepiece_address
+          (item) => item.nftAddress === window.config.nft_timepiece_address,
         );
         setRecentSold(timepieceFilter);
       } else if (filter === "all") {
@@ -834,7 +834,7 @@ const Marketplace = ({
       });
       const data = await response.json();
       console.log(
-        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`
+        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`,
       );
     } catch (error) {
       console.error("Error updating view count:", error);
@@ -947,7 +947,7 @@ const Marketplace = ({
                     <h6 className="stats-value">
                       {getFormattedNumber(totalTx2).slice(
                         0,
-                        getFormattedNumber(totalTx2).length - 3
+                        getFormattedNumber(totalTx2).length - 3,
                       )}
                     </h6>
                     <span className="stats-desc">
@@ -1556,7 +1556,7 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
-                   <div className="d-flex flex-column gap-2 w-100 h-100">
+                  <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
@@ -1607,8 +1607,8 @@ const Marketplace = ({
                         />{" "}
                       </span>
                     </NavLink>
-                  </div> 
-                 {/* <div className="d-flex flex-column gap-2 w-100 h-100">
+                  </div>
+                  {/* <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/bnbchain-5ya"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
@@ -1715,29 +1715,29 @@ const Marketplace = ({
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
-                      to={"/staking"}
+                      to={"/account/prime"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
-                      <div className="p-4 mint-wrappernew market-stake-bg w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
-                        <div className="d-flex align-items-center justify-content-center homepage-nft-stake-tag px-3 py-1">
-                          <span>NFT Staking</span>
+                      <div className="p-4 mint-wrappernew market-premium-bg w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
+                        <div className="d-flex align-items-center justify-content-center homepage-prime-tag px-3 py-1">
+                          <span>Prime Subscription</span>
                         </div>
                         <div className="d-flex flex-column gap-2 mb-3">
                           <h6 className="newminttitlehome m-0 position-relative">
-                            CAWS NFT
+                            Become a Prime
                           </h6>
                           <h6 className="newminttitlehome m-0 position-relative">
-                            Staking
+                            Member
                           </h6>
                         </div>
                       </div>
                     </NavLink>
-                    <NavLink to="/staking">
+                    <NavLink to="/account/prime">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
                       >
-                        Stake now{" "}
+                        Activate now{" "}
                         <img
                           src={
                             "https://cdn.worldofdypians.com/wod/greenArrowMarket.svg"
@@ -1749,29 +1749,29 @@ const Marketplace = ({
                   </div>
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
-                      to={"/staking"}
+                      to={"/account#golden-pass"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
-                      <div className="p-4 mint-wrappernew market-land-stake-bg w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
+                      <div className="p-4 mint-wrappernew market-goldenpass-bg w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
                         <div className="d-flex align-items-center justify-content-center homepage-nft-stake-tag px-3 py-1">
-                          <span>NFT Staking</span>
+                          <span>Golden Pass</span>
                         </div>
                         <div className="d-flex flex-column gap-2 mb-3">
                           <h6 className="newminttitlehome m-0 position-relative">
-                            Genesis NFT
+                            Get Extra
                           </h6>
                           <h6 className="newminttitlehome m-0 position-relative">
-                            Staking
+                            Rewards
                           </h6>
                         </div>
                       </div>
                     </NavLink>
-                    <NavLink to="/staking">
+                    <NavLink to="/account#golden-pass">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
                       >
-                        Stake now{" "}
+                        Activate now{" "}
                         <img
                           src={
                             "https://cdn.worldofdypians.com/wod/greenArrowMarket.svg"
