@@ -71,6 +71,7 @@ const Marketplace = ({
   const [recentSalesFilter, setRecentSalesFilter] = useState("all");
   const firstSlider = useRef();
   const secondSlider = useRef();
+  const openSeaLogsFetchedRef = useRef(false);
   const [loadingTopSales, setLoadingTopSales] = useState(false);
   // const [loadingRecentSales, setLoadingRecentSales] = useState(false);
   const [activeLink, setActiveLink] = useState("collections");
@@ -81,6 +82,21 @@ const Marketplace = ({
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [showSecondNext, setShowSecondNext] = useState(false);
   const [favItems, setfavItems] = useState(0);
+  const [openSeaRecentListings, setOpenSeaRecentListings] = useState({
+    all: [],
+    caws: [],
+    land: [],
+    timepiece: [],
+  });
+  const [hasOpenSeaRecentListings, setHasOpenSeaRecentListings] =
+    useState(false);
+  const [openSeaRecentSales, setOpenSeaRecentSales] = useState({
+    all: [],
+    caws: [],
+    land: [],
+    timepiece: [],
+  });
+  const [hasOpenSeaRecentSales, setHasOpenSeaRecentSales] = useState(false);
 
   const dummyData = [
     {
@@ -530,6 +546,363 @@ const Marketplace = ({
     }
   };
 
+  const OPENSEA_BASE_URL = "https://api.opensea.io/api/v2";
+  const OPENSEA_LIMIT = 7;
+  const OPENSEA_COLLECTION_SLUGS = [
+    "catsandwatchessocietycaws",
+    "cawstimepiece",
+    "worldofdypians",
+  ];
+  const OPENSEA_COLLECTION_CONFIG = {
+    catsandwatchessocietycaws: {
+      type: "caws",
+      chain: 1,
+      configAddressKey: "nft_caws_address",
+    },
+    cawstimepiece: {
+      type: "timepiece",
+      chain: 1,
+      configAddressKey: "nft_timepiece_address",
+    },
+    worldofdypians: {
+      type: "land",
+      chain: 1,
+      configAddressKey: "nft_land_address",
+    },
+  };
+
+  const getTypeByAddress = (nftAddress = "") => {
+    const normalizedAddress = nftAddress.toLowerCase();
+
+    if (
+      normalizedAddress === window.config.nft_caws_address?.toLowerCase() ||
+      normalizedAddress === window.config.nft_cawsold_address?.toLowerCase()
+    ) {
+      return "caws";
+    }
+
+    if (normalizedAddress === window.config.nft_land_address?.toLowerCase()) {
+      return "land";
+    }
+
+    if (
+      normalizedAddress === window.config.nft_timepiece_address?.toLowerCase()
+    ) {
+      return "timepiece";
+    }
+
+    return "caws";
+  };
+
+  const withResolvedType = (items = []) => {
+    return items.map((item) => {
+      const resolvedType = item?.type || getTypeByAddress(item?.nftAddress || "");
+
+      return {
+        ...item,
+        type: resolvedType,
+      };
+    });
+  };
+
+  const normalizeOpenSeaListing = (listing, collectionSlug) => {
+    const config = OPENSEA_COLLECTION_CONFIG[collectionSlug];
+
+    if (!config) {
+      return null;
+    }
+
+    const offerItem = listing?.protocol_data?.parameters?.offer?.[0] || {};
+    const fallbackAddress = window?.config?.[config.configAddressKey] || "";
+    const nftAddress = (
+      offerItem?.token ||
+      listing?.asset_contract?.address ||
+      listing?.asset?.contract ||
+      fallbackAddress
+    )
+      ?.toString()
+      ?.toLowerCase();
+
+    const tokenId =
+      offerItem?.identifierOrCriteria ||
+      listing?.asset?.token_id ||
+      listing?.asset?.identifier ||
+      "";
+
+    if (!nftAddress || tokenId === "") {
+      return null;
+    }
+
+    const currentPriceWei =
+      listing?.price?.current?.value ||
+      listing?.current_price ||
+      listing?.protocol_data?.parameters?.consideration?.[0]?.startAmount ||
+      "0";
+
+    const listedTimestamp =
+      Math.floor(new Date(listing?.created_date || listing?.listing_time || 0).getTime() / 1000) ||
+      Math.floor(Date.now() / 1000);
+
+    return {
+      nftAddress,
+      tokenId: tokenId.toString(),
+      seller: listing?.maker?.address || listing?.maker || "",
+      price: currentPriceWei,
+      payment_priceType: 0,
+      payment_tokenAddress: "0x0000000000000000000000000000000000000000",
+      blockTimestamp: listedTimestamp,
+      type: config.type,
+      chain: config.chain,
+      isListed: true,
+    };
+  };
+
+  const normalizeOpenSeaSale = (saleEvent, collectionSlug) => {
+    const config = OPENSEA_COLLECTION_CONFIG[collectionSlug];
+
+    if (!config) {
+      return null;
+    }
+
+    const nftAddress = (
+      saleEvent?.nft?.contract ||
+      saleEvent?.asset_contract?.address ||
+      saleEvent?.asset?.contract ||
+      window?.config?.[config.configAddressKey] ||
+      ""
+    )
+      .toString()
+      .toLowerCase();
+
+    const tokenId =
+      saleEvent?.nft?.identifier ||
+      saleEvent?.asset?.token_id ||
+      saleEvent?.asset?.identifier ||
+      "";
+
+    if (!nftAddress || tokenId === "") {
+      return null;
+    }
+
+    const salePriceWei =
+      saleEvent?.payment?.quantity ||
+      saleEvent?.total_price ||
+      saleEvent?.payment_token?.quantity ||
+      "0";
+
+    const saleTimestamp =
+      Math.floor(
+        new Date(
+          saleEvent?.event_timestamp ||
+            saleEvent?.created_date ||
+            saleEvent?.transaction?.timestamp ||
+            0
+        ).getTime() / 1000
+      ) || Math.floor(Date.now() / 1000);
+
+    return {
+      nftAddress,
+      tokenId: tokenId.toString(),
+      buyer:
+        saleEvent?.to_account?.address ||
+        saleEvent?.winner_account?.address ||
+        saleEvent?.buyer ||
+        "",
+      seller:
+        saleEvent?.from_account?.address ||
+        saleEvent?.seller ||
+        saleEvent?.maker?.address ||
+        "",
+      price: salePriceWei,
+      payment_priceType: 0,
+      payment_tokenAddress: "0x0000000000000000000000000000000000000000",
+      blockTimestamp: saleTimestamp,
+      type: config.type,
+      chain: config.chain,
+      isListed: true,
+    };
+  };
+
+  const fetchOpenSeaApiKey = async () => {
+    try {
+      // Temporary key creation request as requested.
+      const response = await axios.post(
+        `${OPENSEA_BASE_URL}/auth/keys`,
+        {
+          name: "wod-marketplace-temp",
+        },
+        {
+          headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("OpenSea auth key response:", response.data);
+
+      return (
+        response?.data?.api_key ||
+        response?.data?.key ||
+        response?.data?.data?.api_key ||
+        ""
+      );
+    } catch (error) {
+      console.error("OpenSea auth key request failed:", error);
+      return "";
+    }
+  };
+
+  const fetchOpenSeaCollectionData = async () => {
+    try {
+      const generatedApiKey = await fetchOpenSeaApiKey();
+      const fallbackApiKey = process.env.REACT_APP_OPENSEA_API_KEY || "";
+      const apiKey = generatedApiKey || fallbackApiKey;
+
+      if (!apiKey) {
+        console.warn(
+          "No OpenSea API key available. Set REACT_APP_OPENSEA_API_KEY if key creation fails."
+        );
+        return;
+      }
+
+      const headers = {
+        accept: "application/json",
+        "X-API-KEY": apiKey,
+      };
+
+      const listingBuckets = {
+        all: [],
+        caws: [],
+        land: [],
+        timepiece: [],
+      };
+      const salesBuckets = {
+        all: [],
+        caws: [],
+        land: [],
+        timepiece: [],
+      };
+
+      await Promise.all(
+        OPENSEA_COLLECTION_SLUGS.map(async (collectionSlug) => {
+          const [collectionResponse, listingsResponse, salesResponse] =
+            await Promise.all([
+              axios.get(`${OPENSEA_BASE_URL}/collections/${collectionSlug}`, {
+                headers,
+              }),
+              axios.get(
+                `${OPENSEA_BASE_URL}/listings/collection/${collectionSlug}/all?limit=${OPENSEA_LIMIT}`,
+                { headers }
+              ),
+              axios.get(
+                `${OPENSEA_BASE_URL}/events/collection/${collectionSlug}?event_type=sale&limit=${OPENSEA_LIMIT}`,
+                { headers }
+              ),
+            ]);
+
+          console.log(
+            `OpenSea collection response (${collectionSlug}):`,
+            collectionResponse.data
+          );
+          console.log(
+            `OpenSea recent 20 listings response (${collectionSlug}):`,
+            listingsResponse.data
+          );
+          console.log(
+            `OpenSea recent 20 sales response (${collectionSlug}):`,
+            salesResponse.data
+          );
+
+          const rawListings =
+            listingsResponse?.data?.listings ||
+            listingsResponse?.data?.orders ||
+            [];
+
+          const normalizedListings = rawListings
+            .map((listing) => normalizeOpenSeaListing(listing, collectionSlug))
+            .filter(Boolean)
+            .map((listing) => ({
+              ...listing,
+              type: listing.type || getTypeByAddress(listing.nftAddress),
+            }))
+            .slice(0, OPENSEA_LIMIT);
+
+          const listingType = OPENSEA_COLLECTION_CONFIG[collectionSlug]?.type;
+
+          if (listingType && listingBuckets[listingType]) {
+            listingBuckets[listingType] = normalizedListings;
+          }
+
+          const rawSalesEvents =
+            salesResponse?.data?.asset_events ||
+            salesResponse?.data?.events ||
+            [];
+
+          const normalizedSales = rawSalesEvents
+            .map((saleEvent) => normalizeOpenSeaSale(saleEvent, collectionSlug))
+            .filter(Boolean)
+            .map((sale) => ({
+              ...sale,
+              type: sale.type || getTypeByAddress(sale.nftAddress),
+            }))
+            .slice(0, OPENSEA_LIMIT);
+
+          if (listingType && salesBuckets[listingType]) {
+            salesBuckets[listingType] = normalizedSales;
+          }
+        })
+      );
+
+      const combinedListings = [
+        ...listingBuckets.caws,
+        ...listingBuckets.land,
+        ...listingBuckets.timepiece,
+      ]
+        .sort((a, b) => b.blockTimestamp - a.blockTimestamp)
+        .slice(0, OPENSEA_LIMIT);
+
+      const nextListingState = {
+        all: withResolvedType(combinedListings),
+        caws: withResolvedType(listingBuckets.caws),
+        land: withResolvedType(listingBuckets.land),
+        timepiece: withResolvedType(listingBuckets.timepiece),
+      };
+
+      const combinedSales = [
+        ...salesBuckets.caws,
+        ...salesBuckets.land,
+        ...salesBuckets.timepiece,
+      ]
+        .sort((a, b) => b.blockTimestamp - a.blockTimestamp)
+        .slice(0, OPENSEA_LIMIT);
+
+      const nextSalesState = {
+        all: withResolvedType(combinedSales),
+        caws: withResolvedType(salesBuckets.caws),
+        land: withResolvedType(salesBuckets.land),
+        timepiece: withResolvedType(salesBuckets.timepiece),
+      };
+
+      setOpenSeaRecentListings(nextListingState);
+      setOpenSeaRecentSales(nextSalesState);
+
+      if (combinedListings.length > 0) {
+        setHasOpenSeaRecentListings(true);
+        setRecentListingsFilter("all");
+        setRecentListed(withResolvedType(combinedListings));
+      }
+
+      if (combinedSales.length > 0) {
+        setHasOpenSeaRecentSales(true);
+        setRecentSalesFilter("all");
+        setRecentSold(withResolvedType(combinedSales));
+      }
+    } catch (error) {
+      console.error("OpenSea collection/listings/sales request failed:", error);
+    }
+  };
+
   const cachedVolume = localStorage.getItem("cachedVolume");
   const cachedTvl = localStorage.getItem("cachedTvl");
 
@@ -572,10 +945,14 @@ const Marketplace = ({
   };
 
   useEffect(() => {
+    if (hasOpenSeaRecentListings) {
+      return;
+    }
+
     // initialSales();
     if (latest20RecentListedNFTS && latest20RecentListedNFTS.length > 0) {
-      const result = shuffle(latest20RecentListedNFTS);
-      if (result && result.length === latest20RecentListedNFTS.length) {
+      const result = [...latest20RecentListedNFTS];
+      if (result.length === latest20RecentListedNFTS.length) {
         setRecentListed(result);
       }
     }
@@ -587,13 +964,18 @@ const Marketplace = ({
     // if (recentSales && recentSales.length > 0) {
     //   setLoadingRecentSales(false);
     // }
-  }, [listedNFTS, nftCount, latest20RecentListedNFTS]);
+  }, [listedNFTS, nftCount, latest20RecentListedNFTS, hasOpenSeaRecentListings]);
 
   useEffect(() => {
     getAllData();
     fetchCachedData();
     window.scrollTo(0, 0);
     document.title = "Shop";
+
+    if (!openSeaLogsFetchedRef.current) {
+      openSeaLogsFetchedRef.current = true;
+      fetchOpenSeaCollectionData();
+    }
   }, []);
 
   useEffect(() => {
@@ -708,6 +1090,44 @@ const Marketplace = ({
   // }, [topSalesFilter, topSalesDate]);
 
   const filterRecentListings = (filter) => {
+    const logTabChange = (source, selectedFilter, selectedItems) => {
+      console.log("[Recent Listings Tab Change]", {
+        selectedFilter,
+        source,
+        selectedItems,
+        selectedCount: selectedItems?.length || 0,
+        openSeaAll: openSeaRecentListings.all,
+        openSeaCaws: openSeaRecentListings.caws,
+        openSeaLand: openSeaRecentListings.land,
+        openSeaTimepiece: openSeaRecentListings.timepiece,
+        openSeaEnabled: hasOpenSeaRecentListings,
+      });
+    };
+
+    if (hasOpenSeaRecentListings) {
+      setRecentListingsFilter(filter);
+
+      if (filter === "all") {
+        const selectedItems = openSeaRecentListings.all;
+        setRecentListed(selectedItems);
+        logTabChange("opensea", filter, selectedItems);
+      } else if (filter === "caws") {
+        const selectedItems = openSeaRecentListings.caws;
+        setRecentListed(selectedItems);
+        logTabChange("opensea", filter, selectedItems);
+      } else if (filter === "land") {
+        const selectedItems = openSeaRecentListings.land;
+        setRecentListed(selectedItems);
+        logTabChange("opensea", filter, selectedItems);
+      } else if (filter === "timepiece") {
+        const selectedItems = openSeaRecentListings.timepiece;
+        setRecentListed(selectedItems);
+        logTabChange("opensea", filter, selectedItems);
+      }
+
+      return;
+    }
+
     // setLoadingRecentListings(true);
     if (latest20RecentListedNFTS && latest20RecentListedNFTS.length > 0) {
       if (filter === "caws") {
@@ -718,21 +1138,26 @@ const Marketplace = ({
             item.nftAddress === window.config.nft_cawsold_address,
         );
         setRecentListed(cawsFilter);
+        logTabChange("legacy", filter, cawsFilter);
       } else if (filter === "land") {
         setRecentListingsFilter("land");
         let wodFilter = latest20RecentListedNFTS.filter(
           (item) => item.nftAddress === window.config.nft_land_address,
         );
         setRecentListed(wodFilter);
+        logTabChange("legacy", filter, wodFilter);
       } else if (filter === "timepiece") {
         setRecentListingsFilter("timepiece");
         let timepieceFilter = latest20RecentListedNFTS.filter(
           (item) => item.nftAddress === window.config.nft_timepiece_address,
         );
         setRecentListed(timepieceFilter);
+        logTabChange("legacy", filter, timepieceFilter);
       } else if (filter === "all") {
         setRecentListingsFilter("all");
-        setRecentListed(shuffle(latest20RecentListedNFTS));
+        const selectedItems = [...latest20RecentListedNFTS];
+        setRecentListed(selectedItems);
+        logTabChange("legacy", filter, selectedItems);
       }
     } else {
       if (filter === "caws") {
@@ -743,21 +1168,26 @@ const Marketplace = ({
             item.nftAddress === window.config.nft_cawsold_address,
         );
         setRecentListed(cawsFilter);
+        logTabChange("dummy", filter, cawsFilter);
       } else if (filter === "land") {
         setRecentListingsFilter("land");
         let wodFilter = dummyData.filter(
           (item) => item.nftAddress === window.config.nft_land_address,
         );
         setRecentListed(wodFilter);
+        logTabChange("dummy", filter, wodFilter);
       } else if (filter === "timepiece") {
         setRecentListingsFilter("timepiece");
         let timepieceFilter = dummyData.filter(
           (item) => item.nftAddress === window.config.nft_timepiece_address,
         );
         setRecentListed(timepieceFilter);
+        logTabChange("dummy", filter, timepieceFilter);
       } else if (filter === "all") {
         setRecentListingsFilter("all");
-        setRecentListed(shuffle(dummyData));
+        const selectedItems = [...dummyData];
+        setRecentListed(selectedItems);
+        logTabChange("dummy", filter, selectedItems);
       }
     }
     // setTimeout(() => {
@@ -766,6 +1196,44 @@ const Marketplace = ({
   };
 
   const filterRecentSales = (filter) => {
+    if (hasOpenSeaRecentSales) {
+      setRecentSalesFilter(filter);
+
+      const logSalesTabChange = (selectedFilter, selectedItems) => {
+        console.log("[Recent Sales Tab Change]", {
+          selectedFilter,
+          source: "opensea",
+          selectedItems,
+          selectedCount: selectedItems?.length || 0,
+          openSeaAll: openSeaRecentSales.all,
+          openSeaCaws: openSeaRecentSales.caws,
+          openSeaLand: openSeaRecentSales.land,
+          openSeaTimepiece: openSeaRecentSales.timepiece,
+          openSeaEnabled: hasOpenSeaRecentSales,
+        });
+      };
+
+      if (filter === "all") {
+        const selectedItems = openSeaRecentSales.all;
+        setRecentSold(selectedItems);
+        logSalesTabChange(filter, selectedItems);
+      } else if (filter === "caws") {
+        const selectedItems = openSeaRecentSales.caws;
+        setRecentSold(selectedItems);
+        logSalesTabChange(filter, selectedItems);
+      } else if (filter === "land") {
+        const selectedItems = openSeaRecentSales.land;
+        setRecentSold(selectedItems);
+        logSalesTabChange(filter, selectedItems);
+      } else if (filter === "timepiece") {
+        const selectedItems = openSeaRecentSales.timepiece;
+        setRecentSold(selectedItems);
+        logSalesTabChange(filter, selectedItems);
+      }
+
+      return;
+    }
+
     // setLoadingRecentSales(true);dummyDataSales
     if (recentSales && recentSales.length > 0) {
       if (filter === "caws") {
@@ -790,7 +1258,7 @@ const Marketplace = ({
         setRecentSold(timepieceFilter);
       } else if (filter === "all") {
         setRecentSalesFilter("all");
-        setRecentSold(shuffle(recentSales));
+        setRecentSold([...recentSales]);
       }
     } else {
       if (filter === "caws") {
@@ -815,7 +1283,7 @@ const Marketplace = ({
         setRecentSold(timepieceFilter);
       } else if (filter === "all") {
         setRecentSalesFilter("all");
-        setRecentSold(shuffle(dummyDataSales));
+        setRecentSold([...dummyDataSales]);
       }
     }
     // setTimeout(() => {
@@ -842,14 +1310,18 @@ const Marketplace = ({
   }
 
   useEffect(() => {
+    if (hasOpenSeaRecentSales) {
+      return;
+    }
+
     setRecentSalesFilter("all");
     if (recentSales && recentSales.length > 0) {
-      const result = shuffle(recentSales);
-      if (result && result.length === recentSales.length) {
+      const result = [...recentSales];
+      if (result.length === recentSales.length) {
         setRecentSold(result);
       }
     }
-  }, [recentSales]);
+  }, [recentSales, hasOpenSeaRecentSales]);
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
