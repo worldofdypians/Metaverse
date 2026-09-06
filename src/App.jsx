@@ -5680,12 +5680,12 @@ function AppRoutes() {
           !location.pathname.includes("liquidity-catalyst") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
 
-        {location.pathname === "/" && (
+        {/* {location.pathname === "/" && (
           <WodlCampaignModal
             open={wodlCampaignModalOpen}
             onClose={() => setWodlCampaignModalOpen(false)}
           />
-        )}
+        )} */}
 
         <Header
           authToken={authToken}
