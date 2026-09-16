@@ -34,8 +34,7 @@ const GovernanceContent = ({ totalProposals, allProposals }) => {
                             <div className="d-flex align-items-center gap-4 flex-column flex-lg-row flex-md-row">
                               <div className="d-flex flex-column gap-2">
                                 <span className="active-proposals-features">
-                                  WoD Proposal #{item.proposalId} - WOD Buyback
-                                  & Value Alignment
+                                  WoD Proposal #{item.proposalId} - {item.subject}
                                 </span>
                                 <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
                                   <div className="d-flex align-items-center gap-2">
@@ -124,8 +123,7 @@ const GovernanceContent = ({ totalProposals, allProposals }) => {
                                   {item.subject}
                                 </span> */}
                                 <span className="active-proposals-features">
-                                  WoD Proposal #{item.proposalId} - WOD Buyback
-                                  & Value Alignment
+                                  WoD Proposal #{item.proposalId} - {item.subject}
                                 </span>
                                 <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
                                   {/* <div className="d-flex align-items-center gap-3">

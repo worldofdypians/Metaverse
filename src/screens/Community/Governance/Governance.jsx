@@ -105,7 +105,7 @@ const Governance = ({
 
         return {
           // ...item,
-          subject: actionText,
+          subject: item[9].split('\n')[0],
 
           description: item[9],
           expired: Number(proposalStartTime) < today.getTime() ? true : false,
