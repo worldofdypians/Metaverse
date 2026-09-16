@@ -391,6 +391,43 @@ const GovernanceInner = ({
     );
   };
 
+  const formatProposalText = (text) => {
+    if (!text) return null;
+    const sections = text
+      .replace(/\\n/g, "\n")
+      .split(/\n\s*\n/)
+      .map((section) => section.trim())
+      .filter(Boolean);
+
+    return (
+      <div className="proposal-description">
+        {sections.map((section, index) => {
+          const lines = section.split("\n").filter(Boolean);
+
+          return (
+            <div key={index} className="proposal-section">
+              {index === 0 ? (
+                <h3>{lines[0]}</h3>
+              ) : (
+                <>
+                  <strong>{lines[0]}</strong>
+                  <p>
+                    {lines.slice(1).map((line, i) => (
+                      <span key={i}>
+                        {line}
+                        {i < lines.length - 2 && <br />}
+                      </span>
+                    ))}
+                  </p>
+                </>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Governance";
@@ -430,7 +467,9 @@ const GovernanceInner = ({
                   </span>
                   <span className="single-proposal-content-txt">
                     {/* {currentProposal?.description} */}
-                    {currentProposal?.proposalId === 1 ? displayProposal() : ""}
+                    {currentProposal?.proposalId === 1
+                      ? displayProposal()
+                      : formatProposalText(currentProposal.description)}
                   </span>
                 </div>
                 <div className="proposal-right-col col-lg-5 p-lg-3">
