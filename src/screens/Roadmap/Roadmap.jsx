@@ -879,41 +879,41 @@ const Roadmap = () => {
 
       content: [
         {
-          title: "Introduction of the Mall Center",
-          desc: "Launch a mall center for exploring and purchasing in game items.",
-          completed: false,
+          title: "Binance US Campaign",
+          desc: "Exclusive campaign for US users with livestream, welcome offer, and 8,500 WOD giveaway.",
+          completed: true,
         },
         {
-          title: "Full Release of the Multiplayer PvE",
-          desc: "Release the complete multiplayer PvE mode for large scale cooperative gameplay.",
-          completed: false,
+          title: "AlloX WOD HODL Campaign",
+          desc: "Dedicated $100,000 rewards campaign for WOD buyers and long-term holders.",
+          completed: true,
         },
 
         {
-          title: "Introduction of Shop v1",
-          desc: " Launch the first version of the in game shop.",
-          completed: false,
+          title: "WOD Reserve Expansion",
+          desc: "Total WOD reserve expanded, strengthening ecosystem foundation.",
+          completed: true,
         },
         {
-          title: "NFT Customization",
-          desc: "Enable customization of NFTs such as weapons and equipment.",
-          completed: false,
+          title: "WOD Market Expansion",
+          desc: "WOD now available to store and manage on Guarda Wallet.",
+          completed: true,
         },
         {
-          title: "New Staking Pools",
-          desc: "Expansion of WOD staking options with new pools designed to support long term participation and enhanced utility for WOD holders.",
-          completed: false,
+          title: "Prime Subscription Campaign",
+          desc: "90% OFF promotion on BNB Chain, unlocking premium access for more players.",
+          completed: true,
         },
         {
-          title: "Addition of New AI Powered NPCs",
-          desc: "Introduce new AI-powered NPCs to the game to provide additional challenges and interactions for players.",
-          completed: false,
+          title: "1.B+ On-Chain Transactions",
+          desc: "Historic activity milestone reached and growing throughout Q3.",
+          completed: true,
         },
 
         {
           title: "Partnership Development",
-          desc: "Develop strategic partnerships to expand integrations and ecosystem initiatives.",
-          completed: false,
+          desc: "Expand partnerships to support feature development and ecosystem growth.",
+          completed: true,
         },
       ],
     },
