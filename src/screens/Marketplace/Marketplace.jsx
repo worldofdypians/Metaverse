@@ -316,7 +316,7 @@ const Marketplace = ({
     {
       nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
       buyer: "0x6310D0aD15c12a42d278E1234d3B087e140aEaa0",
-      tokenId: "10",
+      tokenId: "20",
       type: "land",
       chain: 1,
     },
@@ -326,6 +326,21 @@ const Marketplace = ({
       tokenId: "11",
       type: "land",
       chain: 1,
+    },
+    {
+      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
+      buyer: "0xD324A03BF17Eee8D34A8843D094a76FF8f561e38",
+      tokenId: "21",
+      type: "land",
+      chain: 1,
+    },
+    {
+      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "17",
+      type: "timepiece",
+      chain: 1,
+      isListed: false,
     },
   ];
 
@@ -605,70 +620,74 @@ const Marketplace = ({
 
       await Promise.all(
         OPENSEA_COLLECTION_SLUGS.map(async (collectionSlug) => {
-          const [collectionResponse, listingsResponse, salesResponse] =
-            await Promise.all([
-              axios.get(`${OPENSEA_BASE_URL}/collections/${collectionSlug}`, {
-                headers,
-              }),
-              axios.get(
-                `${OPENSEA_BASE_URL}/listings/collection/${collectionSlug}/all?limit=${OPENSEA_LIMIT}`,
-                { headers }
-              ),
-              axios.get(
-                `${OPENSEA_BASE_URL}/events/collection/${collectionSlug}?event_type=sale&limit=${OPENSEA_LIMIT}`,
-                { headers }
-              ),
-            ]);
+          try {
+            const [collectionResponse, listingsResponse, salesResponse] =
+              await Promise.all([
+                axios.get(`${OPENSEA_BASE_URL}/collections/${collectionSlug}`, {
+                  headers,
+                }),
+                axios.get(
+                  `${OPENSEA_BASE_URL}/listings/collection/${collectionSlug}/all?limit=${OPENSEA_LIMIT}`,
+                  { headers }
+                ),
+                axios.get(
+                  `${OPENSEA_BASE_URL}/events/collection/${collectionSlug}?event_type=sale&limit=${OPENSEA_LIMIT}`,
+                  { headers }
+                ),
+              ]);
 
-          console.log(
-            `OpenSea collection response (${collectionSlug}):`,
-            collectionResponse.data
-          );
-          console.log(
-            `OpenSea recent 20 listings response (${collectionSlug}):`,
-            listingsResponse.data
-          );
-          console.log(
-            `OpenSea recent 20 sales response (${collectionSlug}):`,
-            salesResponse.data
-          );
+            console.log(
+              `OpenSea collection response (${collectionSlug}):`,
+              collectionResponse.data
+            );
+            console.log(
+              `OpenSea recent 20 listings response (${collectionSlug}):`,
+              listingsResponse.data
+            );
+            console.log(
+              `OpenSea recent 20 sales response (${collectionSlug}):`,
+              salesResponse.data
+            );
 
-          const rawListings =
-            listingsResponse?.data?.listings ||
-            listingsResponse?.data?.orders ||
-            [];
+            const rawListings =
+              listingsResponse?.data?.listings ||
+              listingsResponse?.data?.orders ||
+              [];
 
-          const normalizedListings = rawListings
-            .map((listing) => normalizeOpenSeaListing(listing, collectionSlug))
-            .filter(Boolean)
-            .map((listing) => ({
-              ...listing,
-              type: listing.type || getTypeByAddress(listing.nftAddress),
-            }))
-            .slice(0, OPENSEA_LIMIT);
+            const normalizedListings = rawListings
+              .map((listing) => normalizeOpenSeaListing(listing, collectionSlug))
+              .filter(Boolean)
+              .map((listing) => ({
+                ...listing,
+                type: listing.type || getTypeByAddress(listing.nftAddress),
+              }))
+              .slice(0, OPENSEA_LIMIT);
 
-          const listingType = OPENSEA_COLLECTION_CONFIG[collectionSlug]?.type;
+            const listingType = OPENSEA_COLLECTION_CONFIG[collectionSlug]?.type;
 
-          if (listingType && listingBuckets[listingType]) {
-            listingBuckets[listingType] = normalizedListings;
-          }
+            if (listingType && listingBuckets[listingType]) {
+              listingBuckets[listingType] = normalizedListings;
+            }
 
-          const rawSalesEvents =
-            salesResponse?.data?.asset_events ||
-            salesResponse?.data?.events ||
-            [];
+            const rawSalesEvents =
+              salesResponse?.data?.asset_events ||
+              salesResponse?.data?.events ||
+              [];
 
-          const normalizedSales = rawSalesEvents
-            .map((saleEvent) => normalizeOpenSeaSale(saleEvent, collectionSlug))
-            .filter(Boolean)
-            .map((sale) => ({
-              ...sale,
-              type: sale.type || getTypeByAddress(sale.nftAddress),
-            }))
-            .slice(0, OPENSEA_LIMIT);
+            const normalizedSales = rawSalesEvents
+              .map((saleEvent) => normalizeOpenSeaSale(saleEvent, collectionSlug))
+              .filter(Boolean)
+              .map((sale) => ({
+                ...sale,
+                type: sale.type || getTypeByAddress(sale.nftAddress),
+              }))
+              .slice(0, OPENSEA_LIMIT);
 
-          if (listingType && salesBuckets[listingType]) {
-            salesBuckets[listingType] = normalizedSales;
+            if (listingType && salesBuckets[listingType]) {
+              salesBuckets[listingType] = normalizedSales;
+            }
+          } catch (error) {
+            console.error(`OpenSea request failed (${collectionSlug}):`, error);
           }
         })
       );
@@ -1054,13 +1073,16 @@ const Marketplace = ({
               <CollectionSection
                 key={type}
                 title={title}
-                items={
-                  openSeaRecentListings[type].length > 0
-                    ? openSeaRecentListings[type]
-                    : openSeaRecentSales[type].length > 0
-                    ? openSeaRecentSales[type]
-                    : dummyData.filter((nft) => nft.type === type)
-                }
+                items={[
+                  ...openSeaRecentListings[type],
+                  ...openSeaRecentSales[type],
+                  ...dummyData.filter((nft) => nft.type === type),
+                ]
+                  .filter(
+                    (nft, index, arr) =>
+                      arr.findIndex((n) => n.tokenId === nft.tokenId) === index
+                  )
+                  .slice(0, OPENSEA_LIMIT)}
                 loading={loadingOpenSea}
                 sliderCut={sliderCut}
                 onItemClick={updateViewCount}
