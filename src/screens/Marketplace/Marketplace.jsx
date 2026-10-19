@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./_marketplace.scss";
 import ItemCard from "../../components/ItemCard/ItemCard";
 import { NavLink } from "react-router-dom";
+import { getOpenSeaLink } from "../../utils/openSeaLink";
 
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -15,12 +16,114 @@ import { Skeleton } from "@mui/material";
 
 import NewChallenges from "../Game/NewChallenges";
 
+const sliderSettings = {
+  dots: false,
+  arrows: false,
+  infinite: false,
+  speed: 300,
+  slidesToShow: 6,
+  slidesToScroll: 1,
+  initialSlide: 0,
+  responsive: [
+    { breakpoint: 1600, settings: { slidesToShow: 5 } },
+    { breakpoint: 1500, settings: { slidesToShow: 4 } },
+    { breakpoint: 1024, settings: { slidesToShow: 3 } },
+    { breakpoint: 600, settings: { slidesToShow: 2 } },
+    { breakpoint: 480, settings: { slidesToShow: 1 } },
+  ],
+};
+
+const CollectionSection = ({
+  title,
+  items,
+  loading,
+  sliderCut,
+  onItemClick,
+  ethTokenData,
+  isConnected,
+  handleConnect,
+  coinbase,
+  chainId,
+  onFavorite,
+}) => {
+  const slider = useRef();
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  return (
+    <div
+      className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-4 my-4"
+      style={{ minHeight: "430px" }}
+    >
+      {activeSlide > 0 && (
+        <div className="prev-arrow-nft" onClick={() => slider.current.slickPrev()}>
+          <img src={"https://cdn.worldofdypians.com/wod/nextArrow1.svg"} alt="" />
+        </div>
+      )}
+      {activeSlide + sliderCut < items.length && (
+        <div className="next-arrow-nft" onClick={() => slider.current.slickNext()}>
+          <img src={"https://cdn.worldofdypians.com/wod/nextArrow1.svg"} alt="" />
+        </div>
+      )}
+      <h6 className="nft-wrapper-title font-raleway mb-0">{title}</h6>
+      {loading ? (
+        <div className="loader-wrapper gap-3 justify-content-start mt-3">
+          {[...Array(sliderCut || 1)].map((obj, indx) => (
+            <Skeleton
+              animation="wave"
+              width={sliderCut === 1 ? "100%" : 178}
+              variant="rounded"
+              height={230}
+              sx={{ bgcolor: "black.700" }}
+              key={indx}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="slider-container">
+          <Slider
+            ref={slider}
+            {...sliderSettings}
+            afterChange={(current) => setActiveSlide(current)}
+          >
+            {items.map((nft, index) => (
+              <a
+                href={getOpenSeaLink(nft.type, nft.tokenId)}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: "none" }}
+                key={index}
+                onClick={() => onItemClick(nft.tokenId, nft.nftAddress)}
+              >
+                <ItemCard
+                  ethTokenData={ethTokenData}
+                  nft={nft}
+                  isConnected={isConnected}
+                  showConnectWallet={handleConnect}
+                  isCaws={nft.type === "caws"}
+                  isTimepiece={nft.type === "timepiece"}
+                  isWod={nft.type === "land"}
+                  coinbase={coinbase}
+                  lastSold={nft.LastSold}
+                  isLatestSale={nft.isLatestSale}
+                  isListed={nft.isListed}
+                  soldPriceType={nft.soldPriceType}
+                  onFavorite={onFavorite}
+                  chainId={chainId}
+                />
+              </a>
+            ))}
+          </Slider>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Marketplace = ({
   listedNFTS,
   isConnected,
   handleConnect,
   totalListed,
-  latest20RecentListedNFTS,
   totalBoughtNFTSCount,
   coinbase,
   recentSales,
@@ -32,8 +135,6 @@ const Marketplace = ({
   chainId,
   wodHolders,
   totalVolumeNew,
-  loadingRecentListings,
-  loadingRecentSales,
   monthlyPlayers,
   hasNft,
 }) => {
@@ -61,17 +162,10 @@ const Marketplace = ({
     }
     return array;
   }
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [activeSlide2, setActiveSlide2] = useState(0);
-  const [recentListed, setRecentListed] = useState([]);
-  const [recentSold, setRecentSold] = useState([]);
   // const [topSold, setTopSold] = useState(shuffle(recentSales) ?? []);
   const [topSalesFilter, setTopSalesFilter] = useState("all");
-  const [recentListingsFilter, setRecentListingsFilter] = useState("all");
-  const [recentSalesFilter, setRecentSalesFilter] = useState("all");
-  const firstSlider = useRef();
-  const secondSlider = useRef();
   const openSeaLogsFetchedRef = useRef(false);
+  const [loadingOpenSea, setLoadingOpenSea] = useState(true);
   const [loadingTopSales, setLoadingTopSales] = useState(false);
   // const [loadingRecentSales, setLoadingRecentSales] = useState(false);
   const [activeLink, setActiveLink] = useState("collections");
@@ -79,8 +173,6 @@ const Marketplace = ({
   const [totalTx2, setTotalTx] = useState(0);
   const [totalvolume2, setTotalVolume] = useState(0);
   const [sliderCut, setSliderCut] = useState();
-  const [showFirstNext, setShowFirstNext] = useState(false);
-  const [showSecondNext, setShowSecondNext] = useState(false);
   const [favItems, setfavItems] = useState(0);
   const [openSeaRecentListings, setOpenSeaRecentListings] = useState({
     all: [],
@@ -88,15 +180,12 @@ const Marketplace = ({
     land: [],
     timepiece: [],
   });
-  const [hasOpenSeaRecentListings, setHasOpenSeaRecentListings] =
-    useState(false);
   const [openSeaRecentSales, setOpenSeaRecentSales] = useState({
     all: [],
     caws: [],
     land: [],
     timepiece: [],
   });
-  const [hasOpenSeaRecentSales, setHasOpenSeaRecentSales] = useState(false);
 
   const dummyData = [
     {
@@ -240,278 +329,8 @@ const Marketplace = ({
     },
   ];
 
-  const dummyDataSales = [
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x76E60102AE09386eE0c848F2Ee36ede6d03ad4B3",
-      tokenId: "300",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0xf6180221a94aCA479f71e2A3a48e9A65E0dF179c",
-      tokenId: "14",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0xd577E2b4C4B85Cc28B35DA6bC8475729b7197a50",
-      tokenId: "25",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      buyer: "0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
-      tokenId: "221",
-      type: "timepiece",
-      chain: 1,
-      isListed: false,
-    },
-    {
-      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      buyer: "0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
-      tokenId: "30",
-      type: "timepiece",
-      chain: 1,
-      isListed: false,
-    },
-    {
-      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      tokenId: "227",
-      type: "timepiece",
-      chain: 1,
-      isListed: false,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0xb8CAC1C259bA3a73e26744fB8D09B5Bd77c2207B",
-      tokenId: "90",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
-      buyer: "0x6821710B0D6E9e10ACfd8433aD023f874ed782F1",
-      tokenId: "30",
-      type: "land",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
-      buyer: "0x6821710B0D6E9e10ACfd8433aD023f874ed782F1",
-      tokenId: "51",
-      type: "land",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      tokenId: "220",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
-      buyer: "0xF4914F025b45798F634fBE638d33701FBff3274A",
-      tokenId: "140",
-      type: "land",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
-      buyer: "0xF4914F025b45798F634fBE638d33701FBff3274A",
-      tokenId: "245",
-      type: "land",
-      chain: 1,
-    },
-    {
-      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      buyer: "0x0438331A6fb1ef9ac41cb80c896658Ee572F364C",
-      tokenId: "70",
-      type: "timepiece",
-      chain: 1,
-      isListed: false,
-    },
-    {
-      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      tokenId: "122",
-      type: "timepiece",
-      chain: 1,
-      isListed: false,
-    },
-    {
-      nftAddress: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
-      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      tokenId: "73",
-      type: "timepiece",
-      chain: 1,
-      isListed: false,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
-      tokenId: "149",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      buyer: "0x105704a52DEB48895226f2C6C47Fb4cc353A4560",
-      tokenId: "115",
-      type: "caws",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
-      buyer: "0x6310D0aD15c12a42d278E1234d3B087e140aEaa0",
-      tokenId: "100",
-      type: "land",
-      chain: 1,
-    },
-    {
-      nftAddress: "0xcd60d912655281908ee557ce1add61e983385a03",
-      buyer: "0xD324A03BF17Eee8D34A8843D094a76FF8f561e38",
-      tokenId: "161",
-      type: "land",
-      chain: 1,
-    },
-  ];
-
-  const firstNext = () => {
-    firstSlider.current.slickNext();
-  };
-  const secondNext = () => {
-    secondSlider.current.slickNext();
-  };
-  const firstPrev = () => {
-    firstSlider.current.slickPrev();
-  };
-  const secondPrev = () => {
-    secondSlider.current.slickPrev();
-  };
-
   const [popupEvent, setPopupEvent] = useState(null);
   const [popupActive, setPopupActive] = useState(false);
-
-  var settings = {
-    dots: false,
-    arrows: false,
-    dotsClass: "button__bar",
-    infinite: false,
-    speed: 300,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    beforeChange: (current, next) => {
-      setActiveSlide(next);
-      setShowFirstNext(current);
-    },
-    afterChange: (current) => setActiveSlide(current),
-    responsive: [
-      {
-        breakpoint: 1600,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1500,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-    ],
-  };
-  var settings2 = {
-    dots: false,
-    arrows: false,
-    dotsClass: "button__bar",
-    infinite: false,
-    speed: 300,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    beforeChange: (current, next) => {
-      setActiveSlide2(next);
-      setShowSecondNext(current);
-    },
-    afterChange: (current) => setActiveSlide2(current),
-    responsive: [
-      {
-        breakpoint: 1600,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1500,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-    ],
-  };
 
   const getAllData = async () => {
     const result = await axios
@@ -886,20 +705,10 @@ const Marketplace = ({
 
       setOpenSeaRecentListings(nextListingState);
       setOpenSeaRecentSales(nextSalesState);
-
-      if (combinedListings.length > 0) {
-        setHasOpenSeaRecentListings(true);
-        setRecentListingsFilter("all");
-        setRecentListed(withResolvedType(combinedListings));
-      }
-
-      if (combinedSales.length > 0) {
-        setHasOpenSeaRecentSales(true);
-        setRecentSalesFilter("all");
-        setRecentSold(withResolvedType(combinedSales));
-      }
     } catch (error) {
       console.error("OpenSea collection/listings/sales request failed:", error);
+    } finally {
+      setLoadingOpenSea(false);
     }
   };
 
@@ -943,28 +752,6 @@ const Marketplace = ({
     }
     return output;
   };
-
-  useEffect(() => {
-    if (hasOpenSeaRecentListings) {
-      return;
-    }
-
-    // initialSales();
-    if (latest20RecentListedNFTS && latest20RecentListedNFTS.length > 0) {
-      const result = [...latest20RecentListedNFTS];
-      if (result.length === latest20RecentListedNFTS.length) {
-        setRecentListed(result);
-      }
-    }
-    setRecentSalesFilter("all");
-
-    // if (recentSales && recentSales.length === 0) {
-    //   setLoadingRecentSales(true);
-    // }
-    // if (recentSales && recentSales.length > 0) {
-    //   setLoadingRecentSales(false);
-    // }
-  }, [listedNFTS, nftCount, latest20RecentListedNFTS, hasOpenSeaRecentListings]);
 
   useEffect(() => {
     getAllData();
@@ -1089,208 +876,6 @@ const Marketplace = ({
   //   filterTopSales();
   // }, [topSalesFilter, topSalesDate]);
 
-  const filterRecentListings = (filter) => {
-    const logTabChange = (source, selectedFilter, selectedItems) => {
-      console.log("[Recent Listings Tab Change]", {
-        selectedFilter,
-        source,
-        selectedItems,
-        selectedCount: selectedItems?.length || 0,
-        openSeaAll: openSeaRecentListings.all,
-        openSeaCaws: openSeaRecentListings.caws,
-        openSeaLand: openSeaRecentListings.land,
-        openSeaTimepiece: openSeaRecentListings.timepiece,
-        openSeaEnabled: hasOpenSeaRecentListings,
-      });
-    };
-
-    if (hasOpenSeaRecentListings) {
-      setRecentListingsFilter(filter);
-
-      if (filter === "all") {
-        const selectedItems = openSeaRecentListings.all;
-        setRecentListed(selectedItems);
-        logTabChange("opensea", filter, selectedItems);
-      } else if (filter === "caws") {
-        const selectedItems = openSeaRecentListings.caws;
-        setRecentListed(selectedItems);
-        logTabChange("opensea", filter, selectedItems);
-      } else if (filter === "land") {
-        const selectedItems = openSeaRecentListings.land;
-        setRecentListed(selectedItems);
-        logTabChange("opensea", filter, selectedItems);
-      } else if (filter === "timepiece") {
-        const selectedItems = openSeaRecentListings.timepiece;
-        setRecentListed(selectedItems);
-        logTabChange("opensea", filter, selectedItems);
-      }
-
-      return;
-    }
-
-    // setLoadingRecentListings(true);
-    if (latest20RecentListedNFTS && latest20RecentListedNFTS.length > 0) {
-      if (filter === "caws") {
-        setRecentListingsFilter("caws");
-        let cawsFilter = latest20RecentListedNFTS.filter(
-          (item) =>
-            item.nftAddress === window.config.nft_caws_address ||
-            item.nftAddress === window.config.nft_cawsold_address,
-        );
-        setRecentListed(cawsFilter);
-        logTabChange("legacy", filter, cawsFilter);
-      } else if (filter === "land") {
-        setRecentListingsFilter("land");
-        let wodFilter = latest20RecentListedNFTS.filter(
-          (item) => item.nftAddress === window.config.nft_land_address,
-        );
-        setRecentListed(wodFilter);
-        logTabChange("legacy", filter, wodFilter);
-      } else if (filter === "timepiece") {
-        setRecentListingsFilter("timepiece");
-        let timepieceFilter = latest20RecentListedNFTS.filter(
-          (item) => item.nftAddress === window.config.nft_timepiece_address,
-        );
-        setRecentListed(timepieceFilter);
-        logTabChange("legacy", filter, timepieceFilter);
-      } else if (filter === "all") {
-        setRecentListingsFilter("all");
-        const selectedItems = [...latest20RecentListedNFTS];
-        setRecentListed(selectedItems);
-        logTabChange("legacy", filter, selectedItems);
-      }
-    } else {
-      if (filter === "caws") {
-        setRecentListingsFilter("caws");
-        let cawsFilter = dummyData.filter(
-          (item) =>
-            item.nftAddress === window.config.nft_caws_address ||
-            item.nftAddress === window.config.nft_cawsold_address,
-        );
-        setRecentListed(cawsFilter);
-        logTabChange("dummy", filter, cawsFilter);
-      } else if (filter === "land") {
-        setRecentListingsFilter("land");
-        let wodFilter = dummyData.filter(
-          (item) => item.nftAddress === window.config.nft_land_address,
-        );
-        setRecentListed(wodFilter);
-        logTabChange("dummy", filter, wodFilter);
-      } else if (filter === "timepiece") {
-        setRecentListingsFilter("timepiece");
-        let timepieceFilter = dummyData.filter(
-          (item) => item.nftAddress === window.config.nft_timepiece_address,
-        );
-        setRecentListed(timepieceFilter);
-        logTabChange("dummy", filter, timepieceFilter);
-      } else if (filter === "all") {
-        setRecentListingsFilter("all");
-        const selectedItems = [...dummyData];
-        setRecentListed(selectedItems);
-        logTabChange("dummy", filter, selectedItems);
-      }
-    }
-    // setTimeout(() => {
-    // setLoadingRecentListings(false);
-    // }, 1000);
-  };
-
-  const filterRecentSales = (filter) => {
-    if (hasOpenSeaRecentSales) {
-      setRecentSalesFilter(filter);
-
-      const logSalesTabChange = (selectedFilter, selectedItems) => {
-        console.log("[Recent Sales Tab Change]", {
-          selectedFilter,
-          source: "opensea",
-          selectedItems,
-          selectedCount: selectedItems?.length || 0,
-          openSeaAll: openSeaRecentSales.all,
-          openSeaCaws: openSeaRecentSales.caws,
-          openSeaLand: openSeaRecentSales.land,
-          openSeaTimepiece: openSeaRecentSales.timepiece,
-          openSeaEnabled: hasOpenSeaRecentSales,
-        });
-      };
-
-      if (filter === "all") {
-        const selectedItems = openSeaRecentSales.all;
-        setRecentSold(selectedItems);
-        logSalesTabChange(filter, selectedItems);
-      } else if (filter === "caws") {
-        const selectedItems = openSeaRecentSales.caws;
-        setRecentSold(selectedItems);
-        logSalesTabChange(filter, selectedItems);
-      } else if (filter === "land") {
-        const selectedItems = openSeaRecentSales.land;
-        setRecentSold(selectedItems);
-        logSalesTabChange(filter, selectedItems);
-      } else if (filter === "timepiece") {
-        const selectedItems = openSeaRecentSales.timepiece;
-        setRecentSold(selectedItems);
-        logSalesTabChange(filter, selectedItems);
-      }
-
-      return;
-    }
-
-    // setLoadingRecentSales(true);dummyDataSales
-    if (recentSales && recentSales.length > 0) {
-      if (filter === "caws") {
-        setRecentSalesFilter("caws");
-        let cawsFilter = recentSales.filter(
-          (item) =>
-            item.nftAddress === window.config.nft_caws_address ||
-            item.nftAddress === window.config.nft_cawsold_address,
-        );
-        setRecentSold(cawsFilter);
-      } else if (filter === "land") {
-        setRecentSalesFilter("land");
-        let wodFilter = recentSales.filter(
-          (item) => item.nftAddress === window.config.nft_land_address,
-        );
-        setRecentSold(wodFilter);
-      } else if (filter === "timepiece") {
-        setRecentSalesFilter("timepiece");
-        let timepieceFilter = recentSales.filter(
-          (item) => item.nftAddress === window.config.nft_timepiece_address,
-        );
-        setRecentSold(timepieceFilter);
-      } else if (filter === "all") {
-        setRecentSalesFilter("all");
-        setRecentSold([...recentSales]);
-      }
-    } else {
-      if (filter === "caws") {
-        setRecentSalesFilter("caws");
-        let cawsFilter = dummyDataSales.filter(
-          (item) =>
-            item.nftAddress === window.config.nft_caws_address ||
-            item.nftAddress === window.config.nft_cawsold_address,
-        );
-        setRecentSold(cawsFilter);
-      } else if (filter === "land") {
-        setRecentSalesFilter("land");
-        let wodFilter = dummyDataSales.filter(
-          (item) => item.nftAddress === window.config.nft_land_address,
-        );
-        setRecentSold(wodFilter);
-      } else if (filter === "timepiece") {
-        setRecentSalesFilter("timepiece");
-        let timepieceFilter = dummyDataSales.filter(
-          (item) => item.nftAddress === window.config.nft_timepiece_address,
-        );
-        setRecentSold(timepieceFilter);
-      } else if (filter === "all") {
-        setRecentSalesFilter("all");
-        setRecentSold([...dummyDataSales]);
-      }
-    }
-    // setTimeout(() => {
-    //   setLoadingRecentSales(false);
-    // }, 1000);
-  };
-
   async function updateViewCount(tokenId, nftAddress) {
     try {
       const response = await fetch("https://api.worldofdypians.com/nft-view", {
@@ -1308,20 +893,6 @@ const Marketplace = ({
       console.error("Error updating view count:", error);
     }
   }
-
-  useEffect(() => {
-    if (hasOpenSeaRecentSales) {
-      return;
-    }
-
-    setRecentSalesFilter("all");
-    if (recentSales && recentSales.length > 0) {
-      const result = [...recentSales];
-      if (result.length === recentSales.length) {
-        setRecentSold(result);
-      }
-    }
-  }, [recentSales, hasOpenSeaRecentSales]);
 
   const cutLength = () => {
     if (windowSize.width > 1600) {
@@ -1475,548 +1046,32 @@ const Marketplace = ({
           </div>
           <div className="main-wrapper w-100">
             {/* <GameEvents/> */}
-            <div
-              className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-4 my-4"
-              style={{ minHeight: "430px" }}
-            >
-              {activeSlide > 0 && (
-                <div className="prev-arrow-nft" onClick={firstPrev}>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/nextArrow1.svg"}
-                    alt=""
-                  />
-                </div>
-              )}
-              {showFirstNext === activeSlide
-                ? null
-                : recentListed.length > sliderCut && (
-                    <div className="next-arrow-nft" onClick={firstNext}>
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/nextArrow1.svg"
-                        }
-                        alt="1"
-                      />
-                    </div>
-                  )}
-              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-                <h6 className="nft-wrapper-title font-raleway mb-0">
-                  Recent Listings
-                </h6>
-
-                <div className="d-flex align-items-center gap-4">
-                  {isConnected && coinbase && hasNft === true && (
-                    <NavLink className="stake-wod-btn" to="/list-my-nft">
-                      List NFT
-                    </NavLink>
-                  )}
-
-                  <h6
-                    className={`filter-title m-0 ${
-                      recentListingsFilter === "all" && "filter-selected"
-                    }`}
-                    onClick={() => {
-                      filterRecentListings("all");
-                      cutLength();
-                      firstSlider.current.innerSlider.slickGoTo(0);
-                      setActiveSlide(0);
-                    }}
-                  >
-                    All
-                  </h6>
-                  <h6
-                    className={`filter-title m-0 ${
-                      recentListingsFilter === "caws" && "filter-selected"
-                    }`}
-                    onClick={() => {
-                      filterRecentListings("caws");
-                      cutLength();
-                      firstSlider.current.innerSlider.slickGoTo(0);
-                      setActiveSlide(0);
-                    }}
-                  >
-                    CAWS
-                  </h6>
-                  <h6
-                    className={`filter-title m-0 ${
-                      recentListingsFilter === "land" && "filter-selected"
-                    }`}
-                    onClick={() => {
-                      filterRecentListings("land");
-                      cutLength();
-                      firstSlider.current.innerSlider.slickGoTo(0);
-                      setActiveSlide(0);
-                    }}
-                  >
-                    Land
-                  </h6>
-                  <h6
-                    className={`filter-title m-0 ${
-                      recentListingsFilter === "timepiece" && "filter-selected"
-                    }`}
-                    onClick={() => {
-                      filterRecentListings("timepiece");
-                      cutLength();
-                      firstSlider.current.innerSlider.slickGoTo(0);
-                      setActiveSlide(0);
-                    }}
-                  >
-                    Timepiece
-                  </h6>
-                </div>
-              </div>
-              {loadingRecentListings === false ? (
-                <div className="slider-container">
-                  {recentListed && recentListed.length > 0 ? (
-                    <Slider
-                      ref={(c) => (firstSlider.current = c)}
-                      {...settings}
-                    >
-                      {recentListed.map((nft, index) => (
-                        <NavLink
-                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
-                          style={{ textDecoration: "none" }}
-                          key={index}
-                          state={{
-                            nft: nft,
-                            type: nft.type,
-                            isOwner:
-                              nft.seller?.toLowerCase() ===
-                              coinbase?.toLowerCase(),
-                            chain: nft.chain,
-                          }}
-                          onClick={() => {
-                            updateViewCount(nft.tokenId, nft.nftAddress);
-                          }}
-                        >
-                          <ItemCard
-                            ethTokenData={ethTokenData}
-                            key={nft.id}
-                            nft={nft}
-                            isConnected={isConnected}
-                            showConnectWallet={handleConnect}
-                            isCaws={nft.type === "caws"}
-                            isTimepiece={nft.type === "timepiece"}
-                            isWod={nft.type === "land"}
-                            coinbase={coinbase}
-                            isListed={
-                              latest20RecentListedNFTS.length > 0 ? true : false
-                            }
-                            chainId={chainId}
-                          />
-                        </NavLink>
-                      ))}
-                    </Slider>
-                  ) : (
-                    // <div className="d-flex w-100 align-items-center justify-content-center">
-                    //   <h3 className="text-white">
-                    //     There are no listed items for that category.
-                    //   </h3>
-                    // </div>
-
-                    <Slider
-                      ref={(c) => (firstSlider.current = c)}
-                      {...settings}
-                    >
-                      {dummyData.map((nft, index) => (
-                        <NavLink
-                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
-                          style={{ textDecoration: "none" }}
-                          key={index}
-                          state={{
-                            nft: nft,
-                            type: nft.type,
-                            isOwner:
-                              nft.seller?.toLowerCase() ===
-                              coinbase?.toLowerCase(),
-                            chain: nft.chain,
-                          }}
-                          onClick={() => {
-                            updateViewCount(nft.tokenId, nft.nftAddress);
-                          }}
-                        >
-                          <ItemCard
-                            ethTokenData={ethTokenData}
-                            key={nft.id}
-                            nft={nft}
-                            isConnected={isConnected}
-                            showConnectWallet={handleConnect}
-                            isCaws={nft.type === "caws"}
-                            isTimepiece={nft.type === "timepiece"}
-                            isWod={nft.type === "land"}
-                            coinbase={coinbase}
-                            lastSold={nft.LastSold}
-                            isLatestSale={nft.isLatestSale}
-                            isListed={nft.isListed}
-                            soldPriceType={nft.soldPriceType}
-                            chainId={chainId}
-                          />
-                        </NavLink>
-                      ))}
-                    </Slider>
-                  )}
-                </div>
-              ) : (
-                <div className="loader-wrapper gap-3 justify-content-start  mt-3">
-                  {/* <HashLoader
-                    color={"#554fd8"}
-                    loading={loadingRecentListings}
-                    cssOverride={override}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                  /> */}
-                  {windowSize.width > 1600 ? (
-                    <>
-                      {[...Array(10)].map((obj, indx) => {
-                        return (
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                            key={indx}
-                          />
-                        );
-                      })}
-                    </>
-                  ) : windowSize.width > 1500 ? (
-                    <>
-                      {[...Array(5)].map((obj, indx) => {
-                        return (
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                            key={indx}
-                          />
-                        );
-                      })}
-                    </>
-                  ) : windowSize.width > 1024 ? (
-                    <>
-                      {[...Array(4)].map((obj, indx) => {
-                        return (
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                            key={indx}
-                          />
-                        );
-                      })}
-                    </>
-                  ) : windowSize.width > 600 ? (
-                    <>
-                      {[...Array(3)].map((obj, indx) => {
-                        return (
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                            key={indx}
-                          />
-                        );
-                      })}
-                    </>
-                  ) : windowSize.width > 480 ? (
-                    <>
-                      {[...Array(2)].map((obj, indx) => {
-                        return (
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                            key={indx}
-                          />
-                        );
-                      })}
-                    </>
-                  ) : (
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                  )}
-                </div>
-              )}
-            </div>
-            <div
-              className="d-flex row mx-1 flex-column align-items-start nft-outer-wrapper2 position-relative p-3 p-lg-5 gap-4 my-4"
-              style={{ minHeight: "430px" }}
-            >
-              {activeSlide2 > 0 && (
-                <div className="prev-arrow-nft" onClick={secondPrev}>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/nextArrow1.svg"}
-                    alt=""
-                  />
-                </div>
-              )}
-              {showSecondNext === activeSlide2
-                ? null
-                : recentSold?.length > sliderCut && (
-                    // <img
-                    //   src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'}
-                    //   width={40}
-                    //   height={40}
-                    //   onClick={secondNext}
-                    //   className="next-arrow-nft"
-                    //   alt=""
-                    // />
-                    <div className="next-arrow-nft" onClick={secondNext}>
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/nextArrow1.svg"
-                        }
-                        alt=""
-                      />
-                    </div>
-                  )}
-
-              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-                <h6 className="nft-wrapper-title font-raleway mb-0">
-                  Recent Sales
-                </h6>
-                <div className="d-flex align-items-center gap-4">
-                  <h6
-                    className={`filter-title ${
-                      recentSalesFilter === "all" && "filter-selected"
-                    }`}
-                    onClick={() => {
-                      filterRecentSales("all");
-                      cutLength();
-                      secondSlider.current.innerSlider.slickGoTo(0);
-                      setActiveSlide2(0);
-                    }}
-                  >
-                    All
-                  </h6>
-                  <h6
-                    className={`filter-title ${
-                      recentSalesFilter === "caws" && "filter-selected"
-                    }`}
-                    onClick={() => {
-                      filterRecentSales("caws");
-                      cutLength();
-                      secondSlider.current.innerSlider.slickGoTo(0);
-                      setActiveSlide2(0);
-                    }}
-                  >
-                    CAWS
-                  </h6>
-                  <h6
-                    className={`filter-title ${
-                      recentSalesFilter === "land" && "filter-selected"
-                    }`}
-                    onClick={() => {
-                      filterRecentSales("land");
-                      cutLength();
-                      secondSlider.current.innerSlider.slickGoTo(0);
-                      setActiveSlide2(0);
-                    }}
-                  >
-                    Land
-                  </h6>
-                  <h6
-                    className={`filter-title ${
-                      recentSalesFilter === "timepiece" && "filter-selected"
-                    }`}
-                    onClick={() => {
-                      filterRecentSales("timepiece");
-                      cutLength();
-                      secondSlider.current.innerSlider.slickGoTo(0);
-                      setActiveSlide2(0);
-                    }}
-                  >
-                    Timepiece
-                  </h6>
-                </div>
-              </div>
-              {loadingRecentSales === false ? (
-                <div className="slider-container">
-                  <Slider
-                    ref={(c) => (secondSlider.current = c)}
-                    {...settings2}
-                  >
-                    {recentSold && recentSold.length > 0
-                      ? recentSold.map((nft, index) => (
-                          <NavLink
-                            to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
-                            style={{ textDecoration: "none" }}
-                            key={index}
-                            state={{
-                              nft: nft,
-                              type: nft.type,
-                              isOwner:
-                                nft.buyer?.toLowerCase() ===
-                                coinbase?.toLowerCase(),
-                              chain: nft.chain,
-                            }}
-                            onClick={() => {
-                              updateViewCount(nft.tokenId, nft.nftAddress);
-                            }}
-                          >
-                            <ItemCard
-                              ethTokenData={ethTokenData}
-                              key={nft.id}
-                              nft={nft}
-                              isConnected={isConnected}
-                              showConnectWallet={handleConnect}
-                              isCaws={nft.type === "caws"}
-                              isTimepiece={nft.type === "timepiece"}
-                              isWod={nft.type === "land"}
-                              coinbase={coinbase}
-                              isListed={recentSales.length > 0 ? true : false}
-                              onFavorite={updateFavs}
-                              chainId={chainId}
-                            />
-                          </NavLink>
-                        ))
-                      : dummyDataSales.map((nft, index) => (
-                          <NavLink
-                            to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
-                            style={{ textDecoration: "none" }}
-                            key={index}
-                            state={{
-                              nft: nft,
-                              type: nft.type,
-                              isOwner:
-                                nft.seller?.toLowerCase() ===
-                                coinbase?.toLowerCase(),
-                              chain: nft.chain,
-                            }}
-                            onClick={() => {
-                              updateViewCount(nft.tokenId, nft.nftAddress);
-                            }}
-                          >
-                            <ItemCard
-                              ethTokenData={ethTokenData}
-                              key={nft.id}
-                              nft={nft}
-                              isConnected={isConnected}
-                              showConnectWallet={handleConnect}
-                              isCaws={nft.type === "caws"}
-                              isTimepiece={nft.type === "timepiece"}
-                              isWod={nft.type === "land"}
-                              coinbase={coinbase}
-                              lastSold={nft.LastSold}
-                              isLatestSale={nft.isLatestSale}
-                              isListed={nft.isListed}
-                              soldPriceType={nft.soldPriceType}
-                              chainId={chainId}
-                            />
-                          </NavLink>
-                        ))}
-                  </Slider>
-                </div>
-              ) : (
-                <div className="loader-wrapper mt-3 justify-content-start gap-3">
-                  {/* <HashLoader
-                    color={"#554fd8"}
-                    loading={loadingRecentListings}
-                    cssOverride={override}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                  /> */}
-                  {windowSize.width > 1600 ? (
-                    <>
-                      {[...Array(10)].map((obj, indx) => {
-                        return (
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                            key={indx}
-                          />
-                        );
-                      })}
-                    </>
-                  ) : windowSize.width > 1500 ? (
-                    <>
-                      {[...Array(5)].map((obj, indx) => {
-                        return (
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                            key={indx}
-                          />
-                        );
-                      })}
-                    </>
-                  ) : windowSize.width > 1024 ? (
-                    <>
-                      {[...Array(4)].map((obj, indx) => {
-                        return (
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                            key={indx}
-                          />
-                        );
-                      })}
-                    </>
-                  ) : windowSize.width > 600 ? (
-                    <>
-                      {[...Array(3)].map((obj, indx) => {
-                        return (
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                            key={indx}
-                          />
-                        );
-                      })}
-                    </>
-                  ) : windowSize.width > 480 ? (
-                    <>
-                      {[...Array(2)].map((obj, indx) => {
-                        return (
-                          <Skeleton
-                            animation="wave"
-                            width={178}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                            key={indx}
-                          />
-                        );
-                      })}
-                    </>
-                  ) : (
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={360}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                  )}
-                </div>
-              )}
-            </div>
+            {[
+              { type: "caws", title: "Cats and Watches Society" },
+              { type: "land", title: "World of Dypians Land" },
+              { type: "timepiece", title: "CAWS Timepiece" },
+            ].map(({ type, title }) => (
+              <CollectionSection
+                key={type}
+                title={title}
+                items={
+                  openSeaRecentListings[type].length > 0
+                    ? openSeaRecentListings[type]
+                    : openSeaRecentSales[type].length > 0
+                    ? openSeaRecentSales[type]
+                    : dummyData.filter((nft) => nft.type === type)
+                }
+                loading={loadingOpenSea}
+                sliderCut={sliderCut}
+                onItemClick={updateViewCount}
+                ethTokenData={ethTokenData}
+                isConnected={isConnected}
+                handleConnect={handleConnect}
+                coinbase={coinbase}
+                chainId={chainId}
+                onFavorite={updateFavs}
+              />
+            ))}
 
             <div
               className="row mx-0 justify-content-center d-flex my-4 align-items-start py-5 gap-4 my-4"
