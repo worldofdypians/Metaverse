@@ -11,6 +11,7 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 
 import { NavLink } from "react-router-dom";
+import { getOpenSeaLink } from "../../../utils/openSeaLink";
 import "./_filters.scss";
 import { Skeleton } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -1001,20 +1002,12 @@ const CawsNFT = ({
                   {cawsNFTS && cawsNFTS.length > 0 && count === 0 ? (
                     <>
                       {cawsNFTS.map((nft, index) => (
-                        <NavLink
-                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
+                        <a
+                          href={getOpenSeaLink("caws", nft.tokenId)}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           style={{ textDecoration: "none" }}
                           key={index}
-                          state={{
-                            nft: nft,
-                            type: nft.type,
-                            isOwner:
-                              nft.seller?.toLowerCase() ===
-                                coinbase?.toLowerCase() ||
-                              nft.buyer?.toLowerCase() ===
-                                coinbase?.toLowerCase(),
-                            chain: nft.chain,
-                          }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
                           }}
@@ -1037,7 +1030,7 @@ const CawsNFT = ({
                             handleRefreshListing={handleRefreshListing}
                             chainId={chainId}
                           />
-                        </NavLink>
+                        </a>
                       ))}
                       {count === 0 && !loading && next < allCaws ? (
                         <button
@@ -1069,20 +1062,12 @@ const CawsNFT = ({
                   ) : cawsNFTS && cawsNFTS.length === 0 && count === 0 ? (
                     dummyData.map((nft, index) => {
                       return (
-                        <NavLink
-                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
+                        <a
+                          href={getOpenSeaLink("caws", nft.tokenId)}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           style={{ textDecoration: "none" }}
                           key={index}
-                          state={{
-                            nft: nft,
-                            type: "caws",
-                            isOwner:
-                              nft.seller?.toLowerCase() ===
-                                coinbase?.toLowerCase() ||
-                              nft.buyer?.toLowerCase() ===
-                                coinbase?.toLowerCase(),
-                            chain: nft.chain,
-                          }}
                           onClick={() => {
                             updateViewCount(
                               nft.tokenId,
@@ -1106,7 +1091,7 @@ const CawsNFT = ({
                             soldPriceType={nft.soldPriceType}
                             chainId={chainId}
                           />
-                        </NavLink>
+                        </a>
                       );
                     })
                   ) : (
@@ -1116,20 +1101,12 @@ const CawsNFT = ({
                   {count > 0 && cawsNFTS2 && cawsNFTS2.length > 0 ? (
                     <>
                       {cawsNFTS2.slice(0, next2).map((nft, index) => (
-                        <NavLink
-                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
+                        <a
+                          href={getOpenSeaLink("caws", nft.tokenId)}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           style={{ textDecoration: "none" }}
                           key={index}
-                          state={{
-                            nft: nft,
-                            type: "caws",
-                            isOwner:
-                              nft.seller?.toLowerCase() ===
-                                coinbase?.toLowerCase() ||
-                              nft.buyer?.toLowerCase() ===
-                                coinbase?.toLowerCase(),
-                            chain: nft.chain,
-                          }}
                           onClick={() => {
                             updateViewCount(
                               nft.tokenId,
@@ -1153,7 +1130,7 @@ const CawsNFT = ({
                             soldPriceType={nft.soldPriceType}
                             chainId={chainId}
                           />
-                        </NavLink>
+                        </a>
                       ))}
                       {count > 0 && !loading && next2 < filterIds.length ? (
                         <button

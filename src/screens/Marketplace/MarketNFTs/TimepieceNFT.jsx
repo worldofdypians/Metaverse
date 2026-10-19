@@ -10,6 +10,7 @@ import ItemCard from "../../../components/ItemCard/ItemCard";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import useWindowSize from "../../../hooks/useWindowSize";
 import { NavLink } from "react-router-dom";
+import { getOpenSeaLink } from "../../../utils/openSeaLink";
 import "./_filters.scss";
 import axios from "axios";
 import { Skeleton } from "@mui/material";
@@ -1062,20 +1063,12 @@ const TimepieceNFT = ({
                   {timepieceNFTS && timepieceNFTS.length > 0 && count === 0 ? (
                     <>
                       {timepieceNFTS.map((nft, index) => (
-                        <NavLink
-                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
+                        <a
+                          href={getOpenSeaLink("timepiece", nft.tokenId)}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           style={{ textDecoration: "none" }}
                           key={index}
-                          state={{
-                            nft: nft,
-                            type: nft.type,
-                            isOwner:
-                              nft.seller?.toLowerCase() ===
-                                coinbase?.toLowerCase() ||
-                              nft.buyer?.toLowerCase() ===
-                                coinbase?.toLowerCase(),
-                            chain: nft.chain,
-                          }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
                           }}
@@ -1098,7 +1091,7 @@ const TimepieceNFT = ({
                             handleRefreshListing={handleRefreshListing}
                             chainId={chainId}
                           />
-                        </NavLink>
+                        </a>
                       ))}
                       {count === 0 && !loading && next < totalSupply ? (
                         <button
@@ -1132,20 +1125,12 @@ const TimepieceNFT = ({
                     count === 0 ? (
                     dummyData.map((nft, index) => {
                       return (
-                        <NavLink
-                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
+                        <a
+                          href={getOpenSeaLink("timepiece", nft.tokenId)}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           style={{ textDecoration: "none" }}
                           key={index}
-                          state={{
-                            nft: nft,
-                            type: "timepiece",
-                            isOwner:
-                              nft.seller?.toLowerCase() ===
-                                coinbase?.toLowerCase() ||
-                              nft.buyer?.toLowerCase() ===
-                                coinbase?.toLowerCase(),
-                            chain: nft.chain,
-                          }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
                           }}
@@ -1166,7 +1151,7 @@ const TimepieceNFT = ({
                             soldPriceType={nft.soldPriceType}
                             chainId={chainId}
                           />
-                        </NavLink>
+                        </a>
                       );
                     })
                   ) : (
@@ -1181,20 +1166,12 @@ const TimepieceNFT = ({
                         })
                         .slice(0, next2)
                         .map((nft, index) => (
-                          <NavLink
-                            to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          <a
+                            href={getOpenSeaLink("timepiece", nft.tokenId)}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             style={{ textDecoration: "none" }}
                             key={index}
-                            state={{
-                              nft: nft,
-                              type: "timepiece",
-                              isOwner:
-                                nft.seller?.toLowerCase() ===
-                                  coinbase?.toLowerCase() ||
-                                nft.buyer?.toLowerCase() ===
-                                  coinbase?.toLowerCase(),
-                              chain: nft.chain,
-                            }}
                             onClick={() => {
                               updateViewCount(
                                 nft.tokenId,
@@ -1218,7 +1195,7 @@ const TimepieceNFT = ({
                               soldPriceType={nft.soldPriceType}
                               chainId={chainId}
                             />
-                          </NavLink>
+                          </a>
                         ))}
                       {count > 0 && !loading && next2 < filterIds.length ? (
                         <button

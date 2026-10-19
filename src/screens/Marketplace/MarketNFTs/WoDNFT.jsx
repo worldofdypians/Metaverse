@@ -10,6 +10,7 @@ import ItemCard from "../../../components/ItemCard/ItemCard";
 import useWindowSize from "../../../hooks/useWindowSize";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import { NavLink } from "react-router-dom";
+import { getOpenSeaLink } from "../../../utils/openSeaLink";
 import OutsideClickHandler from "react-outside-click-handler";
 
 import FilterCard from "./FilterCard";
@@ -1025,20 +1026,12 @@ const WoDNFT = ({
                   {landNfts && landNfts.length > 0 && count === 0 ? (
                     <>
                       {landNfts.map((nft, index) => (
-                        <NavLink
-                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
+                        <a
+                          href={getOpenSeaLink("land", nft.tokenId)}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           style={{ textDecoration: "none" }}
                           key={index}
-                          state={{
-                            nft: nft,
-                            type: nft.type,
-                            isOwner:
-                              nft.seller?.toLowerCase() ===
-                                coinbase?.toLowerCase() ||
-                              nft.buyer?.toLowerCase() ===
-                                coinbase?.toLowerCase(),
-                            chain: nft.chain,
-                          }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
                           }}
@@ -1061,7 +1054,7 @@ const WoDNFT = ({
                             handleRefreshListing={handleRefreshListing}
                             chainId={chainId}
                           />
-                        </NavLink>
+                        </a>
                       ))}
                       {count === 0 && !loading && next < allLandpiece ? (
                         <button
@@ -1093,20 +1086,12 @@ const WoDNFT = ({
                   ) : landNfts && landNfts.length === 0 && count === 0 ? (
                     dummyData.map((nft, index) => {
                       return (
-                        <NavLink
-                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
+                        <a
+                          href={getOpenSeaLink("land", nft.tokenId)}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           style={{ textDecoration: "none" }}
                           key={index}
-                          state={{
-                            nft: nft,
-                            type: "land",
-                            isOwner:
-                              nft.seller?.toLowerCase() ===
-                                coinbase?.toLowerCase() ||
-                              nft.buyer?.toLowerCase() ===
-                                coinbase?.toLowerCase(),
-                            chain: nft.chain,
-                          }}
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
                           }}
@@ -1127,7 +1112,7 @@ const WoDNFT = ({
                             soldPriceType={nft.soldPriceType}
                             chainId={chainId}
                           />
-                        </NavLink>
+                        </a>
                       );
                     })
                   ) : (
@@ -1142,20 +1127,12 @@ const WoDNFT = ({
                         })
                         .slice(0, next2)
                         .map((nft, index) => (
-                          <NavLink
-                            to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          <a
+                            href={getOpenSeaLink("land", nft.tokenId)}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             style={{ textDecoration: "none" }}
                             key={index}
-                            state={{
-                              nft: nft,
-                              type: "land",
-                              isOwner:
-                                nft.seller?.toLowerCase() ===
-                                  coinbase?.toLowerCase() ||
-                                nft.buyer?.toLowerCase() ===
-                                  coinbase?.toLowerCase(),
-                              chain: nft.chain,
-                            }}
                             onClick={() => {
                               updateViewCount(
                                 nft.tokenId,
@@ -1179,7 +1156,7 @@ const WoDNFT = ({
                               soldPriceType={nft.soldPriceType}
                               chainId={chainId}
                             />
-                          </NavLink>
+                          </a>
                         ))}
                       {count > 0 && !loading && next2 < filterIds.length ? (
                         <button
