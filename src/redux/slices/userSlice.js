@@ -37,9 +37,6 @@ const initialState = {
     coreEarnUsd: 0,
     coreEarnToken: 0,
     corePoints: 0,
-    victionEarnUsd: 0,
-    victionEarnToken: 0,
-    victionPoints: 0,
     vanarEarnUsd: 0,
     vanarEarnToken: 0,
     vanarPoints: 0,
@@ -111,7 +108,6 @@ const initialState = {
     myCmcNfts: [],
     mySkaleNfts: [],
     myCoreNfts: [],
-    myVictionNfts: [],
     myMultiversNfts: [],
     myImmutableNfts: [],
     myMantaNfts: [],
@@ -140,11 +136,6 @@ const initialState = {
     userRankCore: 0,
     userCoreStars: 0,
     userCoreScore: 0,
-
-    // Viction Chain
-    userRankViction: 0,
-    userVictionStars: 0,
-    userVictionScore: 0,
 
     // Manta Chain
     userRankManta: 0,

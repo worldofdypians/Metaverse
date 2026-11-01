@@ -588,9 +588,6 @@ const MyRewardsPopupNew = ({
                     // Number(dailyDataAmountSkale) +
                     // Number(weeklyDataAmountSkale) +
                     // Number(monthlyDataAmountSkale) +
-                    // Number(dailyDataAmountViction) +
-                    // Number(weeklyDataAmountViction) +
-                    // Number(monthlyDataAmountViction) +
                     // Number(weeklyDataAmountManta) +
                     // Number(weeklyDataAmountBase) +
 
@@ -891,11 +888,6 @@ const MyRewardsPopupNew = ({
               style={{ width: 16, height: 16 }}
               alt=""
             />
-            <img
-              src={"https://cdn.worldofdypians.com/wod/viction.svg"}
-              style={{ width: 16, height: 16 }}
-              alt=""
-            />
             {/* <img
               src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
               style={{ width: 16, height: 16 }}
@@ -1009,12 +1001,6 @@ const MyRewardsPopupNew = ({
                 </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="item-name-left">Global </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(0, 2)}
-                  </span>
-                </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="item-name-left">Viction</span>
                   <span className="item-name-right">
                     ${getFormattedNumber(0, 2)}
                   </span>
@@ -1177,15 +1163,6 @@ const MyRewardsPopupNew = ({
                   {previousRewards
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoney.skale, 2)}
-                </span>
-              </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">Viction</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(treasureRewardMoney.viction, 2)}
                 </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
@@ -1575,23 +1552,6 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(coingeckoRewardsUSD, 2)}
-                  </span>
-                </div>
-                <div className="d-flex gap-2 align-items-center justify-content-between">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/viction.svg"}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Viction
-                  </span>
-                  <span className="item-name-right">
-                    $
-                    {getFormattedNumber(
-                      userTreasureHuntStats.victionEarnUsd,
-                      2,
-                    )}
                   </span>
                 </div>
               </div>

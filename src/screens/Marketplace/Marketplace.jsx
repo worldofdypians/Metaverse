@@ -994,11 +994,6 @@ const Marketplace = ({
                         alt=""
                         style={{ width: 24, height: 24 }}
                       />
-                      <img
-                        src={vicitonIcon}
-                        alt=""
-                        style={{ width: 24, height: 24 }}
-                      />
                     </span>
                   </div> */}
                 </div>

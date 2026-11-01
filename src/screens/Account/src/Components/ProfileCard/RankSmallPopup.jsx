@@ -95,14 +95,6 @@ const RankSmallPopup = ({ onClose, onPrimeClick }) => {
       score: userProgress.userSkaleScore,
       stars: userProgress.userSkaleStars,
     },
-    {
-      id: "viction",
-      name: "Viction",
-      icon: "https://cdn.worldofdypians.com/wod/viction.svg",
-      rank: userProgress.userRankViction,
-      score: userProgress.userVictionScore,
-      stars: userProgress.userVictionStars,
-    },
     // {
     //   id: 'mat',
     //   name: 'MAT',

@@ -72,12 +72,6 @@ const iconData = [
     chain: true,
   },
   {
-    name: "victionMarker",
-    url: "https://cdn.worldofdypians.com/wod/viction.svg",
-    size: 24,
-    chain: true,
-  },
-  {
     name: "landMarker",
     url: "https://cdn.worldofdypians.com/wod/landIcon.svg",
     size: 32,

@@ -529,10 +529,6 @@ const Portfolio = ({
         (item) => item.nftAddress === window.config.nft_core_address,
       );
 
-      let victionFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_viction_address,
-      );
-
       let immutableFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_immutable_address,
       );
@@ -595,7 +591,6 @@ const Portfolio = ({
         // ...matFilter,
         ...baseFilter,
         ...skaleFilter,
-        ...victionFilter,
         ...immutableFilter,
         ...multiversFilter,
         ...coreFilter,
@@ -2261,10 +2256,6 @@ const Portfolio = ({
                                                             window.config
                                                               .nft_core_address
                                                           ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+50.png`
-                                                          : nft.nftAddress ===
-                                                              window.config
-                                                                .nft_viction_address
-                                                            ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                                             : nft.nftAddress ===
                                                                 window.config
                                                                   .nft_kucoin_address
@@ -2393,10 +2384,6 @@ const Portfolio = ({
                                                               window.config
                                                                 .nft_core_address
                                                             ? "COBP"
-                                                            : nft.nftAddress ===
-                                                                window.config
-                                                                  .nft_viction_address
-                                                              ? "VCBP"
                                                               : nft.nftAddress ===
                                                                   window.config
                                                                     .nft_kucoin_address

@@ -14,7 +14,7 @@ const Utilities = ({ monthlyPlayers, totalSupply, socials, totalTx }) => {
       image: "dyp.svg",
       desc: `
       <p className="utility-desc">
-      Launched on December 29, 2022, World of Dypians it is currently live on Ethereum, BNB Chain, opBNB Chain, Manta Network, Taiko Network, CORE Network, SKALE Network, Immutable Network, Viction Network, Conflux Network,  Avalanche and Base. By being on the mainnet, users can participate in activities and integrations in real-time and explore the benefits of blockchain technology.
+      Launched on December 29, 2022, World of Dypians it is currently live on Ethereum, BNB Chain, opBNB Chain, Manta Network, Taiko Network, CORE Network, SKALE Network, Immutable Network, Conflux Network,  Avalanche and Base. By being on the mainnet, users can participate in activities and integrations in real-time and explore the benefits of blockchain technology.
       </p>`,
       class: "mainnet-card",
     },

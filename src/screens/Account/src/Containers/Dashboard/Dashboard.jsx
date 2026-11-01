@@ -231,7 +231,7 @@ function Dashboard({
     "9",
     "10",
   ];
-  const chestImagesViction = [
+  const chestImagesManta = [
     "0",
     "1",
     "2",
@@ -331,7 +331,6 @@ function Dashboard({
 
   const [openedChests, setOpenedChests] = useState([]);
   const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
-  const [openedVictionChests, setOpenedVictionChests] = useState([]);
   const [openedCoreChests, setOpenedCoreChests] = useState([]);
   const [openedSeiChests, setOpenedSeiChests] = useState([]);
   const [openedMantaChests, setOpenedMantaChests] = useState([]);
@@ -369,7 +368,6 @@ function Dashboard({
   const [claimedBaseChests, setclaimedBaseChests] = useState(0);
   const [claimedBasePremiumChests, setclaimedBasePremiumChests] = useState(0);
 
-  const [claimedVictionChests, setclaimedVictionChests] = useState(0);
   const [claimedSeiChests, setclaimedSeiChests] = useState(0);
   const [claimedMantaChests, setclaimedMantaChests] = useState(0);
   const [claimedTaikoChests, setclaimedTaikoChests] = useState(0);
@@ -377,8 +375,6 @@ function Dashboard({
   // const [claimedMatChests, setclaimedMatChests] = useState(0);
   // const [claimedTaraxaChests, setclaimedTaraxaChests] = useState(0);
 
-  const [claimedVictionPremiumChests, setclaimedVictionPremiumChests] =
-    useState(0);
   const [claimedSeiPremiumChests, setclaimedSeiPremiumChests] = useState(0);
   const [claimedMantaPremiumChests, setclaimedMantaPremiumChests] = useState(0);
   const [claimedTaikoPremiumChests, setclaimedTaikoPremiumChests] = useState(0);
@@ -392,7 +388,6 @@ function Dashboard({
   const [allChests, setallChests] = useState([]);
   const [allSkaleChests, setallSkaleChests] = useState([]);
   const [allCoreChests, setallCoreChests] = useState([]);
-  const [allVictionChests, setallVictionChests] = useState([]);
   const [allTaikoChests, setallTaikoChests] = useState([]);
   // const [allVanarChests, setallVanarChests] = useState([]);
   const [allSeiChests, setallSeiChests] = useState([]);
@@ -408,7 +403,6 @@ function Dashboard({
 
   const [count, setCount] = useState(0);
   const [skalecount, setskalecount] = useState(0);
-  const [vicitoncount, setvicitoncount] = useState(0);
   const [corecount, setcorecount] = useState(0);
   const [mantacount, setmantacount] = useState(0);
   const [taikocount, settaikocount] = useState(0);
@@ -428,9 +422,8 @@ function Dashboard({
   const [bnbImages] = useState(shuffle(chestImagesBnb));
   const [skaleImages] = useState(shuffle(chestImagesSkale));
   const [coreImages] = useState(shuffle(chestImagesCore));
-  const [victionImages] = useState(shuffle(chestImagesViction));
   const [taikoImages] = useState(shuffle(chestImagesTaiko));
-  const [mantaImages] = useState(shuffle(chestImagesViction));
+  const [mantaImages] = useState(shuffle(chestImagesManta));
   const [baseImages] = useState(shuffle(chestImagesBase));
   // const [matImages] = useState(shuffle(chestImagesMat));
   // const [taraxaImages] = useState(shuffle(chestImagesMat));
@@ -521,24 +514,6 @@ function Dashboard({
       userCoreScore:
         userDataCore?.statValue !== undefined && userDataCore?.statValue > 0
           ? userDataCore?.statValue
-          : 0,
-
-      // Viction Chain
-      userRankViction:
-        userDataViction?.statValue !== undefined &&
-        userDataViction?.statValue > 0
-          ? userDataViction.position
-          : "---",
-      userVictionStars:
-        (userDataViction?.statValue === 0
-          ? 0
-          : userDataViction?.position > 100
-            ? 0
-            : skaleStars[userDataViction?.position]) ?? 0,
-      userVictionScore:
-        userDataViction?.statValue !== undefined &&
-        userDataViction?.statValue > 0
-          ? userDataViction?.statValue
           : 0,
 
       // Manta Chain
@@ -748,7 +723,6 @@ function Dashboard({
   const [allBnbData, setAllBnbData] = useState([]);
   const [allSkaleData, setAllSkaleData] = useState([]);
   const [allCoreData, setAllCoreData] = useState([]);
-  const [allVictionData, setAllVictionData] = useState([]);
   // const [allVanarData, setAllVanarData] = useState([]);
   const [allMantaData, setAllMantaData] = useState([]);
   const [allTaikoData, setAllTaikoData] = useState([]);
@@ -777,7 +751,6 @@ function Dashboard({
   // const [loadingMat, setloadingMat] = useState(false);
   const [loadingSkale, setloadingSkale] = useState(false);
   const [loadingCore, setloadingCore] = useState(false);
-  const [loadingViction, setloadingViction] = useState(false);
   const [loadingManta, setloadingManta] = useState(false);
   const [loadingTaiko, setloadingTaiko] = useState(false);
   const [loadingBase, setloadingBase] = useState(false);
@@ -806,16 +779,6 @@ function Dashboard({
   const [dataAmountStarWeekly, setDataAmountStarWeekly] = useState([]);
   // const [userCollectedStars, setuserCollectedStars] = useState(0);
   // const [userCollectedStarsWeekly, setuserCollectedStarsWeekly] = useState(0);
-
-  const [dailyRecordsViction, setDailyRecordsViction] = useState([]);
-
-  const [activePlayerViction, setActivePlayerViction] = useState(false);
-
-  const [userDataViction, setUserDataViction] = useState({});
-
-  const [prevDataViction, setPrevDataViction] = useState([]);
-
-  // const [dailyDataAmountViction, setDailyDataAmountViction] = useState([]);
 
   const [dailyRecordsManta, setDailyRecordsManta] = useState([]);
 
@@ -884,7 +847,6 @@ function Dashboard({
     sei: 0,
     core: 0,
     // vanar: 0,
-    viction: 0,
     manta: 0,
     base: 0,
     taiko: 0,
@@ -1290,247 +1252,6 @@ function Dashboard({
       }, 1000);
     } else {
       setloadingCore(false);
-    }
-  };
-
-  const fillRecordsViction = (itemData) => {
-    if (itemData.length === 0) {
-      setDailyRecordsViction(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setDailyRecordsViction(finalData);
-    }
-  };
-
-  const previousWinnersVictionVersionRef = useRef(null);
-  const previousWinnersVictionFetchedVersionRef = useRef(null);
-  const previousWinnersVictionFetchingPromiseRef = useRef(null);
-  const fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef = useRef(null);
-
-  const previousWinnersVictionQuery = useReactQuery({
-    queryKey: ["previousWinnersViction"],
-    enabled: false,
-    staleTime: getMillisecondsUntil0000UTC(),
-    cacheTime: getMillisecondsUntil0000UTC(),
-    refetchOnWindowFocus: false,
-    refetchInterval: false,
-    retry: false,
-    queryFn: async () => {
-      const version = previousWinnersVictionVersionRef.current;
-      if (!version || version === 0) {
-        return placeholderplayerData;
-      }
-      const data = {
-        StatisticName: "LeaderboardVictionDaily",
-        StartPosition: 0,
-        MaxResultsCount: 100,
-        Version: version - 1,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data,
-      );
-      return result.data.data.leaderboard;
-    },
-  });
-
-  const dailyRecordsVictionQuery = useReactQuery({
-    queryKey: ["dailyRecordsViction"],
-    enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
-    retry: false,
-    refetchOnWindowFocus: false,
-    refetchInterval: false, //LEADERBOARD_CACHE_MS,
-    queryFn: async () => {
-      const data = {
-        StatisticName: "LeaderboardVictionDaily",
-        StartPosition: 0,
-        MaxResultsCount: 100,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard`,
-        data,
-      );
-      return result.data.data;
-    },
-  });
-
-  const dailyRecordsAroundPlayerVictionQuery = useReactQuery({
-    queryKey: ["dailyRecordsAroundPlayerViction", userId],
-    enabled: Boolean(userId),
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
-    retry: false,
-    refetchOnWindowFocus: false,
-    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
-    queryFn: async () => {
-      if (!userId) return [];
-      const data = {
-        StatisticName: "LeaderboardVictionDaily",
-        MaxResultsCount: 1,
-        PlayerId: userId,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data,
-      );
-      return result.data.data.leaderboard || [];
-    },
-  });
-
-  const fetchPreviousWinnersViction = async (version, forceRefresh = false) => {
-    if (version === 0) {
-      setPrevDataViction(placeholderplayerData);
-      return;
-    }
-
-    // Check if we already have the data for this version
-    if (
-      !forceRefresh &&
-      previousWinnersVictionFetchedVersionRef.current === version
-    ) {
-      return;
-    }
-
-    // If there's already a fetch in progress for the same version, wait for it
-    if (
-      previousWinnersVictionFetchingPromiseRef.current &&
-      previousWinnersVictionVersionRef.current === version
-    ) {
-      try {
-        await previousWinnersVictionFetchingPromiseRef.current;
-        // After waiting, check if the version was fetched
-        if (previousWinnersVictionFetchedVersionRef.current === version) {
-          return;
-        }
-      } catch (error) {
-        // If the previous fetch failed, just stop there
-        console.error("Previous fetch failed, stopping:", error);
-        return;
-      }
-    }
-
-    // Start a new fetch
-    previousWinnersVictionVersionRef.current = version;
-
-    const fetchPromise = (async () => {
-      try {
-        const shouldForce = forceRefresh;
-        const { data, error, fromCache } = await fetchQueryData(
-          previousWinnersVictionQuery,
-          {
-            force: shouldForce,
-          },
-        );
-        if ((error && !fromCache) || !data) {
-          setPrevDataViction(placeholderplayerData);
-          return;
-        }
-        setPrevDataViction(data);
-        previousWinnersVictionFetchedVersionRef.current = version;
-      } finally {
-        // Clear the promise ref if this is still the current fetch
-        if (previousWinnersVictionFetchingPromiseRef.current === fetchPromise) {
-          previousWinnersVictionFetchingPromiseRef.current = null;
-        }
-      }
-    })();
-
-    previousWinnersVictionFetchingPromiseRef.current = fetchPromise;
-    await fetchPromise;
-  };
-
-  const fetchDailyRecordsAroundPlayerViction = async (forceRefresh = false) => {
-    if (!userId) return;
-
-    // If there's already a fetch in progress, wait for it
-    if (fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current) {
-      try {
-        await fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current;
-        return;
-      } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
-      }
-    }
-
-    // Start a new fetch
-    const fetchPromise = (async () => {
-      try {
-        const { data, error, fromCache } = await fetchQueryData(
-          dailyRecordsAroundPlayerVictionQuery,
-          {
-            force: forceRefresh,
-          },
-        );
-        if ((error && !fromCache) || !data?.length) {
-          setActivePlayerViction(false);
-          return;
-        }
-        const [userRecord] = data;
-        setUserDataViction(userRecord);
-        setActivePlayerViction(
-          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99,
-        );
-      } finally {
-        // Clear the promise ref if this is still the current fetch
-        if (
-          fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current ===
-          fetchPromise
-        ) {
-          fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current = null;
-        }
-      }
-    })();
-
-    fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current =
-      fetchPromise;
-    await fetchPromise;
-  };
-
-  const fetchDailyRecordsViction = async (forceRefresh = false) => {
-    const useCache = !forceRefresh && isQueryFresh(dailyRecordsVictionQuery);
-    if (!useCache) {
-      setloadingViction(true);
-    }
-
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsVictionQuery,
-      {
-        force: forceRefresh,
-      },
-    );
-
-    if ((error && !fromCache) || !data) {
-      fillRecordsViction([]);
-      setPrevDataViction(placeholderplayerData);
-      setloadingViction(false);
-      return;
-    }
-
-    const leaderboard = data?.leaderboard ?? [];
-    setDailyRecordsViction(leaderboard);
-    fillRecordsViction(leaderboard);
-
-    const version = parseInt(data?.version);
-    await fetchPreviousWinnersViction(
-      Number.isNaN(version) ? 0 : version,
-      forceRefresh,
-    );
-
-    if (userId) {
-      await fetchDailyRecordsAroundPlayerViction(forceRefresh);
-    }
-
-    if (!useCache) {
-      setTimeout(() => {
-        setloadingViction(false);
-      }, 1000);
-    } else {
-      setloadingViction(false);
     }
   };
 
@@ -4550,19 +4271,15 @@ function Dashboard({
       setclaimedPremiumChests(0);
       setclaimedCorePremiumChests(0);
       setclaimedCoreChests(0);
-      setclaimedVictionPremiumChests(0);
-      setclaimedVictionChests(0);
       // setclaimedMatChests(0);
 
       setallChests([]);
       setallSkaleChests([]);
       setallCoreChests([]);
-      setallVictionChests([]);
       // setallMatChests([]);
 
       setOpenedChests([]);
       setOpenedCoreChests([]);
-      setOpenedVictionChests([]);
       setOpenedSkaleChests([]);
       setclaimedSkaleChests(0);
       setclaimedSkalePremiumChests(0);
@@ -4612,12 +4329,6 @@ function Dashboard({
       getAllSkaleChests(email);
     }
   }, [skalecount]);
-
-  useEffect(() => {
-    if (vicitoncount !== 0) {
-      getAllVictionChests(email);
-    }
-  }, [vicitoncount]);
 
   useEffect(() => {
     if (mantacount !== 0) {
@@ -4698,7 +4409,6 @@ function Dashboard({
       activePlayerCore,
       activePlayerManta,
       activePlayerSkale,
-      activePlayerViction,
       activePlayerTaiko,
       // activePlayerMat,
       activePlayerSei,
@@ -4735,7 +4445,6 @@ function Dashboard({
     activePlayerCore,
     activePlayerManta,
     activePlayerSkale,
-    activePlayerViction,
     activePlayerTaiko,
     // activePlayerMat,
     activePlayerSei,
@@ -4826,29 +4535,6 @@ function Dashboard({
     userDataCore,
     activePlayerCore,
     loadingCore,
-  ]);
-
-  useEffect(() => {
-    setAllVictionData([
-      {
-        title: "DAILY",
-        reset: "Daily (00:00 UTC)",
-        type: "stars",
-        rewards: skaleStars,
-        previous_rewards: skaleStars,
-        activeData: dailyRecordsViction,
-        previousData: prevDataViction,
-        player_data: userDataViction,
-        is_active: activePlayerViction,
-        loading: loadingViction,
-      },
-    ]);
-  }, [
-    dailyRecordsViction,
-    prevDataViction,
-    userDataViction,
-    activePlayerViction,
-    loadingViction,
   ]);
 
   useEffect(() => {
@@ -4984,7 +4670,6 @@ function Dashboard({
     setDailyRecordsManta([]);
     setDailyRecordsBase([]);
     setDailyRecordsCore([]);
-    setDailyRecordsViction([]);
     setDailyRecordsSkale([]);
     // setDailyRecordsVanar([]);
     // setDailyRecordsTaraxa([]);
@@ -5047,10 +4732,6 @@ function Dashboard({
       // if (dailyRecordsCore.length === 0) {
       fetchDailyRecordsCore();
       // }
-    } else if (chain === "viction") {
-      // if (dailyRecordsViction.length === 0) {
-      fetchDailyRecordsViction();
-      // }
     } else if (chain === "skale") {
       // if (dailyRecordsSkale.length === 0) {
       fetchDailyRecordsSkale();
@@ -5067,7 +4748,6 @@ function Dashboard({
       fetchDailyRecordsAroundPlayerManta(false);
       fetchDailyRecordsAroundPlayerBase(false);
       fetchDailyRecordsAroundPlayerCore(false);
-      fetchDailyRecordsAroundPlayerViction(false);
       fetchDailyRecordsAroundPlayerSkale(false);
       fetchDailyRecordsAroundPlayerStar(false, starRecords);
       fetchWeeklyRecordsAroundPlayerStar(false, starRecordsWeekly);
@@ -5470,7 +5150,6 @@ function Dashboard({
           claimedChests + claimedPremiumChests < 20 ||
           claimedSkaleChests + claimedSkalePremiumChests < 20 ||
           claimedCoreChests + claimedCorePremiumChests < 20 ||
-          claimedVictionChests + claimedVictionPremiumChests < 20 ||
           claimedMantaChests + claimedMantaPremiumChests < 20 ||
           claimedBaseChests + claimedBasePremiumChests < 20 ||
           claimedTaikoChests + claimedTaikoPremiumChests < 20 ||
@@ -5484,7 +5163,6 @@ function Dashboard({
           claimedChests + claimedPremiumChests === 20 &&
           claimedSkaleChests + claimedSkalePremiumChests === 20 &&
           claimedCoreChests + claimedCorePremiumChests === 20 &&
-          claimedVictionChests + claimedVictionPremiumChests === 20 &&
           claimedMantaChests + claimedMantaPremiumChests === 20 &&
           claimedBaseChests + claimedBasePremiumChests === 20 &&
           claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
@@ -5500,7 +5178,6 @@ function Dashboard({
           claimedChests < 10 ||
           claimedSkaleChests < 10 ||
           claimedCoreChests < 10 ||
-          claimedVictionChests < 10 ||
           claimedMantaChests < 10 ||
           claimedBaseChests < 10 ||
           claimedTaikoChests < 10 ||
@@ -5514,7 +5191,6 @@ function Dashboard({
           claimedChests === 10 &&
           claimedSkaleChests === 10 &&
           claimedCoreChests === 10 &&
-          claimedVictionChests === 10 &&
           claimedMantaChests === 10 &&
           claimedBaseChests === 10 &&
           claimedTaikoChests === 10 &&
@@ -5659,49 +5335,6 @@ function Dashboard({
           setclaimedCoreChests(openedStandardChests.length);
           setclaimedCorePremiumChests(openedPremiumChests.length);
           setallCoreChests(chestOrder);
-        }
-      }
-    }
-  };
-
-  const getAllVictionChests = async (userEmail) => {
-    if (userEmail) {
-      const emailData = { emailAddress: userEmail, chainId: "viction" };
-
-      const result = await axios.post(
-        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-        emailData,
-      );
-      if (result.status === 200 && result.data) {
-        const chestOrder = result.data.chestOrder;
-
-        let standardChestsArray = [];
-        let premiumChestsArray = [];
-        let openedChests = [];
-        let openedStandardChests = [];
-        let openedPremiumChests = [];
-
-        if (chestOrder.length > 0) {
-          for (let item = 0; item < chestOrder.length; item++) {
-            if (chestOrder[item].chestType === "Standard") {
-              if (chestOrder[item].isOpened === true) {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
-              }
-              standardChestsArray.push(chestOrder[item]);
-            } else if (chestOrder[item].chestType === "Premium") {
-              if (chestOrder[item].isOpened === true) {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
-              }
-              premiumChestsArray.push(chestOrder[item]);
-            }
-          }
-          setOpenedVictionChests(openedChests);
-
-          setclaimedVictionChests(openedStandardChests.length);
-          setclaimedVictionPremiumChests(openedPremiumChests.length);
-          setallVictionChests(chestOrder);
         }
       }
     }
@@ -6247,7 +5880,6 @@ function Dashboard({
       bnb: 0,
       skale: 0,
       core: 0,
-      viction: 0,
       manta: 0,
       base: 0,
       taiko: 0,
@@ -6307,25 +5939,6 @@ function Dashboard({
                 innerChest.status === "Claimed"
               ) {
                 temp.core += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedVictionChests && openedVictionChests.length > 0) {
-      openedVictionChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                temp.viction += Number(innerChest.reward);
               }
             });
           }
@@ -6470,7 +6083,6 @@ function Dashboard({
         prev.bnb === temp.bnb &&
         prev.skale === temp.skale &&
         prev.core === temp.core &&
-        prev.viction === temp.viction &&
         prev.manta === temp.manta &&
         prev.base === temp.base &&
         prev.taiko === temp.taiko &&
@@ -6518,8 +6130,6 @@ function Dashboard({
     claimedSkalePremiumChests,
     claimedCoreChests,
     claimedCorePremiumChests,
-    claimedVictionChests,
-    claimedVictionPremiumChests,
     claimedMantaChests,
     claimedMantaPremiumChests,
     claimedSeiChests,
@@ -6564,7 +6174,6 @@ function Dashboard({
       userData ||
       userDataSkale ||
       userDataCore ||
-      userDataViction ||
       userDataManta ||
       userDataBase ||
       userDataTaiko ||
@@ -6580,7 +6189,6 @@ function Dashboard({
     userData,
     userDataSkale,
     userDataCore,
-    userDataViction,
     userDataManta,
     userDataBase,
     userDataTaiko,
@@ -6629,7 +6237,6 @@ function Dashboard({
       getAllChests(email);
       // getAIQuestionRewardStatus(email);
       getAllCoreChests(email);
-      getAllVictionChests(email);
       getAllMantaChests(email);
       getAllBaseChests(email);
       getAllTaikoChests(email);
@@ -6667,7 +6274,6 @@ function Dashboard({
     userWallet,
     openedCoreChests,
     // openedMatChests,
-    openedVictionChests,
     openedSkaleChests,
     openedMantaChests,
     openedSeiChests,
@@ -6698,7 +6304,6 @@ function Dashboard({
       fetchDailyRecordsAroundPlayerTaiko(false, []);
       // fetchDailyRecordsAroundPlayerVanar(false, []);
       // fetchDailyRecordsAroundPlayerMat(false, []);
-      fetchDailyRecordsAroundPlayerViction(false, []);
       fetchDailyRecordsAroundPlayerSkale(false, []);
       // fetchDailyRecordsAroundPlayerTaraxa(false, []);
       effectRan.current = true;
@@ -6814,10 +6419,9 @@ function Dashboard({
                 openedSeiChests.length +
                 // openedTaraxaChests.length +
                 openedSkaleChests.length +
-                openedTaikoChests.length +
+                openedTaikoChests.length
                 // openedVanarChests.length +
                 // openedMatChests.length +
-                openedVictionChests.length
               }
               allClaimedChestsPremium={
                 claimedBasePremiumChests +
@@ -6828,7 +6432,6 @@ function Dashboard({
                 // claimedMatPremiumChests +
                 claimedTaikoPremiumChests +
                 // claimedVanarPremiumChests +
-                claimedVictionPremiumChests +
                 claimedSkalePremiumChests +
                 claimedPremiumChests
               }
@@ -6841,7 +6444,6 @@ function Dashboard({
                 // claimedMatChests +
                 claimedTaikoChests +
                 // claimedVanarChests +
-                claimedVictionChests +
                 claimedSkaleChests +
                 claimedChests
               }
@@ -6948,7 +6550,6 @@ function Dashboard({
             bnbImages={bnbImages}
             skaleImages={skaleImages}
             seiImages={seiImages}
-            victionImages={victionImages}
             mantaImages={mantaImages}
             baseImages={baseImages}
             taikoImages={taikoImages}
@@ -6974,8 +6575,6 @@ function Dashboard({
             claimedSkalePremiumChests={claimedSkalePremiumChests}
             claimedCoreChests={claimedCoreChests}
             claimedCorePremiumChests={claimedCorePremiumChests}
-            claimedVictionChests={claimedVictionChests}
-            claimedVictionPremiumChests={claimedVictionPremiumChests}
             claimedMantaChests={claimedMantaChests}
             claimedMantaPremiumChests={claimedMantaPremiumChests}
             claimedBaseChests={claimedBaseChests}
@@ -6994,7 +6593,6 @@ function Dashboard({
             openedChests={openedChests}
             openedSkaleChests={openedSkaleChests}
             openedCoreChests={openedCoreChests}
-            openedVictionChests={openedVictionChests}
             openedMantaChests={openedMantaChests}
             openedBaseChests={openedBaseChests}
             openedTaikoChests={openedTaikoChests}
@@ -7006,7 +6604,6 @@ function Dashboard({
             allChests={allChests}
             allSkaleChests={allSkaleChests}
             allCoreChests={allCoreChests}
-            allVictionChests={allVictionChests}
             allMantaChests={allMantaChests}
             allBaseChests={allBaseChests}
             allTaikoChests={allTaikoChests}
@@ -7022,9 +6619,6 @@ function Dashboard({
             }}
             onCoreChestClaimed={() => {
               setcorecount(corecount + 1);
-            }}
-            onVictionChestClaimed={() => {
-              setvicitoncount(vicitoncount + 1);
             }}
             onMantaChestClaimed={() => {
               setmantacount(mantacount + 1);
@@ -7099,7 +6693,6 @@ function Dashboard({
                 allBnbData={allBnbData}
                 allSkaleData={allSkaleData}
                 allCoreData={allCoreData}
-                allVictionData={allVictionData}
                 allMantaData={allMantaData}
                 allBaseData={allBaseData}
                 allTaikoData={allTaikoData}

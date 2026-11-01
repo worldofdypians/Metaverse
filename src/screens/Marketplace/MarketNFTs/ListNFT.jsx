@@ -1432,8 +1432,6 @@ console.log('finalCollection',finalCollection)
       nftAddress.toLowerCase() === window.config.nft_core_address.toLowerCase()
     ) {
       setType("core");
-    } else if (nftAddress === window.config.nft_viction_address) {
-      setType("viction");
     } else if (
       nftAddress.toLowerCase() ===
       window.config.nft_immutable_address.toLowerCase()
@@ -1528,8 +1526,6 @@ console.log('finalCollection',finalCollection)
         : nftAddress.toLowerCase() ===
           window.config.nft_core_address.toLowerCase()
         ? "core"
-        : nftAddress === window.config.nft_viction_address
-        ? "viction"
         : nftAddress.toLowerCase() ===
           window.config.nft_immutable_address.toLowerCase()
         ? "immutable"
@@ -1839,18 +1835,6 @@ console.log('finalCollection',finalCollection)
                   </h6>
                 </h6>
               </>
-            ) : type === "viction" ? (
-              <>
-                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
-                  Viction{" "}
-                  <h6
-                    className="market-banner-title m-0"
-                    style={{ color: "#8C56FF", lineHeight: "80%" }}
-                  >
-                    Beta Pass
-                  </h6>
-                </h6>
-              </>
             ) : type === "multivers" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
@@ -1923,8 +1907,6 @@ console.log('finalCollection',finalCollection)
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
                         : type === "core"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+400.png`
-                        : type === "viction"
-                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+400.png`
                         : type === "multivers"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+400.png`
                         : type === "base"
@@ -1981,8 +1963,6 @@ console.log('finalCollection',finalCollection)
                           ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
                           : type === "core"
                           ? "https://cdn.worldofdypians.com/wod/core.svg"
-                          : type === "viction"
-                          ? "https://cdn.worldofdypians.com/wod/viction.svg"
                           : type === "mat"
                           ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
                           : type === "multivers"
@@ -2017,8 +1997,6 @@ console.log('finalCollection',finalCollection)
                       ? "Avalanche"
                       : type === "skale"
                       ? "SKALE"
-                      : type === "viction"
-                      ? "Viction"
                       : type === "multivers"
                       ? "MultiversX"
                       : type === "core"
@@ -2090,8 +2068,6 @@ console.log('finalCollection',finalCollection)
                           ? "CoinMarketCap Beta Pass"
                           : type === "core"
                           ? "CORE Beta Pass"
-                          : type === "viction"
-                          ? "Viction Beta Pass"
                           : type === "multivers"
                           ? "MultiversX Beta Pass"
                           : type === "immutable"
@@ -2235,7 +2211,6 @@ console.log('finalCollection',finalCollection)
                         type !== "opbnb" &&
                         type !== "cmc" &&
                         type !== "core" &&
-                        type !== "viction" &&
                         type !== "multivers" &&
                         type !== "skale" &&
                         type !== "immutable" &&
@@ -2400,7 +2375,6 @@ console.log('finalCollection',finalCollection)
                         type !== "opbnb" &&
                         type !== "cmc" &&
                         type !== "core" &&
-                        type !== "viction" &&
                         type !== "multivers" &&
                         type !== "cawsbnb" &&
                         type !== "cawsavax" &&
@@ -2603,7 +2577,6 @@ console.log('finalCollection',finalCollection)
                           type === "skale" ||
                           type === "cmc" ||
                           type === "core" ||
-                          type === "viction" ||
                           type === "multivers" ||
                           type === "immutable" ||
                           type === "cawsbnb" ||
@@ -2649,8 +2622,6 @@ console.log('finalCollection',finalCollection)
                                     ? `https://snowtrace.io/address/${owner}`
                                     : type === "skale"
                                     ? `https://green-giddy-denebola.explorer.mainnet.skalenodes.com/address/${owner}`
-                                    : type === "viction"
-                                    ? `https://www.vicscan.xyz/address/${owner}`
                                     : type === "core"
                                     ? `https://scan.coredao.org/address/${owner}`
                                     : type === "manta"
@@ -2852,7 +2823,6 @@ console.log('finalCollection',finalCollection)
                           type !== "cookie3" &&
                           type !== "base" &&
                           type !== "cmc" &&
-                          type !== "viction" &&
                           type !== "multivers" &&
                           type !== "core" &&
                           type !== "doge" &&
@@ -2941,7 +2911,6 @@ console.log('finalCollection',finalCollection)
                           type !== "skale" &&
                           type !== "cmc" &&
                           type !== "core" &&
-                          type !== "viction" &&
                           type !== "multivers" &&
                           type !== "cawsbnb" &&
                           type !== "cawsavax" &&
@@ -2985,7 +2954,6 @@ console.log('finalCollection',finalCollection)
                           type !== "skale" &&
                           type !== "cmc" &&
                           type !== "core" &&
-                          type !== "viction" &&
                           type !== "multivers" &&
                           type !== "immutable" &&
                           type !== "cawsbnb" &&
@@ -3307,7 +3275,6 @@ console.log('finalCollection',finalCollection)
             type !== "skale" &&
             type !== "cmc" &&
             type !== "core" &&
-            type !== "viction" &&
             type !== "multivers" &&
             type !== "immutable" &&
             type !== "mat" &&
@@ -3582,7 +3549,6 @@ console.log('finalCollection',finalCollection)
             type === "skale" ||
             type === "cmc" ||
             type === "core" ||
-            type === "viction" ||
             type === "multivers" ||
             type === "immutable" ||
             type === "mat" ||
@@ -3637,8 +3603,6 @@ console.log('finalCollection',finalCollection)
                             ? "SKL"
                             : type === "core"
                             ? "CORE"
-                            : type === "viction"
-                            ? "VIC"
                             : type === "multivers"
                             ? "EGLD"
                             : type === "immutable"

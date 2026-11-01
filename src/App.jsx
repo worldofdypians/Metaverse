@@ -813,7 +813,7 @@ function AppRoutes() {
   let teaLastDay = new Date("2025-10-16T13:00:00.000+02:00");
   let bnbLastDay = new Date("2026-09-15T14:00:00.000+02:00");
   let coreLastDay = new Date("2025-04-04T14:00:00.000+02:00");
-  let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
+  let expiredEventLastDay = new Date("2025-03-29T14:00:00.000+02:00");
   let coreLastDay2 = new Date("2026-05-19T14:00:00.000+02:00");
   let mantaLastDay = new Date("2025-08-13T14:00:00.000+02:00");
   let taikoLastDay = new Date("2025-08-02T14:00:00.000+02:00");
@@ -833,7 +833,6 @@ function AppRoutes() {
   const [loadingRecentListings, setLoadingRecentListings] = useState(false);
 
   const [corePrice, setCorePrice] = useState(0);
-  const [victionPrice, setVictionPrice] = useState(0);
   const [vanarPrice, setvanarPrice] = useState(0);
   const [taikoPrice, setTaikoPrice] = useState(0);
   // const [taraxaPrice, setTaraxaPrice] = useState(0);
@@ -1966,7 +1965,7 @@ function AppRoutes() {
         id: "event15",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in IMX Rewards",
-        eventDuration: victionLastDay,
+        eventDuration: expiredEventLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -2339,7 +2338,7 @@ function AppRoutes() {
         id: "event26",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: victionLastDay,
+        eventDuration: expiredEventLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -2393,7 +2392,7 @@ function AppRoutes() {
         id: "event27",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: victionLastDay,
+        eventDuration: expiredEventLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -2469,60 +2468,6 @@ function AppRoutes() {
         telegramLink: "https://t.me/cookie3_co",
         websiteLink: "https://www.cookie3.com/",
         thumbImage: "https://cdn.worldofdypians.com/wod/cookie3Thumb.png",
-      },
-    },
-    {
-      title: "VICTION",
-      logo: "https://cdn.worldofdypians.com/wod/viction.svg",
-      eventStatus: "Expired",
-      totalRewards: "$20,000 in VIC Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Nov 29, 2024",
-      type: "Treasure Hunt",
-      infoType: "Treasure Hunt",
-
-      marker: markers.treasureMarker,
-      backgroundImage: "https://cdn.worldofdypians.com/wod/victionBg.webp",
-      image: "victionBanner.png",
-      userEarnUsd: user.userStats.victionEarnUsd,
-      userEarnCrypto: user.userStats.victionEarnToken,
-      userEarnPoints: user.userStats.victionPoints,
-      popupInfo: {
-        title: "VICTION",
-        chain: "VICTION Chain",
-        linkState: "viction",
-        rewards: "VIC",
-        status: "Expired",
-        id: "event14",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in VIC Rewards",
-        eventDuration: victionLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Nov 29, 2024",
-        detailsText: `To participate in the event, players are required to&nbsp;
-                  <b>hold a Viction Beta Pass NFT</b>. You can get the Viction
-                  Beta Pass NFT from the World of Dypians Shop. By engaging in
-                  the game on a daily basis and exploring the Viction area,
-                  players not only stand a chance to secure daily rewards in
-                  VIC, but also earn points for their placement on the global
-                  leaderboard. Remember to log in to the game daily and venture
-                  into the Viction area to uncover hidden treasures.`,
-        about: `Viction, previously known as TomoChain, is a people-centric
-            layer-1 blockchain that provides zero-gas transactions and
-            heightened security, making Web3 accessible and safe for everyone.
-            With a design emphasis on user experience, Viction prioritizes
-            zero-gas transactions through the innovative TRC25 token standard,
-            alongside speed, security, and scalability, all contributing to a
-            more secure and open world.`,
-        twitterLink: "https://viction.link/x",
-        telegramLink: "https://viction.link/telegram",
-        websiteLink: "https://www.viction.xyz/",
-        thumbImage: "https://cdn.worldofdypians.com/wod/victionThumb.png",
       },
     },
     {
@@ -3245,16 +3190,6 @@ function AppRoutes() {
       });
   };
 
-  const fetchVictionPrice = async () => {
-    await axios
-      .get(`https://api.worldofdypians.com/api/price/tomochain`)
-      .then((obj) => {
-        setVictionPrice(obj.data.price);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
 
   const fetchVanarPrice = async () => {
     await axios
@@ -3355,9 +3290,8 @@ function AppRoutes() {
     fetchCorePrice();
     fetchCFXPrice();
     fetchTWTPrice();
-    fetchVictionPrice();
     // fetchVanarPrice();
-    fetchEgldPrice();
+    // fetchEgldPrice();
     fetchImmutablePrice();
     fetchKucoinCoinPrice();
     fetchEthereumPrice();
@@ -4102,7 +4036,6 @@ function AppRoutes() {
     const bscClient = makeClient(window.config.bsc_endpoint);
     const skaleClient = makeClient(window.config.skale_endpoint);
     const opbnbClient = makeClient(window.config.opbnb_endpoint);
-    const victionClient = makeClient(window.config.viction_endpoint);
     const coreClient = makeClient(window.config.core_endpoint);
     const multiversClient = bscClient;
     const mantaClient = makeClient(window.config.manta_endpoint);
@@ -4123,7 +4056,6 @@ function AppRoutes() {
       opbnbresult,
       kucoinresult,
       bnb_5ya_result,
-      victionresult,
       coreresult,
       multiversresult,
       mantaresult,
@@ -4179,11 +4111,6 @@ function AppRoutes() {
         opbnbClient,
         window.config.nft_bnb5ya_address,
         window.OPBNB_NFT_ABI,
-      ),
-      safeReadTotalSupply(
-        victionClient,
-        window.config.nft_viction_address.toLowerCase(),
-        window.VICTION_NFT_ABI,
       ),
       safeReadTotalSupply(
         coreClient,
@@ -4278,7 +4205,6 @@ function AppRoutes() {
         Number(bnbresult) +
         Number(opbnbresult) +
         Number(coreresult) +
-        Number(victionresult) +
         Number(multiversresult) +
         Number(mantaresult) +
         Number(taikoresult) +
@@ -4461,10 +4387,6 @@ function AppRoutes() {
 
           const coreEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "core";
-          });
-
-          const victionEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "viction";
           });
 
           const mantaEvent = responseData.events.filter((obj) => {
@@ -4805,23 +4727,6 @@ function AppRoutes() {
             });
           }
 
-          if (victionEvent && victionEvent[0]) {
-            // if (victionEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
-
-            const userEarnedusd =
-              victionEvent[0].reward.earn.total /
-              victionEvent[0].reward.earn.multiplier;
-            const pointsViction = victionEvent[0].reward.earn.totalPoints;
-
-            setUserStats({
-              victionPoints: pointsViction,
-              victionEarnUsd: userEarnedusd,
-              victionEarnToken: userEarnedusd / victionPrice,
-            });
-          }
-
           if (mantaEvent && mantaEvent[0]) {
             // if (mantaEvent[0].reward.earn.totalPoints > 0) {
             //   userActiveEvents = userActiveEvents + 1;
@@ -5113,9 +5018,6 @@ function AppRoutes() {
       setUserNFTs({ myCoreNfts: NFTS ?? [] }),
     );
 
-    getMyNFTS(wallet, "viction").then((NFTS) =>
-      setUserNFTs({ myVictionNfts: NFTS ?? [] }),
-    );
     getMyNFTS(wallet, "immutable").then((NFTS) =>
       setUserNFTs({ myImmutableNfts: NFTS ?? [] }),
     );
@@ -5553,7 +5455,6 @@ function AppRoutes() {
     corePrice &&
     seiPrice &&
     vanarPrice &&
-    victionPrice &&
     mantaPrice &&
     multiversPrice &&
     skalePrice &&
@@ -5583,7 +5484,6 @@ function AppRoutes() {
     corePrice,
     seiPrice,
     vanarPrice,
-    victionPrice,
     mantaPrice,
     multiversPrice,
     skalePrice,
