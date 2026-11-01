@@ -83,7 +83,6 @@ const NewLeaderBoard = ({
   // allVanarData,
   allCoreData,
   allSkaleData,
-  allVictionData,
   allMantaData,
   allBaseData,
   allTaikoData,
@@ -156,13 +155,6 @@ const NewLeaderBoard = ({
     // if (allTaraxaData && allTaraxaData.length > 0 && optionText2 === "taraxa") {
     //   setAllData(allTaraxaData);
     // }
-    if (
-      allVictionData &&
-      allVictionData.length > 0 &&
-      optionText2 === "viction"
-    ) {
-      setAllData(allVictionData);
-    }
   }, [
     allBnbData,
     allBaseData,
@@ -172,7 +164,6 @@ const NewLeaderBoard = ({
     allSeiData,
     allSkaleData,
     allTaikoData,
-    allVictionData,
     // allVanarData,
     // allTaraxaData,
   ]);
@@ -550,46 +541,6 @@ const NewLeaderBoard = ({
                           ? "SKALE"
                           : windowSize.width < 786 && optionText2 === "skale"
                             ? "SKALE"
-                            : ""}
-                      </button>
-                      <button
-                        onMouseEnter={() => handleMouseEnter("viction")}
-                        onMouseLeave={handleMouseLeave}
-                        className={`
-                     d-flex align-items-center gap-2
-                     
-                     ${
-                       optionText2 === "viction" &&
-                       "otheroptionsActive optionswrapper-bg-new"
-                     } leaderboard-inactive-btn2 w-100`}
-                        onClick={() => {
-                          handleOption("viction");
-                          setAllData(allVictionData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "viction"
-                              ? "https://cdn.worldofdypians.com/wod/viction.svg"
-                              : optionText2 !== "viction" &&
-                                  hoverState === "viction"
-                                ? "https://cdn.worldofdypians.com/wod/victionWhite.svg"
-                                : "https://cdn.worldofdypians.com/wod/victionInactive.svg"
-                          }
-                          className={`${
-                            optionText2 === "viction"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={18}
-                          height={18}
-                          style={{ borderRadius: "50%" }}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "Viction"
-                          : windowSize.width < 786 && optionText2 === "viction"
-                            ? "Viction"
                             : ""}
                       </button>
                       {/* <button

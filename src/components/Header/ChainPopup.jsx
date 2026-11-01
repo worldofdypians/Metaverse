@@ -145,23 +145,6 @@ const ChainPopup = ({
                 </Dropdown.Item>
               )}
 
-            {window.WALLET_TYPE !== "binance" &&
-              !window.ethereum?.isBinance && (
-                <Dropdown.Item
-                  onClick={() => onSwitchNetwork("0x58", 88)}
-                  className={
-                    activeChain === "viction" ? "active-chain-btn" : ""
-                  }
-                >
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/viction.svg"}
-                    width={20}
-                    height={20}
-                    alt=""
-                  />
-                  Viction
-                </Dropdown.Item>
-              )}
              
               <Dropdown.Item
                 onClick={() => onSwitchNetwork("0xa86a", 43114)}

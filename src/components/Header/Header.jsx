@@ -98,8 +98,6 @@ const Header = ({
         setchainState("skale");
       } else if (chainId === 1116) {
         setchainState("core");
-      } else if (chainId === 88) {
-        setchainState("viction");
       } else if (chainId === 13371) {
         setchainState("immutable");
       } else if (chainId === 169) {
@@ -1358,8 +1356,6 @@ const Header = ({
                                                   ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
                                                   : chainState === "core"
                                                     ? "https://cdn.worldofdypians.com/wod/core.svg"
-                                                    : chainState === "viction"
-                                                      ? "https://cdn.worldofdypians.com/wod/viction.svg"
                                                       : chainState ===
                                                           "immutable"
                                                         ? "https://cdn.worldofdypians.com/wod/immutable.svg"

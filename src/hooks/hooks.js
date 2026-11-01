@@ -124,17 +124,6 @@ export const handleSwitchNetworkhook = async (chainID) => {
     rpcUrls: ["https://core.drpc.org"],
     blockExplorerUrls: ["https://scan.coredao.org"],
   };
-  const VICTIONPARAMS = {
-    chainId: "0x58", // A 0x-prefixed hexadecimal string
-    chainName: "Viction",
-    nativeCurrency: {
-      name: "Viction",
-      symbol: "VIC", // 2-6 characters long
-      decimals: 18,
-    },
-    rpcUrls: ["https://viction.drpc.org/"],
-    blockExplorerUrls: ["https://www.vicscan.xyz/"],
-  };
   const SEIPARAMS = {
     chainId: "0x531", // A 0x-prefixed hexadecimal string
     chainName: "Sei Network",
@@ -223,7 +212,6 @@ export const handleSwitchNetworkhook = async (chainID) => {
       (chainID === "0x45c" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x28c58" &&
         switchError.code.toString().includes("32603")) ||
-      (chainID === "0x58" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x531" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x343b" && switchError.code.toString().includes("32603")) ||
       (chainID === "0xa9" && switchError.code.toString().includes("32603")) ||
@@ -260,8 +248,6 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [COREPARAMS]
               : chainID === "0x28c58"
               ? [TAIKOPARAMS]
-              : chainID === "0x58"
-              ? [VICTIONPARAMS]
               : chainID === "0x531"
               ? [SEIPARAMS]
               : chainID === "0x343b"

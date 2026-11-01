@@ -931,72 +931,6 @@ const chainAreas = [
     ],
   },
   {
-    title: "Viction Area",
-    marker: markers.victionMarker,
-    activeMarker: activeMarkers.victionMarker,
-
-    icon: "https://cdn.worldofdypians.com/wod/viction.svg",
-    location: [-0.0699144428319988, 0.08450567722320558],
-    banner: "victionBanner.png",
-    area: [
-      [
-        [-0.06978569689494729, 0.08455932140350342],
-        [-0.06981788337923879, 0.08439302444458008],
-        [-0.07016120587699533, 0.08447349071502686],
-        [-0.07009683290887032, 0.08467197418212892],
-      ],
-    ],
-    events: [
-      {
-        title: "Daily Bonus",
-        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
-        link: "/account#dailybonus",
-      },
-
-      {
-        title: "Leaderboard",
-        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
-        link: "/account#leaderboard",
-      },
-    ],
-    pastEvents: [
-      {
-        title: "Treasure Hunt",
-        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-        link: "/account/challenges/treasure-hunt",
-      },
-    ],
-    socials: [
-      {
-        link: "https://x.com/BuildOnViction",
-        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
-      },
-      {
-        link: "https://t.me/buildonviction",
-        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
-      },
-      {
-        link: "https://discord.com/invite/viction",
-        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
-      },
-      {
-        link: "https://www.viction.xyz/",
-        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
-      },
-    ],
-    city: "Dypians",
-    size: "125x125",
-    rewards: "Available",
-    desc: "Viction is a people-centric layer-1 blockchain that offers zero-gas transactions and enhanced security to make Web3 easy and safe for everyone. ",
-    benefits: [
-      "Participate in exclusive quests and events",
-      "Earn rewards by completing daily tasks",
-      "Explore an immersive environment ",
-      "Experience real-time interactions",
-      "Get ranked in dedicated leaderboards",
-    ],
-  },
-  {
     title: "Taiko Area",
     marker: markers.taikoMarker,
     activeMarker: activeMarkers.taikoMarker,
@@ -4523,10 +4457,6 @@ const leaderboards = [
   {
     title: "SKALE Leaderboard",
     location: [-0.06927607755737608, 0.08556246757507326],
-  },
-  {
-    title: "VICTION Leaderboard",
-    location: [-0.06696937943514361, 0.08530497550964355],
   },
 ];
 

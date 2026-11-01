@@ -628,19 +628,6 @@ const SingleNft = ({
 
       setowner(owner);
       return owner;
-    } else if (nftType === "viction") {
-      const owner = await readContract(wagmiClient, {
-        address: window.config.nft_viction_address,
-        abi: window.VICTION_NFT_ABI,
-        functionName: "ownerOf",
-        args: [Id],
-        chainId: 89,
-      }).catch((e) => {
-        console.log(e);
-      });
-
-      setowner(owner);
-      return owner;
     } else if (nftType === "multivers") {
       const owner = await readContract(wagmiClient, {
         address: window.config.nft_multivers_address,
@@ -1627,8 +1614,6 @@ const SingleNft = ({
       nftAddress.toLowerCase() === window.config.nft_core_address.toLowerCase()
     ) {
       setType("core");
-    } else if (nftAddress === window.config.nft_viction_address) {
-      setType("viction");
     } else if (
       nftAddress.toLowerCase() ===
       window.config.nft_immutable_address.toLowerCase()
@@ -1779,8 +1764,6 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_core_address.toLowerCase()
         ? "core"
-        : nftAddress === window.config.nft_viction_address
-        ? "viction"
         : nftAddress.toLowerCase() ===
           window.config.nft_immutable_address.toLowerCase()
         ? "immutable"
@@ -2165,18 +2148,6 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
-            ) : type === "viction" ? (
-              <>
-                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
-                  Viction{" "}
-                  <h6
-                    className="market-banner-title m-0"
-                    style={{ color: "#8C56FF", lineHeight: "80%" }}
-                  >
-                    Beta Pass
-                  </h6>
-                </h6>
-              </>
             ) : type === "multivers" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
@@ -2256,8 +2227,6 @@ const SingleNft = ({
                         ? `https://cdn.worldofdypians.com/wod/tea-fi-nft-400.webp`
                         : type === "core"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+400.png`
-                        : type === "viction"
-                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+400.png`
                         : type === "multivers"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+400.png`
                         : type === "base"
@@ -2326,8 +2295,6 @@ const SingleNft = ({
                           ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
                           : type === "core"
                           ? "https://cdn.worldofdypians.com/wod/core.svg"
-                          : type === "viction"
-                          ? "https://cdn.worldofdypians.com/wod/viction.svg"
                           // : type === "mat"
                           // ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
                           : type === "multivers"
@@ -2368,8 +2335,6 @@ const SingleNft = ({
                       ? "Avalanche"
                       : type === "skale"
                       ? "SKALE"
-                      : type === "viction"
-                      ? "Viction"
                       // : type === "taraxa"
                       // ? "Taraxa"
                       : type === "multivers"
@@ -2454,8 +2419,6 @@ const SingleNft = ({
                         ? "CoinMarketCap Beta Pass"
                         : type === "core"
                         ? "CORE Beta Pass"
-                        : type === "viction"
-                        ? "Viction Beta Pass"
                         // : type === "taraxa"
                         // ? "Taraxa Beta Pass"
                         : type === "multivers"
@@ -2606,7 +2569,6 @@ const SingleNft = ({
                       type !== "opbnb" &&
                       type !== "cmc" &&
                       type !== "core" &&
-                      type !== "viction" &&
                       type !== "multivers" &&
                       type !== "skale" &&
                       type !== "immutable" &&
@@ -2779,7 +2741,6 @@ const SingleNft = ({
                       type !== "opbnb" &&
                       type !== "cmc" &&
                       type !== "core" &&
-                      type !== "viction" &&
                       type !== "multivers" &&
                       type !== "cawsbnb" &&
                       type !== "cawsavax" &&
@@ -2990,7 +2951,6 @@ const SingleNft = ({
                         type === "skale" ||
                         type === "cmc" ||
                         type === "core" ||
-                        type === "viction" ||
                         type === "multivers" ||
                         type === "immutable" ||
                         type === "cawsbnb" ||
@@ -3045,8 +3005,6 @@ const SingleNft = ({
                                   ? `https://snowtrace.io/address/${owner}`
                                   : type === "skale"
                                   ? `https://green-giddy-denebola.explorer.mainnet.skalenodes.com/address/${owner}`
-                                  : type === "viction"
-                                  ? `https://www.vicscan.xyz/address/${owner}`
                                   : type === "core"
                                   ? `https://scan.coredao.org/address/${owner}`
                                   : type === "manta"
@@ -3253,7 +3211,6 @@ const SingleNft = ({
                         type !== "cookie3" &&
                         type !== "base" &&
                         type !== "cmc" &&
-                        type !== "viction" &&
                         type !== "multivers" &&
                         type !== "core" &&
                         type !== "doge" &&
@@ -3350,7 +3307,6 @@ const SingleNft = ({
                         type !== "skale" &&
                         type !== "cmc" &&
                         type !== "core" &&
-                        type !== "viction" &&
                         type !== "multivers" &&
                         type !== "cawsbnb" &&
                         type !== "cawsavax" &&
@@ -3402,7 +3358,6 @@ const SingleNft = ({
                         type !== "skale" &&
                         type !== "cmc" &&
                         type !== "core" &&
-                        type !== "viction" &&
                         type !== "multivers" &&
                         type !== "immutable" &&
                         type !== "cawsbnb" &&
@@ -3463,7 +3418,6 @@ const SingleNft = ({
             type !== "skale" &&
             type !== "cmc" &&
             type !== "core" &&
-            type !== "viction" &&
             type !== "multivers" &&
             type !== "immutable" &&
             // type !== "mat" &&
@@ -3746,7 +3700,6 @@ const SingleNft = ({
             type === "skale" ||
             type === "cmc" ||
             type === "core" ||
-            type === "viction" ||
             type === "multivers" ||
             type === "immutable" ||
             // type === "mat" ||
@@ -3808,8 +3761,6 @@ const SingleNft = ({
                             ? "SKL"
                             : type === "core"
                             ? "CORE"
-                            : type === "viction"
-                            ? "VIC"
                             : type === "multivers"
                             ? "EGLD"
                             : type === "immutable"

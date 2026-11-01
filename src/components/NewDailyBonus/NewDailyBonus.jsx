@@ -86,22 +86,16 @@ const NewDailyBonus = ({
   skaleImages,
   claimedCoreChests,
   claimedCorePremiumChests,
-  claimedVictionChests,
-  claimedVictionPremiumChests,
   openedCoreChests,
-  openedVictionChests,
   onCoreChestClaimed,
-  onVictionChestClaimed,
   onSeiChestClaimed,
   allCoreChests,
-  allVictionChests,
   claimedSeiChests,
   claimedSeiPremiumChests,
   openedSeiChests,
   allSeiChests,
   bnbImages,
   seiImages,
-  victionImages,
   coreImages,
   mantaImages,
   taraxaImages,
@@ -154,9 +148,6 @@ const NewDailyBonus = ({
 
   const coreClaimed = claimedCoreChests + claimedCorePremiumChests;
   const corePercentage = (coreClaimed / 20) * 100;
-
-  const victionClaimed = claimedVictionChests + claimedVictionPremiumChests;
-  const victionPercentage = (victionClaimed / 20) * 100;
 
   const mantaClaimed = claimedMantaChests + claimedMantaPremiumChests;
   const mantaPercentage = (mantaClaimed / 20) * 100;
@@ -348,7 +339,6 @@ const NewDailyBonus = ({
   const [totalSkaleStars, settotalSkaleStars] = useState(0);
 
   const [totalCoreStars, settotalCoreStars] = useState(0);
-  const [totalVictionStars, settotalVictionStars] = useState(0);
   const [totalMantaStars, settotalMantaStars] = useState(0);
   // const [totalTaraxaStars, settotalTaraxaStars] = useState(0);
   const [totalBaseStars, settotalBaseStars] = useState(0);
@@ -364,8 +354,6 @@ const NewDailyBonus = ({
 
   const [totalCorePoints, settotalCorePoints] = useState(0);
   const [totalCoreUsd, settotalCoreUsd] = useState(0);
-  const [totalVictionPoints, settotalVictionPoints] = useState(0);
-  const [totalVictionUsd, settotalVictionUsd] = useState(0);
   const [totalMantaPoints, settotalMantaPoints] = useState(0);
   const [totalMantaUsd, settotalMantaUsd] = useState(0);
   // const [totalTaraxaPoints, settotalTaraxaPoints] = useState(0);
@@ -515,45 +503,6 @@ const NewDailyBonus = ({
       settotalCorePoints(resultCorePoints);
       settotalCoreUsd(resultCoreUsd);
       settotalCoreStars(resultstars);
-    }
-
-    if (allVictionChests && allVictionChests.length > 0) {
-      let resultVictionPoints = 0;
-      let resultVictionUsd = 0;
-      let resultstars = 0;
-
-      allVictionChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (innerChest.rewardType === "Points") {
-                resultVictionPoints += Number(innerChest.reward);
-              }
-              if (innerChest.rewardType === "Stars") {
-                resultstars += Number(innerChest.reward);
-              }
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                resultVictionUsd += Number(innerChest.reward);
-              }
-            });
-          } else if (chest.rewards.length === 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (innerChest.rewardType === "Points") {
-                resultVictionPoints += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-
-      settotalVictionPoints(resultVictionPoints);
-      settotalVictionUsd(resultVictionUsd);
-      settotalVictionStars(resultstars);
     }
 
     if (allMantaChests && allMantaChests.length > 0) {
@@ -895,8 +844,6 @@ const NewDailyBonus = ({
   //       onSkaleChestClaimed();
   //     } else if (chain === "core") {
   //       showSingleRewardDataCore(rewardData.chestId, isActiveIndex - 1);
-  //     } else if (chain === "viction") {
-  //       showSingleRewardDataViction(rewardData.chestId, isActiveIndex - 1);
   //     } else if (chain === "manta") {
   //       showSingleRewardDataManta(rewardData.chestId, isActiveIndex - 1);
   //     } else if (chain === "taraxa") {
@@ -958,11 +905,6 @@ const NewDailyBonus = ({
 
   const handleCorePool = async () => {
     await handleSwitchChainPool("0x45c", 1116, {
-      supportsBinance: false,
-    });
-  };
-  const handleVictionPool = async () => {
-    await handleSwitchChainPool("0x58", 88, {
       supportsBinance: false,
     });
   };
@@ -1336,87 +1278,6 @@ const NewDailyBonus = ({
     const filteredResult = openedCoreChests.find(
       (el) =>
         el.chestId === chestID && allCoreChests.indexOf(el) === chestIndex,
-    );
-    setIsActive(chestID);
-    setIsActiveIndex(chestIndex + 1);
-    if (filteredResult) {
-      const resultPoints = filteredResult.rewards.length === 1;
-      const resultPointsStars =
-        filteredResult.rewards.length === 2 &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points";
-        }) !== undefined &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money";
-        }) === undefined;
-
-      const resultPointsMoney =
-        filteredResult.rewards.length === 2 &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money" || obj.rewardType === "Points";
-        }) !== undefined &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money" && obj.status === "Claimed";
-        }) !== undefined;
-
-      const resultWonMoneyNoLand =
-        filteredResult.rewards.length === 3 &&
-        filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Stars" ||
-            (obj.rewardType === "Money" &&
-              obj.status === "Unclaimable" &&
-              obj.details ===
-                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
-            obj.rewardType === "Points"
-          );
-        }) !== undefined;
-
-      const resultWonMoneyNoCaws =
-        filteredResult.rewards.length === 3 &&
-        filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Stars" ||
-            (obj.rewardType === "Money" &&
-              obj.status === "Unclaimable" &&
-              obj.details ===
-                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
-            obj.rewardType === "Points"
-          );
-        }) !== undefined;
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-
-      if (resultPoints) {
-        setMessage("wonPoints");
-      } else if (resultPointsStars) {
-        setMessage("wonPointsStars");
-      } else if (resultWonMoneyNoLand) {
-        setMessage("winDangerLand");
-      } else if (resultPointsMoney) {
-        setMessage("won");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
-      } else if (resultPremium) {
-        setMessage("needPremium");
-      }
-      setLiveRewardData(filteredResult);
-      setRewardData(filteredResult);
-    } else {
-      setLiveRewardData([]);
-    }
-  };
-
-  const showSingleRewardDataViction = (chestID, chestIndex) => {
-    const filteredResult = openedVictionChests.find(
-      (el) =>
-        el.chestId === chestID && allVictionChests.indexOf(el) === chestIndex,
     );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
@@ -2069,7 +1930,6 @@ const NewDailyBonus = ({
 
     { chainId: [169], chainName: "manta" },
     { chainId: [1482601649], chainName: "skale" },
-    { chainId: [88], chainName: "viction" },
 
     // { chainId: [698], chainName: "matchain" },
   ];
@@ -2079,7 +1939,6 @@ const NewDailyBonus = ({
   }, [
     allChests,
     allSkaleChests,
-    allVictionChests,
     allMantaChests,
     allBaseChests,
     allTaikoChests,
@@ -2303,78 +2162,6 @@ const NewDailyBonus = ({
                 // rewardData.length === 0 &&
                 address.toLowerCase() === coinbase.toLowerCase() &&
                 chainId !== 1116
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            }
-          } else {
-            setMessage("switchAccount");
-            setDisable(true);
-          }
-        } else {
-          setMessage("connect");
-          setDisable(true);
-        }
-      } else if (
-        window.WALLET_TYPE === "binance" ||
-        window.ethereum?.isBinance
-      ) {
-        setMessage("notsupported");
-      }
-    } else if (chain === "viction") {
-      if (window.WALLET_TYPE !== "binance") {
-        if (!email) {
-          setMessage("login");
-          setDisable(true);
-        } else if (email && coinbase && address) {
-          if (coinbase.toLowerCase() === address.toLowerCase()) {
-            if (isPremium) {
-              if (
-                claimedVictionChests + claimedVictionPremiumChests === 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase()
-              ) {
-                setMessage("complete");
-              } else if (
-                claimedVictionChests + claimedVictionPremiumChests < 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 88
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedVictionChests + claimedVictionPremiumChests < 20 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 88
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            } else if (!isPremium) {
-              if (
-                claimedVictionChests === 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 88
-              ) {
-                setMessage("premium");
-                setDisable(true);
-              } else if (
-                claimedVictionChests < 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 88
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedVictionChests < 10 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 88
               ) {
                 setMessage("switch");
                 setDisable(true);
@@ -2907,8 +2694,6 @@ const NewDailyBonus = ({
     claimedSkalePremiumChests,
     claimedCoreChests,
     claimedCorePremiumChests,
-    claimedVictionChests,
-    claimedVictionPremiumChests,
     claimedMantaChests,
     claimedMantaPremiumChests,
     claimedBaseChests,
@@ -3063,8 +2848,6 @@ const NewDailyBonus = ({
                       ? totalPoints
                       : chain === "core"
                         ? totalCorePoints
-                        : chain === "viction"
-                          ? totalVictionPoints
                           : chain === "manta"
                             ? totalMantaPoints
                             : chain === "base"
@@ -3092,8 +2875,6 @@ const NewDailyBonus = ({
                       ? totalStars
                       : chain === "core"
                         ? totalCoreStars
-                        : chain === "viction"
-                          ? totalVictionStars
                           : chain === "manta"
                             ? totalMantaStars
                             : chain === "base"
@@ -3124,8 +2905,6 @@ const NewDailyBonus = ({
                       ? totalUsd
                       : chain === "core"
                         ? totalCoreUsd
-                        : chain === "viction"
-                          ? totalVictionUsd
                           : chain === "manta"
                             ? totalMantaUsd
                             : chain === "base"
@@ -4183,110 +3962,6 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "viction" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/victionBg.png"
-                            }
-                            className={`chain-img ${
-                              chain === "viction" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "viction" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("viction");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <button
-                              className={`${
-                                chainId === 88
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleVictionPool}
-                            >
-                              {" "}
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/viction.svg"
-                                }
-                                width={20}
-                                height={20}
-                                alt=""
-                              />{" "}
-                              VICTION
-                            </button>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage >= 20
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage >= 40
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage >= 60
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage >= 80
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage === 100
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(victionPercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                        </div>
                         {/* <div
                           className={`position-relative chain-item ${
                             chain === "matchain" && "chain-item-active"
@@ -4400,6 +4075,24 @@ const NewDailyBonus = ({
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/comingSoon.png"
+                            }
+                            className={`chain-img`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
+                          >
+                            <div className="d-flex align-items-center gap-2">
+                              <span className="percentage-span">
+                                Coming Soon
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                         <div className={`position-relative chain-item w-100`}>
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon3.png"
                             }
                             className={`chain-img`}
                             alt=""
@@ -4945,52 +4638,6 @@ const NewDailyBonus = ({
                                 SKALE
                               </button>
                             </div>
-                          </div>
-                        </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "viction" && "chain-item-active"
-                          } w-auto`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/victionBg.png"
-                            }
-                            className={`chain-img ${
-                              chain === "viction" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "viction" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("viction");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <button
-                              className={`${
-                                chainId === 88
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleVictionPool}
-                            >
-                              {" "}
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/viction.svg"
-                                }
-                                style={{ width: 20, height: 20 }}
-                                alt=""
-                              />{" "}
-                              VICTION
-                            </button>
                           </div>
                         </div>
 
@@ -5963,143 +5610,6 @@ const NewDailyBonus = ({
                                                 }
                                               />
                                             ))
-                                      : chain === "viction"
-                                        ? allVictionChests &&
-                                          allVictionChests.length > 0
-                                          ? allVictionChests.map(
-                                              (item, index) => (
-                                                <NewChestItem
-                                                  closeDaily={onclose}
-                                                  openKickstarter={
-                                                    openKickstarter
-                                                  }
-                                                  coinbase={coinbase}
-                                                  claimingChest={claimingChest}
-                                                  setClaimingChest={
-                                                    setClaimingChest
-                                                  }
-                                                  buyNftPopup={buyNftPopup}
-                                                  chainId={chainId}
-                                                  chain={chain}
-                                                  image={victionImages[index]}
-                                                  key={index}
-                                                  item={item}
-                                                  username={username}
-                                                  // openChest={openChest}
-                                                  selectedChest={selectedChest}
-                                                  isPremium={isPremium}
-                                                  onClaimRewards={(value) => {
-                                                    // setRewardData(value);
-                                                    setLiveRewardData(value);
-                                                    onVictionChestClaimed();
-                                                    showLiveRewardData(value);
-                                                    setIsActive(item.chestId);
-                                                    setIsActiveIndex(index + 1);
-                                                  }}
-                                                  handleShowRewards={(
-                                                    value,
-                                                    value2,
-                                                  ) => {
-                                                    showSingleRewardDataViction(
-                                                      value,
-                                                      value2,
-                                                    );
-                                                    setIsActive(value);
-                                                    setIsActiveIndex(index + 1);
-                                                  }}
-                                                  onLoadingChest={(value) => {
-                                                    // setDisable(value);
-                                                  }}
-                                                  onChestStatus={(val) => {
-                                                    setMessage(val);
-                                                  }}
-                                                  address={address}
-                                                  email={email}
-                                                  rewardTypes={item.chestType?.toLowerCase()}
-                                                  chestId={item.chestId}
-                                                  chestIndex={index + 1}
-                                                  open={item.isOpened}
-                                                  disableBtn={disable}
-                                                  isActive={isActive}
-                                                  isActiveIndex={isActiveIndex}
-                                                  dummypremiumChests={
-                                                    dummypremiumChests[
-                                                      index - 10
-                                                    ]?.closedImg
-                                                  }
-                                                />
-                                              ),
-                                            )
-                                          : window
-                                              .range(0, 19)
-                                              .map((item, index) => (
-                                                <NewChestItem
-                                                  closeDaily={onclose}
-                                                  openKickstarter={
-                                                    openKickstarter
-                                                  }
-                                                  coinbase={coinbase}
-                                                  claimingChest={claimingChest}
-                                                  setClaimingChest={
-                                                    setClaimingChest
-                                                  }
-                                                  buyNftPopup={buyNftPopup}
-                                                  chainId={chainId}
-                                                  chain={chain}
-                                                  key={index}
-                                                  item={item}
-                                                  username={username}
-                                                  // openChest={openChest}
-                                                  selectedChest={selectedChest}
-                                                  image={victionImages[index]}
-                                                  isPremium={isPremium}
-                                                  onClaimRewards={(value) => {
-                                                    // setRewardData(value);
-                                                    setLiveRewardData(value);
-                                                    onVictionChestClaimed();
-                                                    showLiveRewardData(value);
-                                                    setIsActive(item.chestId);
-                                                    // setIsActiveIndex(index + 1);
-                                                  }}
-                                                  handleShowRewards={(
-                                                    value,
-                                                    value2,
-                                                  ) => {
-                                                    showSingleRewardDataViction(
-                                                      value,
-                                                      value2,
-                                                    );
-                                                    setIsActive(value);
-                                                    // setIsActiveIndex(index + 1);
-                                                  }}
-                                                  onLoadingChest={(value) => {
-                                                    // setDisable(value);
-                                                  }}
-                                                  onChestStatus={(val) => {
-                                                    setMessage(val);
-                                                  }}
-                                                  address={address}
-                                                  email={email}
-                                                  rewardTypes={
-                                                    index + 1 <= 10
-                                                      ? "standard"
-                                                      : "premium"
-                                                  }
-                                                  chestId={item.chestId}
-                                                  chestIndex={index + 1}
-                                                  open={item.opened}
-                                                  disableBtn={true}
-                                                  isActive={isActive}
-                                                  openChest={() => {
-                                                    console.log("test");
-                                                  }}
-                                                  dummypremiumChests={
-                                                    dummypremiumChests[
-                                                      index - 10
-                                                    ]?.closedImg
-                                                  }
-                                                />
-                                              ))
                                         : chain === "skale" &&
                                             allSkaleChests &&
                                             allSkaleChests.length > 0
@@ -6415,22 +5925,6 @@ const NewDailyBonus = ({
                                 onClick={handleCorePool}
                               >
                                 CORE Network
-                              </span>
-                            </h6>
-                          ) : chain === "viction" ? (
-                            <h6
-                              className="loader-text mb-0"
-                              style={{ color: "#ce5d1b" }}
-                            >
-                              Switch to{" "}
-                              <span
-                                style={{
-                                  textDecoration: "underline",
-                                  cursor: "pointer",
-                                }}
-                                onClick={handleVictionPool}
-                              >
-                                Viction Network
                               </span>
                             </h6>
                           ) : chain === "base" ? (
@@ -8924,7 +8418,6 @@ const NewDailyBonus = ({
           onSuccessPurchase={() => {
             onSkaleChestClaimed();
             onChestClaimed();
-            onVictionChestClaimed();
             onCoreChestClaimed();
             onMantaChestClaimed();
             onTaikoChestClaimed();
@@ -8955,11 +8448,6 @@ const NewDailyBonus = ({
                       //       rewardData.chestId,
                       //       isActiveIndex - 1,
                       //     )
-                        : chain === "viction"
-                          ? showSingleRewardDataViction(
-                              rewardData.chestId,
-                              isActiveIndex - 1,
-                            )
                           : chain === "base"
                             ? showSingleRewardDataBase(
                                 rewardData.chestId,

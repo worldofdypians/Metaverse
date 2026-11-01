@@ -65,8 +65,6 @@ const MobileNavbar = ({
         setchainState("skale");
       } else if (chainId === 1116) {
         setchainState("core");
-      } else if (chainId === 88) {
-        setchainState("viction");
       } else if (chainId === 13371) {
         setchainState("immutable");
       } else if (chainId === 169) {
@@ -200,8 +198,6 @@ const MobileNavbar = ({
                           ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
                           : chainState === "core"
                           ? "https://cdn.worldofdypians.com/wod/core.svg"
-                          : chainState === "viction"
-                          ? "https://cdn.worldofdypians.com/wod/viction.svg"
                           : chainState === "immutable"
                           ? "https://cdn.worldofdypians.com/wod/immutable.svg"
                           : chainState === "manta"
@@ -237,8 +233,6 @@ const MobileNavbar = ({
                         ? "SKALE"
                         : chainState === "core"
                         ? "CORE"
-                        : chainState === "viction"
-                        ? "Viction"
                         : chainState === "immutable"
                         ? "Immutable"
                         : chainState === "manta"

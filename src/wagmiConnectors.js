@@ -11,7 +11,6 @@ import {
   coreDao,
   base,
   sei,
-  viction,
   avalanche,
   skaleNebula,
   immutableZkEvm,
@@ -37,7 +36,6 @@ export const wagmiClient = createConfig({
     coreDao,
     base,
     sei,
-    viction,
     avalanche,
     skaleNebula,
     immutableZkEvm,
@@ -118,10 +116,6 @@ export const wagmiClient = createConfig({
     [sei.id]: fallback([
       http("https://evm-rpc.sei-apis.com"),
       http("https://sei.drpc.org"),
-    ]),
-    [viction.id]: fallback([
-      http("https://rpc.viction.xyz"),
-      http("https://viction.drpc.org"),
     ]),
     [avalanche.id]: fallback([
       http("https://api.avax.network/ext/bc/C/rpc"),
