@@ -1505,165 +1505,165 @@ function AppRoutes() {
         thumbImage: "https://cdn.worldofdypians.com/wod/trustwalletThumb.webp",
       },
     },
-    {
-      title: "Tea-Fi",
-      logo: "https://cdn.worldofdypians.com/wod/teafi.svg",
-      eventStatus: "Expired",
-      totalRewards: "$50,000 in TEA Rewards",
-      myEarnings: 0.0,
-      rewardAmount: "$50,000",
-      location: [-0.06892739063903598, 0.08374929428100586],
-      eventType: "Explore & Mine",
-      eventDate: "Jul 18, 2025",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/teafiEventBg.webp",
-      userEarnUsd: user.userStats.teaEarnUsd,
-      userEarnCrypto: user.userStats.teaEarnToken,
-      userEarnPoints: user.userStats.teaPoints,
-      image: "teafiBuilderBanner.webp",
-      type: "Treasure Hunt",
-      infoType: "Treasure Hunt",
-      rewardType: "TEA",
-      marker: markers.treasureMarker,
-      popupInfo: {
-        title: "Tea-Fi",
-        chain: "BNB Chain",
-        linkState: "tea-fi",
-        rewards: "TEA",
-        status: "Expired",
-        id: "event4",
-        eventType: "Explore & Mine",
-        totalRewards: "$50,000 in TEA Rewards",
-        eventDuration: teaLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Jul 18, 2025",
-        detailsText: `To participate in the event, players are required to&nbsp;
-                  <b>hold a Tea-Fi Beta Pass NFT</b>. You can get the Tea-Fi
-                  Beta Pass NFT from the World of Dypians Shop. By engaging in
-                  the game on a daily basis and exploring the Tea-Fi area,
-                  players not only stand a chance to secure daily rewards in
-                  TEA, but also earn points for their placement on the global
-                  leaderboard. Remember to log in to the game daily and venture
-                  into the Tea-Fi area to uncover hidden treasures.`,
-        about: ` Tea-Fi eliminates the hassle of crypto management by providing a
-            seamless, all-in-one platform to manage and grow digital assets. Its
-            Yield Engine offers effortless access to tailored growth
-            opportunities by integrating a wide variety of yield tools into a
-            unified ecosystem.`,
-        twitterLink: "https://x.com/TeaFi_Official",
-        telegramLink: "https://t.me/TeaFi_Official",
-        websiteLink: "https://tea-fi.com/",
-        thumbImage: "https://cdn.worldofdypians.com/wod/teafiThumb.webp",
-      },
-    },
-    {
-      title: "Vanar",
-      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
-      eventStatus: "Expired",
-      totalRewards: "$20,000 in VANRY Rewards",
-      location: [-0.06784377896887378, 0.0839531421661377],
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "May 19, 2025",
-      type: "Treasure Hunt",
-      rewardType: "VANRY",
-      rewardAmount: "$20,000",
-      infoType: "Treasure Hunt",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
-      image: "vanarArea.webp",
-      userEarnUsd: 0,
-      userEarnCrypto: 0,
-      userEarnPoints: 0,
-      popupInfo: {
-        title: "Vanar",
-        chain: "Vanar Network",
-        linkState: "vanar",
-        rewards: "VANRY",
-        status: "Expired",
-        id: "event2",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in VANRY Rewards",
-        eventDuration: vanarLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "May 19, 2025",
-        detailsText: `To participate in the event, players are required to
-                  <b>hold a Vanar Beta Pass NFT</b>. You can get the Vanar Beta
-                  Pass NFT from the World of Dypians Shop. By engaging in the
-                 game on a daily basis and exploring the Vanar area, players
-                  not only stand a chance to secure daily rewards in VANRY, but
-                  also earn points for their placement on the global
-                  leaderboard. Remember to log in to the game daily and venture
-                  into the Vanar area to uncover hidden treasures.`,
-        about: ` Vanar offers a suite of solutions for brands built on years of
-            experience. From new engagement experiences to AI-driven IP
-           tracking.`,
-        twitterLink: "https://x.com/vanarchain",
-        telegramLink: "https://t.me/vanarofficial",
-        websiteLink: "https://vanarchain.com/",
-        thumbImage: "https://cdn.worldofdypians.com/wod/vanarThumb.webp",
-      },
-    },
-    {
-      title: "Matchain",
-      logo: "https://cdn.worldofdypians.com/wod/matchainIcon.svg",
-      eventStatus: "Expired",
-      rewardType: "BNB",
-      rewardAmount: "$20,000",
-      location: [-0.06787060104021504, 0.08728981018066406],
-      image: "matchainBanner.png",
-      type: "Treasure Hunt",
-      infoType: "Treasure Hunt",
-      marker: markers.treasureMarker,
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Dec 04, 2024",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/matchainMintBg.webp",
-      userEarnUsd: user.userStats.matEarnUsd,
-      userEarnCrypto: user.userStats.matEarnToken,
-      userEarnPoints: user.userStats.matPoints,
-      popupInfo: {
-        title: "Matchain",
-        chain: "Matchain",
-        linkState: "matchain",
-        rewards: "BNB",
-        status: "Expired",
-        id: "event25",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: coreLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Dec 04, 2024",
-        detailsText: ` To participate in the event, players are required to&nbsp;
-                  <b>hold a Matchain Beta Pass NFT</b>. You can get the Matchain
-                  Beta Pass NFT from the World of Dypians Shop. By engaging in
-                  the game on a daily basis and exploring the Matchain area,
-                  players not only stand a chance to secure daily rewards in
-                  MAT, but also earn points for their placement on the global
-                  leaderboard. Remember to log in to the game daily and venture
-                  into the Matchain area to uncover hidden treasures.`,
-        about: `Matchain is a decentralized AI blockchain focused on data and
-            identity sovereignty, utilizing advanced AI for data aggregation,
-            analytics, and user profiling to enhance decentralized identity
-            solutions and data management.`,
-        twitterLink: "https://x.com/matchain_io",
-        telegramLink: "https://t.me/matchain_fam",
-        websiteLink: "https://www.matchain.io/",
-        thumbImage:
-          "https://cdn.worldofdypians.com/wod/eventPopupImageMatchain.webp",
-      },
-    },
+    // {
+    //   title: "Tea-Fi",
+    //   logo: "https://cdn.worldofdypians.com/wod/teafi.svg",
+    //   eventStatus: "Expired",
+    //   totalRewards: "$50,000 in TEA Rewards",
+    //   myEarnings: 0.0,
+    //   rewardAmount: "$50,000",
+    //   location: [-0.06892739063903598, 0.08374929428100586],
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Jul 18, 2025",
+    //   backgroundImage: "https://cdn.worldofdypians.com/wod/teafiEventBg.webp",
+    //   userEarnUsd: user.userStats.teaEarnUsd,
+    //   userEarnCrypto: user.userStats.teaEarnToken,
+    //   userEarnPoints: user.userStats.teaPoints,
+    //   image: "teafiBuilderBanner.webp",
+    //   type: "Treasure Hunt",
+    //   infoType: "Treasure Hunt",
+    //   rewardType: "TEA",
+    //   marker: markers.treasureMarker,
+    //   popupInfo: {
+    //     title: "Tea-Fi",
+    //     chain: "BNB Chain",
+    //     linkState: "tea-fi",
+    //     rewards: "TEA",
+    //     status: "Expired",
+    //     id: "event4",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$50,000 in TEA Rewards",
+    //     eventDuration: teaLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "Jul 18, 2025",
+    //     detailsText: `To participate in the event, players are required to&nbsp;
+    //               <b>hold a Tea-Fi Beta Pass NFT</b>. You can get the Tea-Fi
+    //               Beta Pass NFT from the World of Dypians Shop. By engaging in
+    //               the game on a daily basis and exploring the Tea-Fi area,
+    //               players not only stand a chance to secure daily rewards in
+    //               TEA, but also earn points for their placement on the global
+    //               leaderboard. Remember to log in to the game daily and venture
+    //               into the Tea-Fi area to uncover hidden treasures.`,
+    //     about: ` Tea-Fi eliminates the hassle of crypto management by providing a
+    //         seamless, all-in-one platform to manage and grow digital assets. Its
+    //         Yield Engine offers effortless access to tailored growth
+    //         opportunities by integrating a wide variety of yield tools into a
+    //         unified ecosystem.`,
+    //     twitterLink: "https://x.com/TeaFi_Official",
+    //     telegramLink: "https://t.me/TeaFi_Official",
+    //     websiteLink: "https://tea-fi.com/",
+    //     thumbImage: "https://cdn.worldofdypians.com/wod/teafiThumb.webp",
+    //   },
+    // },
+    // {
+    //   title: "Vanar",
+    //   logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+    //   eventStatus: "Expired",
+    //   totalRewards: "$20,000 in VANRY Rewards",
+    //   location: [-0.06784377896887378, 0.0839531421661377],
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "May 19, 2025",
+    //   type: "Treasure Hunt",
+    //   rewardType: "VANRY",
+    //   rewardAmount: "$20,000",
+    //   infoType: "Treasure Hunt",
+    //   backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
+    //   image: "vanarArea.webp",
+    //   userEarnUsd: 0,
+    //   userEarnCrypto: 0,
+    //   userEarnPoints: 0,
+    //   popupInfo: {
+    //     title: "Vanar",
+    //     chain: "Vanar Network",
+    //     linkState: "vanar",
+    //     rewards: "VANRY",
+    //     status: "Expired",
+    //     id: "event2",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$20,000 in VANRY Rewards",
+    //     eventDuration: vanarLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "May 19, 2025",
+    //     detailsText: `To participate in the event, players are required to
+    //               <b>hold a Vanar Beta Pass NFT</b>. You can get the Vanar Beta
+    //               Pass NFT from the World of Dypians Shop. By engaging in the
+    //              game on a daily basis and exploring the Vanar area, players
+    //               not only stand a chance to secure daily rewards in VANRY, but
+    //               also earn points for their placement on the global
+    //               leaderboard. Remember to log in to the game daily and venture
+    //               into the Vanar area to uncover hidden treasures.`,
+    //     about: ` Vanar offers a suite of solutions for brands built on years of
+    //         experience. From new engagement experiences to AI-driven IP
+    //        tracking.`,
+    //     twitterLink: "https://x.com/vanarchain",
+    //     telegramLink: "https://t.me/vanarofficial",
+    //     websiteLink: "https://vanarchain.com/",
+    //     thumbImage: "https://cdn.worldofdypians.com/wod/vanarThumb.webp",
+    //   },
+    // },
+    // {
+    //   title: "Matchain",
+    //   logo: "https://cdn.worldofdypians.com/wod/matchainIcon.svg",
+    //   eventStatus: "Expired",
+    //   rewardType: "BNB",
+    //   rewardAmount: "$20,000",
+    //   location: [-0.06787060104021504, 0.08728981018066406],
+    //   image: "matchainBanner.png",
+    //   type: "Treasure Hunt",
+    //   infoType: "Treasure Hunt",
+    //   marker: markers.treasureMarker,
+    //   totalRewards: "$20,000 in BNB Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Dec 04, 2024",
+    //   backgroundImage: "https://cdn.worldofdypians.com/wod/matchainMintBg.webp",
+    //   userEarnUsd: user.userStats.matEarnUsd,
+    //   userEarnCrypto: user.userStats.matEarnToken,
+    //   userEarnPoints: user.userStats.matPoints,
+    //   popupInfo: {
+    //     title: "Matchain",
+    //     chain: "Matchain",
+    //     linkState: "matchain",
+    //     rewards: "BNB",
+    //     status: "Expired",
+    //     id: "event25",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$20,000 in BNB Rewards",
+    //     eventDuration: coreLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "Dec 04, 2024",
+    //     detailsText: ` To participate in the event, players are required to&nbsp;
+    //               <b>hold a Matchain Beta Pass NFT</b>. You can get the Matchain
+    //               Beta Pass NFT from the World of Dypians Shop. By engaging in
+    //               the game on a daily basis and exploring the Matchain area,
+    //               players not only stand a chance to secure daily rewards in
+    //               MAT, but also earn points for their placement on the global
+    //               leaderboard. Remember to log in to the game daily and venture
+    //               into the Matchain area to uncover hidden treasures.`,
+    //     about: `Matchain is a decentralized AI blockchain focused on data and
+    //         identity sovereignty, utilizing advanced AI for data aggregation,
+    //         analytics, and user profiling to enhance decentralized identity
+    //         solutions and data management.`,
+    //     twitterLink: "https://x.com/matchain_io",
+    //     telegramLink: "https://t.me/matchain_fam",
+    //     websiteLink: "https://www.matchain.io/",
+    //     thumbImage:
+    //       "https://cdn.worldofdypians.com/wod/eventPopupImageMatchain.webp",
+    //   },
+    // },
     {
       title: "Base",
       logo: "https://cdn.worldofdypians.com/wod/base.svg",
@@ -1822,60 +1822,60 @@ function AppRoutes() {
         thumbImage: "https://cdn.worldofdypians.com/wod/taikoThumb.webp",
       },
     },
-    {
-      title: "Taraxa",
-      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
-      eventStatus: "Expired",
-      rewardType: "TARA",
-      rewardAmount: "$20,000",
-      location: [-0.06917415368919773, 0.08433401584625246],
-      image: "taraxaArea.webp",
-      type: "Treasure Hunt",
-      infoType: "Treasure Hunt",
-      marker: markers.treasureMarker,
-      totalRewards: "$20,000 in TARA Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 15, 2025",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/taraxaEventBg.webp",
-      userEarnUsd: user.userStats.taraxaEarnUsd,
-      userEarnCrypto: user.userStats.taraxaEarnToken,
-      userEarnPoints: user.userStats.taraxaPoints,
-      popupInfo: {
-        title: "Taraxa",
-        chain: "Taraxa",
-        linkState: "taraxa",
-        rewards: "TARA",
-        status: "Expired",
-        id: "event30",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in TARA Rewards",
-        eventDuration: taraxaLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 15, 2025",
-        detailsText: `To participate in the event, players are required to&nbsp;
-                  <b>hold a Taraxa Beta Pass NFT</b>. You can get the Taraxa
-                  Beta Pass NFT from the World of Dypians Shop. By engaging in
-                  the game on a daily basis and exploring the Taraxa area,
-                  players not only stand a chance to secure daily rewards in
-                  Taraxa, but also earn points for their placement on the global
-                  leaderboard. Remember to log in to the game daily and venture
-                  into the Taraxa area to uncover hidden treasures.`,
-        about: `Taraxa is a public, EVM-compatible blockchain designed to support
-            fast, scalable, and cost-efficient decentralized applications
-            (dApps). It was originally created to address audit logging for
-            off-chain data and real-world events, but has since evolved into a
-            general-purpose platform.`,
-        twitterLink: "https://x.com/taraxa_project",
-        telegramLink: "https://t.me/taraxa_project",
-        websiteLink: "https://taraxa.io/",
-        thumbImage: "https://cdn.worldofdypians.com/wod/taraxaThumb.webp",
-      },
-    },
+    // {
+    //   title: "Taraxa",
+    //   logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+    //   eventStatus: "Expired",
+    //   rewardType: "TARA",
+    //   rewardAmount: "$20,000",
+    //   location: [-0.06917415368919773, 0.08433401584625246],
+    //   image: "taraxaArea.webp",
+    //   type: "Treasure Hunt",
+    //   infoType: "Treasure Hunt",
+    //   marker: markers.treasureMarker,
+    //   totalRewards: "$20,000 in TARA Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Aug 15, 2025",
+    //   backgroundImage: "https://cdn.worldofdypians.com/wod/taraxaEventBg.webp",
+    //   userEarnUsd: user.userStats.taraxaEarnUsd,
+    //   userEarnCrypto: user.userStats.taraxaEarnToken,
+    //   userEarnPoints: user.userStats.taraxaPoints,
+    //   popupInfo: {
+    //     title: "Taraxa",
+    //     chain: "Taraxa",
+    //     linkState: "taraxa",
+    //     rewards: "TARA",
+    //     status: "Expired",
+    //     id: "event30",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$20,000 in TARA Rewards",
+    //     eventDuration: taraxaLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "Aug 15, 2025",
+    //     detailsText: `To participate in the event, players are required to&nbsp;
+    //               <b>hold a Taraxa Beta Pass NFT</b>. You can get the Taraxa
+    //               Beta Pass NFT from the World of Dypians Shop. By engaging in
+    //               the game on a daily basis and exploring the Taraxa area,
+    //               players not only stand a chance to secure daily rewards in
+    //               Taraxa, but also earn points for their placement on the global
+    //               leaderboard. Remember to log in to the game daily and venture
+    //               into the Taraxa area to uncover hidden treasures.`,
+    //     about: `Taraxa is a public, EVM-compatible blockchain designed to support
+    //         fast, scalable, and cost-efficient decentralized applications
+    //         (dApps). It was originally created to address audit logging for
+    //         off-chain data and real-world events, but has since evolved into a
+    //         general-purpose platform.`,
+    //     twitterLink: "https://x.com/taraxa_project",
+    //     telegramLink: "https://t.me/taraxa_project",
+    //     websiteLink: "https://taraxa.io/",
+    //     thumbImage: "https://cdn.worldofdypians.com/wod/taraxaThumb.webp",
+    //   },
+    // },
     {
       title: "CoinGecko",
       image: "coingeckoBanner.png",
@@ -2363,58 +2363,58 @@ function AppRoutes() {
         thumbImage: "https://cdn.worldofdypians.com/wod/easy2stakeThumb.webp",
       },
     },
-    {
-      title: "Midle",
-      logo: "https://cdn.worldofdypians.com/wod/midle.svg",
-      eventStatus: "Expired",
-      rewardType: "BNB",
-      rewardAmount: "$20,000",
-      location: [-0.05935191046684262, 0.03785133361816407],
-      image: "midleBanner.png",
-      type: "Treasure Hunt",
-      infoType: "Treasure Hunt",
-      marker: markers.treasureMarker,
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Nov 29, 2024",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/midleBg.webp",
-      userEarnUsd: user.userStats.midleEarnUsd,
-      userEarnCrypto: user.userStats.midleEarnToken,
-      userEarnPoints: user.userStats.midlePoints,
+    // {
+    //   title: "Midle",
+    //   logo: "https://cdn.worldofdypians.com/wod/midle.svg",
+    //   eventStatus: "Expired",
+    //   rewardType: "BNB",
+    //   rewardAmount: "$20,000",
+    //   location: [-0.05935191046684262, 0.03785133361816407],
+    //   image: "midleBanner.png",
+    //   type: "Treasure Hunt",
+    //   infoType: "Treasure Hunt",
+    //   marker: markers.treasureMarker,
+    //   totalRewards: "$20,000 in BNB Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Nov 29, 2024",
+    //   backgroundImage: "https://cdn.worldofdypians.com/wod/midleBg.webp",
+    //   userEarnUsd: user.userStats.midleEarnUsd,
+    //   userEarnCrypto: user.userStats.midleEarnToken,
+    //   userEarnPoints: user.userStats.midlePoints,
 
-      popupInfo: {
-        title: "Midle",
-        chain: "BNB Chain",
-        linkState: "midle",
-        rewards: "BNB",
-        status: "Expired",
-        id: "event27",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: expiredEventLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Nov 29, 2024",
-        detailsText: `To participate in the event, players are required to&nbsp;
-                  <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
-                  Chain Beta Pass NFT from the World of Dypians Shop. By
-                  engaging in the game on a daily basis and exploring the Midle
-                  area, players not only stand a chance to secure daily rewards
-                  in BNB, but also earn points for their placement on the global
-                  leaderboard. Remember to log in to the game daily and venture
-                  into the Midle area to uncover hidden treasures.`,
-        about: `Midle is the web and mobile app that boosts user acquisition,
-            retention and engagement.`,
-        twitterLink: "https://x.com/midle_official",
-        telegramLink: "https://t.me/midlecommunity",
-        websiteLink: "https://app.midle.io/",
-        thumbImage: "https://cdn.worldofdypians.com/wod/midleThumb.webp",
-      },
-    },
+    //   popupInfo: {
+    //     title: "Midle",
+    //     chain: "BNB Chain",
+    //     linkState: "midle",
+    //     rewards: "BNB",
+    //     status: "Expired",
+    //     id: "event27",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$20,000 in BNB Rewards",
+    //     eventDuration: expiredEventLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "Nov 29, 2024",
+    //     detailsText: `To participate in the event, players are required to&nbsp;
+    //               <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
+    //               Chain Beta Pass NFT from the World of Dypians Shop. By
+    //               engaging in the game on a daily basis and exploring the Midle
+    //               area, players not only stand a chance to secure daily rewards
+    //               in BNB, but also earn points for their placement on the global
+    //               leaderboard. Remember to log in to the game daily and venture
+    //               into the Midle area to uncover hidden treasures.`,
+    //     about: `Midle is the web and mobile app that boosts user acquisition,
+    //         retention and engagement.`,
+    //     twitterLink: "https://x.com/midle_official",
+    //     telegramLink: "https://t.me/midlecommunity",
+    //     websiteLink: "https://app.midle.io/",
+    //     thumbImage: "https://cdn.worldofdypians.com/wod/midleThumb.webp",
+    //   },
+    // },
     {
       title: "Cookie3",
       logo: "https://cdn.worldofdypians.com/wod/cookie3.svg",
@@ -2888,108 +2888,108 @@ function AppRoutes() {
       },
     },
 
-    {
-      title: "Vanar",
-      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
-      eventStatus: "Expired",
-      totalRewards: "$10,000 in VANRY Rewards",
-      location: [-0.06784377896887378, 0.0839531421661377],
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Jan 16, 2026",
-      type: "Treasure Hunt",
-      rewardType: "VANRY",
-      rewardAmount: "$10,000",
-      infoType: "Treasure Hunt",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
-      image: "vanarArea.webp",
-      userEarnUsd: 0,
-      userEarnCrypto: 0,
-      userEarnPoints: 0,
-      popupInfo: {
-        title: "Vanar",
-        chain: "Vanar Network",
-        linkState: "vanar",
-        rewards: "VANRY",
-        status: "Expired",
-        id: "event2",
-        eventType: "Explore & Mine",
-        totalRewards: "$10,000 in VANRY Rewards",
-        eventDuration: vanarLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Jan 16, 2026",
-        detailsText: `To participate in the event, players are required to
-                  <b>hold a Vanar Beta Pass NFT</b>. You can get the Vanar Beta
-                  Pass NFT from the World of Dypians Shop. By engaging in the
-                  game on a daily basis and exploring the Vanar area, players
-                  not only stand a chance to secure daily rewards in VANRY, but
-                  also earn points for their placement on the global
-                  leaderboard. Remember to log in to the game daily and venture
-                  into the Vanar area to uncover hidden treasures.`,
-        about: ` Vanar offers a suite of solutions for brands built on years of
-            experience. From new engagement experiences to AI-driven IP
-           tracking.`,
-        twitterLink: "https://x.com/vanarchain",
-        telegramLink: "https://t.me/vanarofficial",
-        websiteLink: "https://vanarchain.com/",
-        thumbImage: "https://cdn.worldofdypians.com/wod/vanarThumb.webp",
-      },
-    },
-    {
-      title: "Vanar",
-      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
-      eventStatus: "Expired",
-      totalRewards: "$20,000 in VANRY Rewards",
-      location: [-0.06784377896887378, 0.0839531421661377],
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Sep 17, 2025",
-      type: "Treasure Hunt",
-      rewardType: "VANRY",
-      rewardAmount: "$20,000",
-      infoType: "Treasure Hunt",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
-      image: "vanarArea.webp",
-      userEarnUsd: 0,
-      userEarnCrypto: 0,
-      userEarnPoints: 0,
-      popupInfo: {
-        title: "Vanar",
-        chain: "Vanar Network",
-        linkState: "vanar",
-        rewards: "VANRY",
-        status: "Expired",
-        id: "event2",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in VANRY Rewards",
-        eventDuration: vanarLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "May 19, 2025",
-        detailsText: `To participate in the event, players are required to
-                  <b>hold a Vanar Beta Pass NFT</b>. You can get the Vanar Beta
-                  Pass NFT from the World of Dypians Shop. By engaging in the
-                  game on a daily basis and exploring the Vanar area, players
-                  not only stand a chance to secure daily rewards in VANRY, but
-                  also earn points for their placement on the global
-                  leaderboard. Remember to log in to the game daily and venture
-                  into the Vanar area to uncover hidden treasures.`,
-        about: ` Vanar offers a suite of solutions for brands built on years of
-            experience. From new engagement experiences to AI-driven IP
-           tracking.`,
-        twitterLink: "https://x.com/vanarchain",
-        telegramLink: "https://t.me/vanarofficial",
-        websiteLink: "https://vanarchain.com/",
-        thumbImage: "https://cdn.worldofdypians.com/wod/vanarThumb.webp",
-      },
-    },
+    // {
+    //   title: "Vanar",
+    //   logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+    //   eventStatus: "Expired",
+    //   totalRewards: "$10,000 in VANRY Rewards",
+    //   location: [-0.06784377896887378, 0.0839531421661377],
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Jan 16, 2026",
+    //   type: "Treasure Hunt",
+    //   rewardType: "VANRY",
+    //   rewardAmount: "$10,000",
+    //   infoType: "Treasure Hunt",
+    //   backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
+    //   image: "vanarArea.webp",
+    //   userEarnUsd: 0,
+    //   userEarnCrypto: 0,
+    //   userEarnPoints: 0,
+    //   popupInfo: {
+    //     title: "Vanar",
+    //     chain: "Vanar Network",
+    //     linkState: "vanar",
+    //     rewards: "VANRY",
+    //     status: "Expired",
+    //     id: "event2",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$10,000 in VANRY Rewards",
+    //     eventDuration: vanarLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "Jan 16, 2026",
+    //     detailsText: `To participate in the event, players are required to
+    //               <b>hold a Vanar Beta Pass NFT</b>. You can get the Vanar Beta
+    //               Pass NFT from the World of Dypians Shop. By engaging in the
+    //               game on a daily basis and exploring the Vanar area, players
+    //               not only stand a chance to secure daily rewards in VANRY, but
+    //               also earn points for their placement on the global
+    //               leaderboard. Remember to log in to the game daily and venture
+    //               into the Vanar area to uncover hidden treasures.`,
+    //     about: ` Vanar offers a suite of solutions for brands built on years of
+    //         experience. From new engagement experiences to AI-driven IP
+    //        tracking.`,
+    //     twitterLink: "https://x.com/vanarchain",
+    //     telegramLink: "https://t.me/vanarofficial",
+    //     websiteLink: "https://vanarchain.com/",
+    //     thumbImage: "https://cdn.worldofdypians.com/wod/vanarThumb.webp",
+    //   },
+    // },
+    // {
+    //   title: "Vanar",
+    //   logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+    //   eventStatus: "Expired",
+    //   totalRewards: "$20,000 in VANRY Rewards",
+    //   location: [-0.06784377896887378, 0.0839531421661377],
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Sep 17, 2025",
+    //   type: "Treasure Hunt",
+    //   rewardType: "VANRY",
+    //   rewardAmount: "$20,000",
+    //   infoType: "Treasure Hunt",
+    //   backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
+    //   image: "vanarArea.webp",
+    //   userEarnUsd: 0,
+    //   userEarnCrypto: 0,
+    //   userEarnPoints: 0,
+    //   popupInfo: {
+    //     title: "Vanar",
+    //     chain: "Vanar Network",
+    //     linkState: "vanar",
+    //     rewards: "VANRY",
+    //     status: "Expired",
+    //     id: "event2",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$20,000 in VANRY Rewards",
+    //     eventDuration: vanarLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "May 19, 2025",
+    //     detailsText: `To participate in the event, players are required to
+    //               <b>hold a Vanar Beta Pass NFT</b>. You can get the Vanar Beta
+    //               Pass NFT from the World of Dypians Shop. By engaging in the
+    //               game on a daily basis and exploring the Vanar area, players
+    //               not only stand a chance to secure daily rewards in VANRY, but
+    //               also earn points for their placement on the global
+    //               leaderboard. Remember to log in to the game daily and venture
+    //               into the Vanar area to uncover hidden treasures.`,
+    //     about: ` Vanar offers a suite of solutions for brands built on years of
+    //         experience. From new engagement experiences to AI-driven IP
+    //        tracking.`,
+    //     twitterLink: "https://x.com/vanarchain",
+    //     telegramLink: "https://t.me/vanarofficial",
+    //     websiteLink: "https://vanarchain.com/",
+    //     thumbImage: "https://cdn.worldofdypians.com/wod/vanarThumb.webp",
+    //   },
+    // },
   ];
 
   const fetchSocialData = async () => {
@@ -5454,7 +5454,7 @@ function AppRoutes() {
     cookiePrice &&
     corePrice &&
     seiPrice &&
-    vanarPrice &&
+    // vanarPrice &&
     mantaPrice &&
     multiversPrice &&
     skalePrice &&

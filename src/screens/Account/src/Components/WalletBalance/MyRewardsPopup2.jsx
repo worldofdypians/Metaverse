@@ -1469,7 +1469,7 @@ const MyRewardsPopupNew = ({
                     </span>
                   </div>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
@@ -1482,9 +1482,9 @@ const MyRewardsPopupNew = ({
                     $
                     {getFormattedNumber(userTreasureHuntStats.taraxaEarnUsd, 2)}
                   </span>
-                </div>
+                </div> */}
 
-                <div className="d-flex gap-2 align-items-center justify-content-between">
+                {/* <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={"https://cdn.worldofdypians.com/wod/midle.svg"}
@@ -1496,7 +1496,7 @@ const MyRewardsPopupNew = ({
                   <span className="item-name-right">
                     ${getFormattedNumber(userTreasureHuntStats.midleEarnUsd, 2)}
                   </span>
-                </div>
+                </div> */}
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1554,6 +1554,22 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(coingeckoRewardsUSD, 2)}
                   </span>
                 </div>
+                     <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg"
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    KuCoin
+                  </span>
+                  <span className="item-name-right">
+                    $
+                    {getFormattedNumber(userTreasureHuntStats.kucoinEarnUsd, 2)}
+                  </span>
+                </div>
               </div>
 
               <div className="d-flex flex-column gap-2">
@@ -1592,7 +1608,7 @@ const MyRewardsPopupNew = ({
                   </div>
                 </div>
 
-                <div className="d-flex w-100 justify-content-between gap-2">
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={"https://cdn.worldofdypians.com/wod/teafi.svg"}
@@ -1604,7 +1620,7 @@ const MyRewardsPopupNew = ({
                   <span className="item-name-right">
                     ${getFormattedNumber(userTreasureHuntStats.teaEarnUsd, 2)}
                   </span>
-                </div>
+                </div> */}
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1682,26 +1698,11 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(userTreasureHuntStats.skaleEarnUsd, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg"
-                      }
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    KuCoin
-                  </span>
-                  <span className="item-name-right">
-                    $
-                    {getFormattedNumber(userTreasureHuntStats.kucoinEarnUsd, 2)}
-                  </span>
-                </div>
+           
               </div>
 
               <div className="d-flex flex-column gap-2">
-                <div className="d-flex w-100 justify-content-between gap-2">
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
@@ -1713,7 +1714,7 @@ const MyRewardsPopupNew = ({
                   <span className="item-name-right">
                     ${getFormattedNumber(userTreasureHuntStats.vanarEarnUsd, 2)}
                   </span>
-                </div>
+                </div> */}
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1804,7 +1805,7 @@ const MyRewardsPopupNew = ({
                     )}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
@@ -1818,7 +1819,7 @@ const MyRewardsPopupNew = ({
                   <span className="item-name-right">
                     ${getFormattedNumber(userTreasureHuntStats.matEarnUsd, 2)}
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

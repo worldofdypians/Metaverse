@@ -3151,7 +3151,7 @@ const NewEvents = ({
                               >
                                 <span>3</span>
                               </div>
-                              <div
+                              {/* <div
                                 className={`${
                                   page === 4
                                     ? "active-challenge-tab"
@@ -3162,7 +3162,7 @@ const NewEvents = ({
                                 }}
                               >
                                 <span>4</span>
-                              </div>
+                              </div> */}
                             </div>
                           ))}
                       </div>

@@ -2223,19 +2223,19 @@ const Portfolio = ({
                                             : nft.nftAddress ===
                                                 window.config.nft_doge_address
                                               ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
-                                              : nft.nftAddress ===
-                                                    window.config
-                                                      .nft_teabnb_address ||
-                                                  nft.nftAddress ===
-                                                    window.config
-                                                      .nft_teaopbnb_address ||
-                                                  nft.nftAddress ===
-                                                    window.config
-                                                      .nft_teabase_address ||
-                                                  nft.nftAddress ===
-                                                    window.config
-                                                      .nft_teasei_address
-                                                ? `https://cdn.worldofdypians.com/wod/tea-fi-nft-50.webp`
+                                              // : nft.nftAddress ===
+                                              //       window.config
+                                              //         .nft_teabnb_address ||
+                                              //     nft.nftAddress ===
+                                              //       window.config
+                                              //         .nft_teaopbnb_address ||
+                                              //     nft.nftAddress ===
+                                              //       window.config
+                                              //         .nft_teabase_address ||
+                                              //     nft.nftAddress ===
+                                              //       window.config
+                                              //         .nft_teasei_address
+                                              //   ? `https://cdn.worldofdypians.com/wod/tea-fi-nft-50.webp`
                                                 : nft.nftAddress ===
                                                     window.config
                                                       .nft_skale_address

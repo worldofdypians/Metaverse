@@ -1887,22 +1887,24 @@ const SingleNft = ({
                   Cats and Watches Society{" "}
                 </h6>
               </>
-            ) : type === "tea-bnb" ||
-              type === "tea-opbnb" ||
-              type === "tea-sei" ||
-              type === "tea-base" ? (
-              <>
-                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
-                  Tea-Fi Beta{" "}
-                  <h6
-                    className="market-banner-title m-0"
-                    style={{ color: "#8C56FF", lineHeight: "80%" }}
-                  >
-                    Beta Pass
-                  </h6>
-                </h6>
-              </>
-            ) : type === "coingecko" ? (
+            ) 
+            // : type === "tea-bnb" ||
+            //   type === "tea-opbnb" ||
+            //   type === "tea-sei" ||
+            //   type === "tea-base" ? (
+            //   <>
+            //     <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+            //       Tea-Fi Beta{" "}
+            //       <h6
+            //         className="market-banner-title m-0"
+            //         style={{ color: "#8C56FF", lineHeight: "80%" }}
+            //       >
+            //         Beta Pass
+            //       </h6>
+            //     </h6>
+            //   </>
+            // )
+             : type === "coingecko" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   CoinGecko{" "}

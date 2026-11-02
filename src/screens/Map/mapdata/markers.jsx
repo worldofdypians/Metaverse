@@ -281,18 +281,18 @@ const iconData = [
     size: 24,
     chain: true,
   },
-  {
-    name: "midleMarker",
-    url: "https://cdn.worldofdypians.com/wod/midle.svg",
-    size: 24,
-    chain: true,
-  },
-  {
-    name: "ordifyMarker",
-    url: "https://cdn.worldofdypians.com/wod/ordify.svg",
-    size: 24,
-    chain: true,
-  },
+  // {
+  //   name: "midleMarker",
+  //   url: "https://cdn.worldofdypians.com/wod/midle.svg",
+  //   size: 24,
+  //   chain: true,
+  // },
+  // {
+  //   name: "ordifyMarker",
+  //   url: "https://cdn.worldofdypians.com/wod/ordify.svg",
+  //   size: 24,
+  //   chain: true,
+  // },
   {
     name: "vanarMarker",
     url: "https://cdn.worldofdypians.com/wod/vanar.svg",
