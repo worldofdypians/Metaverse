@@ -159,70 +159,70 @@ const chainAreas = [
       "Get ranked in dedicated leaderboards",
     ],
   },
-  {
-    title: "Matchain Area",
-    marker: markers.matchainMarker,
-    activeMarker: activeMarkers.matchainMarker,
+  // {
+  //   title: "Matchain Area",
+  //   marker: markers.matchainMarker,
+  //   activeMarker: activeMarkers.matchainMarker,
 
-    icon: "https://cdn.worldofdypians.com/wod/matchainIcon.svg",
-    location: [-0.06703375240749239, 0.08581995964050293],
-    banner: "matchainBanner.png",
-    area: [
-      [
-        [-0.0668191758326784, 0.08607208728790285],
-        [-0.06696937943514361, 0.0854766368865967],
-        [-0.06716249835192278, 0.08551955223083497],
-        [-0.06697474384951874, 0.08613646030426027],
-      ],
-    ],
-    events: [],
-    pastEvents: [
-      {
-        title: "Daily Bonus",
-        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
-        link: "/account#dailybonus",
-      },
-      {
-        title: "Leaderboard",
-        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
-        link: "/account#leaderboard",
-      },
-      {
-        title: "Treasure Hunt",
-        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-        link: "/account/challenges/treasure-hunt",
-      },
-    ],
-    socials: [
-      {
-        link: "https://x.com/matchain_io",
-        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
-      },
-      {
-        link: "https://t.me/matchain_fam",
-        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
-      },
-      // {
-      //   link: "https://discord.com/invite/X3fHfpvpCM",
-      //   icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
-      // },
-      {
-        link: "https://www.matchain.io/",
-        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
-      },
-    ],
-    city: "Dypians",
-    size: "250x250",
-    rewards: "N/A",
-    desc: "Matchain is an AI-powered blockchain advancing data and identity sovereignty through data aggregation, analytics, and profiling for improved decentralized identity solutions. ",
-    benefits: [
-      "Participate in exclusive quests and events",
-      "Participate in daily challenges",
-      "Explore an immersive environment",
-      "Experience real-time interactions",
-      "Join community-driven contests",
-    ],
-  },
+  //   icon: "https://cdn.worldofdypians.com/wod/matchainIcon.svg",
+  //   location: [-0.06703375240749239, 0.08581995964050293],
+  //   banner: "matchainBanner.png",
+  //   area: [
+  //     [
+  //       [-0.0668191758326784, 0.08607208728790285],
+  //       [-0.06696937943514361, 0.0854766368865967],
+  //       [-0.06716249835192278, 0.08551955223083497],
+  //       [-0.06697474384951874, 0.08613646030426027],
+  //     ],
+  //   ],
+  //   events: [],
+  //   pastEvents: [
+  //     {
+  //       title: "Daily Bonus",
+  //       image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
+  //       link: "/account#dailybonus",
+  //     },
+  //     {
+  //       title: "Leaderboard",
+  //       image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
+  //       link: "/account#leaderboard",
+  //     },
+  //     {
+  //       title: "Treasure Hunt",
+  //       image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+  //       link: "/account/challenges/treasure-hunt",
+  //     },
+  //   ],
+  //   socials: [
+  //     {
+  //       link: "https://x.com/matchain_io",
+  //       icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+  //     },
+  //     {
+  //       link: "https://t.me/matchain_fam",
+  //       icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+  //     },
+  //     // {
+  //     //   link: "https://discord.com/invite/X3fHfpvpCM",
+  //     //   icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+  //     // },
+  //     {
+  //       link: "https://www.matchain.io/",
+  //       icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+  //     },
+  //   ],
+  //   city: "Dypians",
+  //   size: "250x250",
+  //   rewards: "N/A",
+  //   desc: "Matchain is an AI-powered blockchain advancing data and identity sovereignty through data aggregation, analytics, and profiling for improved decentralized identity solutions. ",
+  //   benefits: [
+  //     "Participate in exclusive quests and events",
+  //     "Participate in daily challenges",
+  //     "Explore an immersive environment",
+  //     "Experience real-time interactions",
+  //     "Join community-driven contests",
+  //   ],
+  // },
   {
     title: "Coingecko Area",
     marker: markers.coingeckoMarker,
@@ -616,59 +616,59 @@ const chainAreas = [
       "Join community-driven contests",
     ],
   },
-  {
-    title: "Midle Area",
-    marker: markers.midleMarker,
-    activeMarker: activeMarkers.midleMarker,
-    icon: "https://cdn.worldofdypians.com/wod/midle.svg",
-    location: [-0.0699144428319988, 0.08710205554962158],
-    banner: "midleBanner.png",
-    area: [
-      [
-        [-0.06980715455115011, 0.08719325065612794],
-        [-0.06985006986351756, 0.08695721626281738],
-        [-0.07004318876868135, 0.08700549602508546],
-        [-0.06997345138634661, 0.08725225925445558],
-      ],
-    ],
-    events: [],
-    pastEvents: [
-      {
-        title: "Treasure Hunt",
-        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-        link: "/account/challenges/treasure-hunt",
-      },
-    ],
-    socials: [
-      {
-        link: "https://x.com/midle_official",
-        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
-      },
-      {
-        link: "https://t.me/midlecommunity",
-        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
-      },
-      {
-        link: "https://discord.gg/midle",
-        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
-      },
-      {
-        link: "https://app.midle.io/",
-        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
-      },
-    ],
-    city: "Dypians",
-    size: "125x125",
-    rewards: "N/A",
-    desc: " Midle is the web and mobile app that boosts user acquisition, retention and engagement. ",
-    benefits: [
-      "Participate in exclusive quests and events",
-      "Participate in daily challenges",
-      "Explore an immersive environment",
-      "Experience real-time interactions",
-      "Join community-driven contests",
-    ],
-  },
+  // {
+  //   title: "Midle Area",
+  //   marker: markers.midleMarker,
+  //   activeMarker: activeMarkers.midleMarker,
+  //   icon: "https://cdn.worldofdypians.com/wod/midle.svg",
+  //   location: [-0.0699144428319988, 0.08710205554962158],
+  //   banner: "midleBanner.png",
+  //   area: [
+  //     [
+  //       [-0.06980715455115011, 0.08719325065612794],
+  //       [-0.06985006986351756, 0.08695721626281738],
+  //       [-0.07004318876868135, 0.08700549602508546],
+  //       [-0.06997345138634661, 0.08725225925445558],
+  //     ],
+  //   ],
+  //   events: [],
+  //   pastEvents: [
+  //     {
+  //       title: "Treasure Hunt",
+  //       image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+  //       link: "/account/challenges/treasure-hunt",
+  //     },
+  //   ],
+  //   socials: [
+  //     {
+  //       link: "https://x.com/midle_official",
+  //       icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+  //     },
+  //     {
+  //       link: "https://t.me/midlecommunity",
+  //       icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+  //     },
+  //     {
+  //       link: "https://discord.gg/midle",
+  //       icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+  //     },
+  //     {
+  //       link: "https://app.midle.io/",
+  //       icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+  //     },
+  //   ],
+  //   city: "Dypians",
+  //   size: "125x125",
+  //   rewards: "N/A",
+  //   desc: " Midle is the web and mobile app that boosts user acquisition, retention and engagement. ",
+  //   benefits: [
+  //     "Participate in exclusive quests and events",
+  //     "Participate in daily challenges",
+  //     "Explore an immersive environment",
+  //     "Experience real-time interactions",
+  //     "Join community-driven contests",
+  //   ],
+  // },
   {
     title: "KuCoin Area",
     marker: markers.kucoinMarker,
@@ -1374,54 +1374,54 @@ const chainAreas = [
       "Join community-driven contests",
     ],
   },
-  {
-    title: "Ordify Area",
-    marker: markers.ordifyMarker,
-    activeMarker: activeMarkers.ordifyMarker,
+  // {
+  //   title: "Ordify Area",
+  //   marker: markers.ordifyMarker,
+  //   activeMarker: activeMarkers.ordifyMarker,
 
-    icon: "https://cdn.worldofdypians.com/wod/ordify.svg",
-    location: [-0.06787060104021504, 0.08728981018066406],
-    banner: "ordifyBanner.png",
-    area: [
-      [
-        [-0.06764529564051838, 0.08725762367248537],
-        [-0.0676774821262475, 0.08715033531188966],
-        [-0.06810127085310366, 0.08725762367248537],
-        [-0.06804226229642768, 0.08736491203308107],
-      ],
-    ],
-    events: [],
-    pastEvents: [],
-    socials: [
-      {
-        link: "https://x.com/ordifyworld",
-        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
-      },
-      {
-        link: "https://t.me/ordifyann",
-        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
-      },
-      // {
-      //   link: "https://discord.com/invite/X3fHfpvpCM",
-      //   icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
-      // },
-      {
-        link: "https://ordify.world/",
-        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
-      },
-    ],
-    city: "Dypians",
-    size: "125x125",
-    rewards: "N/A",
-    desc: "Ordify is a curated collection designed to enhance user experience across various blockchains, connecting businesses with the community in the Bitcoin and EVM ecosystems. ",
-    benefits: [
-      "Participate in exclusive quests and events",
-      "Participate in daily challenges",
-      "Explore an immersive environment",
-      "Experience real-time interactions",
-      "Join community-driven contests",
-    ],
-  },
+  //   icon: "https://cdn.worldofdypians.com/wod/ordify.svg",
+  //   location: [-0.06787060104021504, 0.08728981018066406],
+  //   banner: "ordifyBanner.png",
+  //   area: [
+  //     [
+  //       [-0.06764529564051838, 0.08725762367248537],
+  //       [-0.0676774821262475, 0.08715033531188966],
+  //       [-0.06810127085310366, 0.08725762367248537],
+  //       [-0.06804226229642768, 0.08736491203308107],
+  //     ],
+  //   ],
+  //   events: [],
+  //   pastEvents: [],
+  //   socials: [
+  //     {
+  //       link: "https://x.com/ordifyworld",
+  //       icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+  //     },
+  //     {
+  //       link: "https://t.me/ordifyann",
+  //       icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+  //     },
+  //     // {
+  //     //   link: "https://discord.com/invite/X3fHfpvpCM",
+  //     //   icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+  //     // },
+  //     {
+  //       link: "https://ordify.world/",
+  //       icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+  //     },
+  //   ],
+  //   city: "Dypians",
+  //   size: "125x125",
+  //   rewards: "N/A",
+  //   desc: "Ordify is a curated collection designed to enhance user experience across various blockchains, connecting businesses with the community in the Bitcoin and EVM ecosystems. ",
+  //   benefits: [
+  //     "Participate in exclusive quests and events",
+  //     "Participate in daily challenges",
+  //     "Explore an immersive environment",
+  //     "Experience real-time interactions",
+  //     "Join community-driven contests",
+  //   ],
+  // },
   {
     title: "Sei Area",
     marker: markers.seiMarker,
@@ -1497,206 +1497,206 @@ const chainAreas = [
       "Join community-driven contests",
     ],
   },
-  {
-    title: "Vanar Area",
-    marker: markers.vanarMarker,
-    activeMarker: activeMarkers.vanarMarker,
+  // {
+  //   title: "Vanar Area",
+  //   marker: markers.vanarMarker,
+  //   activeMarker: activeMarkers.vanarMarker,
 
-    icon: "https://cdn.worldofdypians.com/wod/vanar.png",
-    location: [-0.06784377896887378, 0.0839531421661377],
-    banner: "vanarArea.webp",
-    area: [
-      [
-        [-0.06776331275477364, 0.08392632007598878],
-        [-0.06781695689751979, 0.08366882801055908],
-        [-0.06816027940971604, 0.0837761163711548],
-        [-0.06807981319613751, 0.08403897285461426],
-      ],
-    ],
-    events: [
-      {
-        title: "Daily Bonus",
-        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
-        link: "/account#dailybonus",
-      },
+  //   icon: "https://cdn.worldofdypians.com/wod/vanar.png",
+  //   location: [-0.06784377896887378, 0.0839531421661377],
+  //   banner: "vanarArea.webp",
+  //   area: [
+  //     [
+  //       [-0.06776331275477364, 0.08392632007598878],
+  //       [-0.06781695689751979, 0.08366882801055908],
+  //       [-0.06816027940971604, 0.0837761163711548],
+  //       [-0.06807981319613751, 0.08403897285461426],
+  //     ],
+  //   ],
+  //   events: [
+  //     {
+  //       title: "Daily Bonus",
+  //       image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
+  //       link: "/account#dailybonus",
+  //     },
 
-      {
-        title: "Leaderboard",
-        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
-        link: "/account#leaderboard",
-      },
-      // {
-      //   title: "Treasure Hunt",
-      //   image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-      //   link: "/account/challenges/treasure-hunt",
-      // },
-    ],
-    pastEvents: [
-      {
-        title: "Treasure Hunt",
-        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-        link: "/account/challenges/treasure-hunt",
-      },
-    ],
-    socials: [
-      {
-        link: "https://x.com/vanarchain",
-        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
-      },
-      {
-        link: "https://t.me/vanarofficial",
-        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
-      },
-      {
-        link: "https://discord.gg/fBwPGQUwBm",
-        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
-      },
-      {
-        link: "https://vanarchain.com/",
-        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
-      },
-    ],
-    city: "Dypians",
-    size: "125x125",
-    rewards: "N/A",
-    desc: "Vanar offers a suite of solutions for brands built on years of experience. From new engagement experiences to AI-driven IP tracking. ",
-    benefits: [
-      "Participate in exclusive quests and events",
-      "Participate in daily challenges",
-      "Explore an immersive environment",
-      "Experience real-time interactions",
-      "Join community-driven contests",
-    ],
-  },
-  {
-    title: "Tea-Fi Area",
-    marker: markers.teafiMarker,
-    activeMarker: activeMarkers.teafiMarker,
+  //     {
+  //       title: "Leaderboard",
+  //       image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
+  //       link: "/account#leaderboard",
+  //     },
+  //     // {
+  //     //   title: "Treasure Hunt",
+  //     //   image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+  //     //   link: "/account/challenges/treasure-hunt",
+  //     // },
+  //   ],
+  //   pastEvents: [
+  //     {
+  //       title: "Treasure Hunt",
+  //       image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+  //       link: "/account/challenges/treasure-hunt",
+  //     },
+  //   ],
+  //   socials: [
+  //     {
+  //       link: "https://x.com/vanarchain",
+  //       icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+  //     },
+  //     {
+  //       link: "https://t.me/vanarofficial",
+  //       icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+  //     },
+  //     {
+  //       link: "https://discord.gg/fBwPGQUwBm",
+  //       icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+  //     },
+  //     {
+  //       link: "https://vanarchain.com/",
+  //       icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+  //     },
+  //   ],
+  //   city: "Dypians",
+  //   size: "125x125",
+  //   rewards: "N/A",
+  //   desc: "Vanar offers a suite of solutions for brands built on years of experience. From new engagement experiences to AI-driven IP tracking. ",
+  //   benefits: [
+  //     "Participate in exclusive quests and events",
+  //     "Participate in daily challenges",
+  //     "Explore an immersive environment",
+  //     "Experience real-time interactions",
+  //     "Join community-driven contests",
+  //   ],
+  // },
+  // {
+  //   title: "Tea-Fi Area",
+  //   marker: markers.teafiMarker,
+  //   activeMarker: activeMarkers.teafiMarker,
 
-    icon: "https://cdn.worldofdypians.com/wod/teafi.svg",
-    location: [-0.06863771227416586, 0.08419454097747804],
-    banner: "teafiArea.webp",
-    area: [
-      [
-        [-0.06829975417960162, 0.08421599864959718],
-        [-0.06834803390754009, 0.08401751518249512],
-        [-0.06900785685118961, 0.08417844772338869],
-        [-0.06895421270976658, 0.08437693119049074],
-      ],
-    ],
-    events: [
-      // {
-      //   title: "Daily Bonus",
-      //   image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
-      //   link: "/account#dailybonus",
-      // },
-      // {
-      //   title: "Leaderboard",
-      //   image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
-      //   link: "/account#leaderboard",
-      // },
-    ],
-    pastEvents: [
-      {
-        title: "Treasure Hunt",
-        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-        link: "/account/challenges/treasure-hunt",
-      },
-    ],
-    socials: [
-      {
-        link: "https://x.com/TeaFi_Official",
-        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
-      },
-      {
-        link: "https://t.me/TeaFi_Official",
-        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
-      },
-      {
-        link: "https://discord.com/invite/DUVua49zrf",
-        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
-      },
-      {
-        link: "https://tea-fi.com/",
-        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
-      },
-    ],
-    city: "Dypians",
-    size: "250x250",
-    rewards: "N/A",
-    desc: "Tea-Fi is taking the Hustle out of DeFi with a seamless, intuitive & unified SUPER APP. It offers a frictionless, unified platform, to manage and grow digital assets. ",
-    benefits: [
-      "Participate in exclusive quests and events",
-      "Participate in daily challenges",
-      "Explore an immersive environment",
-      "Experience real-time interactions",
-      "Join community-driven contests",
-    ],
-  },
-  {
-    title: "Taraxa Area",
-    marker: markers.taraxaMarker,
-    activeMarker: activeMarkers.taraxaMarker,
+  //   icon: "https://cdn.worldofdypians.com/wod/teafi.svg",
+  //   location: [-0.06863771227416586, 0.08419454097747804],
+  //   banner: "teafiArea.webp",
+  //   area: [
+  //     [
+  //       [-0.06829975417960162, 0.08421599864959718],
+  //       [-0.06834803390754009, 0.08401751518249512],
+  //       [-0.06900785685118961, 0.08417844772338869],
+  //       [-0.06895421270976658, 0.08437693119049074],
+  //     ],
+  //   ],
+  //   events: [
+  //     // {
+  //     //   title: "Daily Bonus",
+  //     //   image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
+  //     //   link: "/account#dailybonus",
+  //     // },
+  //     // {
+  //     //   title: "Leaderboard",
+  //     //   image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
+  //     //   link: "/account#leaderboard",
+  //     // },
+  //   ],
+  //   pastEvents: [
+  //     {
+  //       title: "Treasure Hunt",
+  //       image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+  //       link: "/account/challenges/treasure-hunt",
+  //     },
+  //   ],
+  //   socials: [
+  //     {
+  //       link: "https://x.com/TeaFi_Official",
+  //       icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+  //     },
+  //     {
+  //       link: "https://t.me/TeaFi_Official",
+  //       icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+  //     },
+  //     {
+  //       link: "https://discord.com/invite/DUVua49zrf",
+  //       icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+  //     },
+  //     {
+  //       link: "https://tea-fi.com/",
+  //       icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+  //     },
+  //   ],
+  //   city: "Dypians",
+  //   size: "250x250",
+  //   rewards: "N/A",
+  //   desc: "Tea-Fi is taking the Hustle out of DeFi with a seamless, intuitive & unified SUPER APP. It offers a frictionless, unified platform, to manage and grow digital assets. ",
+  //   benefits: [
+  //     "Participate in exclusive quests and events",
+  //     "Participate in daily challenges",
+  //     "Explore an immersive environment",
+  //     "Experience real-time interactions",
+  //     "Join community-driven contests",
+  //   ],
+  // },
+  // {
+  //   title: "Taraxa Area",
+  //   marker: markers.taraxaMarker,
+  //   activeMarker: activeMarkers.taraxaMarker,
 
-    icon: "https://cdn.worldofdypians.com/wod/taraxa.svg",
-    location: [-0.06771503302624994, 0.08426427841186523],
-    banner: "taraxaArea.webp",
-    area: [
-      [
-        [-0.06749509204012691, 0.08437156677246094],
-        [-0.06755946501177595, 0.08404970169067384],
-        [-0.06789205869727025, 0.08415162563323976],
-        [-0.06781159248324645, 0.0844627618789673],
-      ],
-    ],
-    events: [],
-    pastEvents: [
-      {
-        title: "Daily Bonus",
-        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
-        link: "/account#dailybonus",
-      },
-      {
-        title: "Leaderboard",
-        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
-        link: "/account#leaderboard",
-      },
-      {
-        title: "Treasure Hunt",
-        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-        link: "/account/challenges/treasure-hunt",
-      },
-    ],
-    socials: [
-      {
-        link: "https://x.com/taraxa_project",
-        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
-      },
-      {
-        link: "https://t.me/taraxa_project",
-        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
-      },
-      {
-        link: "https://discord.com/invite/WaXnwUb",
-        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
-      },
-      {
-        link: "https://taraxa.io/",
-        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
-      },
-    ],
-    city: "Dypians",
-    size: "250x250",
-    rewards: "N/A",
-    desc: "Taraxa is revolutionizing the DeFi and Social AI landscape with the world’s only EVM-compatible blockDAG Layer-1, delivering unmatched scalability and parallel transaction processing. ",
-    benefits: [
-      "Participate in exclusive quests and events",
-      "Participate in daily challenges",
-      "Explore an immersive environment",
-      "Experience real-time interactions",
-      "Join community-driven contests",
-    ],
-  },
+  //   icon: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+  //   location: [-0.06771503302624994, 0.08426427841186523],
+  //   banner: "taraxaArea.webp",
+  //   area: [
+  //     [
+  //       [-0.06749509204012691, 0.08437156677246094],
+  //       [-0.06755946501177595, 0.08404970169067384],
+  //       [-0.06789205869727025, 0.08415162563323976],
+  //       [-0.06781159248324645, 0.0844627618789673],
+  //     ],
+  //   ],
+  //   events: [],
+  //   pastEvents: [
+  //     {
+  //       title: "Daily Bonus",
+  //       image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
+  //       link: "/account#dailybonus",
+  //     },
+  //     {
+  //       title: "Leaderboard",
+  //       image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
+  //       link: "/account#leaderboard",
+  //     },
+  //     {
+  //       title: "Treasure Hunt",
+  //       image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+  //       link: "/account/challenges/treasure-hunt",
+  //     },
+  //   ],
+  //   socials: [
+  //     {
+  //       link: "https://x.com/taraxa_project",
+  //       icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+  //     },
+  //     {
+  //       link: "https://t.me/taraxa_project",
+  //       icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+  //     },
+  //     {
+  //       link: "https://discord.com/invite/WaXnwUb",
+  //       icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+  //     },
+  //     {
+  //       link: "https://taraxa.io/",
+  //       icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+  //     },
+  //   ],
+  //   city: "Dypians",
+  //   size: "250x250",
+  //   rewards: "N/A",
+  //   desc: "Taraxa is revolutionizing the DeFi and Social AI landscape with the world’s only EVM-compatible blockDAG Layer-1, delivering unmatched scalability and parallel transaction processing. ",
+  //   benefits: [
+  //     "Participate in exclusive quests and events",
+  //     "Participate in daily challenges",
+  //     "Explore an immersive environment",
+  //     "Experience real-time interactions",
+  //     "Join community-driven contests",
+  //   ],
+  // },
 ];
 
 const bearAreas = [

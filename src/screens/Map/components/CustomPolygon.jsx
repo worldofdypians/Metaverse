@@ -32,7 +32,7 @@ const CustomPolygon = ({ item, handleMarkerClick, setInfo, setContent, content, 
         click: () => {
           setContent(item.title);
           handleMarkerClick(item, 15, "area", false);
-          setInfo(true);
+          // setInfo(true);
         }
       }}
     />

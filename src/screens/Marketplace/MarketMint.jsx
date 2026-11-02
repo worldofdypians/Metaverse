@@ -213,41 +213,41 @@ const MarketMint = ({
       chainName: "Taiko Network",
       logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
     },
-    {
-      id: "vanar",
-      cardTitle: "Vanar Beta Pass",
-      title: "Vanar Beta Pass",
-      background: "vanar-mint-bg",
-      mobileBg: "vanarMobileBg.webp",
-      activeClass: "vanar-active",
-      emptyClass: "conflux-empty",
-      nftcreated: nftCreated,
-      nft_address: window.config.nft_vanar_address,
-      chainId: [2040],
-      chainName: "Vanar Chain",
-      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
-    },
-    {
-      id: "tea-fi",
-      cardTitle: "Tea-Fi Beta Pass",
-      title: "Tea-Fi Beta Pass",
-      background: "teafi-mint-bg",
-      mobileBg: "teafiMobileBg.webp",
-      activeClass: "teafi-active",
-      emptyClass: "conflux-empty",
-      nftcreated: nftCreated,
-      nft_address:
-        chainId === 56
-          ? window.config.nft_teabnb_address
-          : chainId === 204
-          ? window.config.nft_teaopbnb_address
-          : chainId === 8453
-          ? window.config.nft_teabase_address
-          : window.config.nft_teasei_address,
-      chainId: [56, 204, 8453, 1329],
-      chainName: "Sei Network",
-      logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
-    },
+    // {
+    //   id: "vanar",
+    //   cardTitle: "Vanar Beta Pass",
+    //   title: "Vanar Beta Pass",
+    //   background: "vanar-mint-bg",
+    //   mobileBg: "vanarMobileBg.webp",
+    //   activeClass: "vanar-active",
+    //   emptyClass: "conflux-empty",
+    //   nftcreated: nftCreated,
+    //   nft_address: window.config.nft_vanar_address,
+    //   chainId: [2040],
+    //   chainName: "Vanar Chain",
+    //   logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+    // },
+    // {
+    //   id: "tea-fi",
+    //   cardTitle: "Tea-Fi Beta Pass",
+    //   title: "Tea-Fi Beta Pass",
+    //   background: "teafi-mint-bg",
+    //   mobileBg: "teafiMobileBg.webp",
+    //   activeClass: "teafi-active",
+    //   emptyClass: "conflux-empty",
+    //   nftcreated: nftCreated,
+    //   nft_address:
+    //     chainId === 56
+    //       ? window.config.nft_teabnb_address
+    //       : chainId === 204
+    //       ? window.config.nft_teaopbnb_address
+    //       : chainId === 8453
+    //       ? window.config.nft_teabase_address
+    //       : window.config.nft_teasei_address,
+    //   chainId: [56, 204, 8453, 1329],
+    //   chainName: "Sei Network",
+    //   logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
+    // },
   ];
 
   const windowSize = useWindowSize();
@@ -270,17 +270,17 @@ const MarketMint = ({
   const [baseSold, setcBaseSold] = useState(0);
   const [skaleSold, setskaleSold] = useState(0);
   const [bnbNftsSold, setbnbNftsSold] = useState(0);
-  const [teaNftsSold, setteaNftsSold] = useState(0);
+  // const [teaNftsSold, setteaNftsSold] = useState(0);
 
-  const [victionNftsSold, setVictionNftsSold] = useState(0);
+  // const [victionNftsSold, setVictionNftsSold] = useState(0);
   const [coreNftsSold, setCoreNftsSold] = useState(0);
   const [opbnbNftsSold, setopBnbNftsSold] = useState(0);
   const [immutableNftsSold, setimmutableNftsSold] = useState(0);
   const [taikoNftsSold, setTaikoNftsSold] = useState(0);
   const [seiNftsSold, setSeiNftsSold] = useState(0);
   const [kucoinNftsSold, setKucoinNftsSold] = useState(0);
-  const [vanarNftsSold, setVanarNftsSold] = useState(0);
-  const [taraxaNftsSold, setTaraxaNftsSold] = useState(0);
+  // const [vanarNftsSold, setVanarNftsSold] = useState(0);
+  // const [taraxaNftsSold, setTaraxaNftsSold] = useState(0);
   const [bnb5yaNftsSold, setbnb5yaNftsSold] = useState(0);
 
   const [activeSlide, setActiveSlide] = useState(0);
@@ -354,65 +354,65 @@ const MarketMint = ({
       window.OPBNB_NFT_ABI,
       window.config.nft_bnb5ya_address
     );
-    const taraxaContract = new window.taraxaWeb3.eth.Contract(
-      window.TARAXA_NFT_ABI,
-      window.config.nft_taraxa_address
-    );
-    const vanarContract = new window.vanarWeb3.eth.Contract(
-      window.VANAR_NFT_ABI,
-      window.config.nft_vanar_address
-    );
+    // const taraxaContract = new window.taraxaWeb3.eth.Contract(
+    //   window.TARAXA_NFT_ABI,
+    //   window.config.nft_taraxa_address
+    // );
+    // const vanarContract = new window.vanarWeb3.eth.Contract(
+    //   window.VANAR_NFT_ABI,
+    //   window.config.nft_vanar_address
+    // );
 
-    const teaseicontract = new window.seiWeb3.eth.Contract(
-      window.SEI_NFT_ABI,
-      window.config.nft_teasei_address
-    );
+    // const teaseicontract = new window.seiWeb3.eth.Contract(
+    //   window.SEI_NFT_ABI,
+    //   window.config.nft_teasei_address
+    // );
 
-    const teaseiResult = await teaseicontract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    // const teaseiResult = await teaseicontract.methods
+    //   .totalSupply()
+    //   .call()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
 
-    const teaBNBResult = await window.teabnb_nft
-      .getTeaBNBLatestMint()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    // const teaBNBResult = await window.teabnb_nft
+    //   .getTeaBNBLatestMint()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
 
-    const teaOPBNBResult = await window.teaopbnb_nft
-      .getTeaOPBNBLatestMint()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    // const teaOPBNBResult = await window.teaopbnb_nft
+    //   .getTeaOPBNBLatestMint()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
 
-    const teaBaseResult = await window.teabase_nft
-      .getTeaBaseLatestMint()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    // const teaBaseResult = await window.teabase_nft
+    //   .getTeaBaseLatestMint()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
 
-    const teaResult =
-      Number(teaBNBResult) +
-      Number(teaOPBNBResult) +
-      Number(teaBaseResult) +
-      Number(teaseiResult);
-    setteaNftsSold(teaResult);
+    // const teaResult =
+    //   Number(teaBNBResult) +
+    //   Number(teaOPBNBResult) +
+    //   Number(teaBaseResult) +
+    //   Number(teaseiResult);
+    // setteaNftsSold(teaResult);
 
-    const vanarresult = await vanarContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    // const vanarresult = await vanarContract.methods
+    //   .totalSupply()
+    //   .call()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
 
-    setVanarNftsSold(vanarresult);
+    // setVanarNftsSold(vanarresult);
     const bnbresult = await bnbnftContract.methods
       .totalSupply()
       .call()
@@ -423,20 +423,20 @@ const MarketMint = ({
 
     setbnbNftsSold(bnbresult);
 
-    const victionnftContract = new window.victionWeb3.eth.Contract(
-      window.VICTION_NFT_ABI,
-      window.config.nft_viction_address.toLowerCase()
-    );
+    // const victionnftContract = new window.victionWeb3.eth.Contract(
+    //   window.VICTION_NFT_ABI,
+    //   window.config.nft_viction_address.toLowerCase()
+    // );
 
-    const victionresult = await victionnftContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    // const victionresult = await victionnftContract.methods
+    //   .totalSupply()
+    //   .call()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
 
-    setVictionNftsSold(victionresult);
+    // setVictionNftsSold(victionresult);
 
     const corenftContract = new window.coreWeb3.eth.Contract(
       window.CORE_NFT_ABI,
@@ -523,15 +523,15 @@ const MarketMint = ({
 
     setKucoinNftsSold(kucoinresult);
 
-    const taraxaResult = await taraxaContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    // const taraxaResult = await taraxaContract.methods
+    //   .totalSupply()
+    //   .call()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
 
-    setTaraxaNftsSold(taraxaResult);
+    // setTaraxaNftsSold(taraxaResult);
 
     const bnb_5ya_result = await bnb_5yaContract.methods
       .totalSupply()
@@ -1169,15 +1169,16 @@ const MarketMint = ({
               "Smart contract wallets are not supported for this action."
             );
           }
-        } else if (selectedMint.id === "tea-fi") {
-          if (!selectedMint.chainId.includes(chainId)) {
-            setactiveButton(false);
-            setStatus("Switch to supported chains to continue minting.");
-          } else if (selectedMint.chainId.includes(chainId)) {
-            setactiveButton(true);
-            setStatus("");
-          }
-        }
+        } 
+        // else if (selectedMint.id === "tea-fi") {
+        //   if (!selectedMint.chainId.includes(chainId)) {
+        //     setactiveButton(false);
+        //     setStatus("Switch to supported chains to continue minting.");
+        //   } else if (selectedMint.chainId.includes(chainId)) {
+        //     setactiveButton(true);
+        //     setStatus("");
+        //   }
+        // }
       }
     }
   }, [isConnected, chainId, coinbase, selectedMint, isEOA, nftCreated]);
@@ -2273,7 +2274,7 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
-                  <div className="col-12 col-lg-6 mt-lg-5">
+                  {/* <div className="col-12 col-lg-6 mt-lg-5">
                     <div className="past-viction-mint p-4">
                       <div className="sold-out-tag px-3 py-1">
                         <span className="sold-out-span">Sold Out</span>
@@ -2291,7 +2292,7 @@ const MarketMint = ({
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-12 col-lg-6 mt-lg-5">
                     <div className="past-core-mint p-4">
                       <div className="sold-out-tag px-3 py-1">
@@ -2394,7 +2395,7 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
-                  <div className="col-12 col-lg-6 mt-lg-5">
+                  {/* <div className="col-12 col-lg-6 mt-lg-5">
                     <div className="past-vanar-mint p-4">
                       <div className="sold-out-tag px-3 py-1">
                         <span className="sold-out-span">Sold Out</span>
@@ -2425,7 +2426,7 @@ const MarketMint = ({
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> 
 
                   <div className="col-12 col-lg-6 mt-lg-5">
                     <div className="past-taraxa-mint p-4">
@@ -2445,7 +2446,7 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
-
+*/}
                   <div className="col-12 col-lg-6 mt-lg-5">
                     <div className="past-bnb5ya-mint p-4">
                       <div className="sold-out-tag px-3 py-1">

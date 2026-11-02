@@ -20,10 +20,10 @@ const WodPartners = ({ full }) => {
       name: "Trust Wallet",
       icon: "trustWalletLogo.svg",
     },
-    {
-      name: "Matchain",
-      icon: "matchainIcon.svg",
-    },
+    // {
+    //   name: "Matchain",
+    //   icon: "matchainIcon.svg",
+    // },
     {
       name: "Core",
       icon: "core.svg",
@@ -44,10 +44,10 @@ const WodPartners = ({ full }) => {
       name: "Coingecko",
       icon: "coingeckoIcon.svg",
     },
-    {
-      name: "Viction",
-      icon: "viction.svg",
-    },
+    // {
+    //   name: "Viction",
+    //   icon: "viction.svg",
+    // },
     {
       name: "SKALE",
       icon: "skaleIcon.svg",
@@ -64,10 +64,10 @@ const WodPartners = ({ full }) => {
       name: "KuCoin",
       icon: "kucoinLogoRound.svg",
     },
-    {
-      name: "Taraxa",
-      icon: "taraxa.svg",
-    },
+    // {
+    //   name: "Taraxa",
+    //   icon: "taraxa.svg",
+    // },
     {
       name: "Binance Wallet",
       icon: "binanceWalletUpdated.svg",
@@ -123,10 +123,10 @@ const WodPartners = ({ full }) => {
       name: "Cookie DAO",
       icon: "cookie3.svg",
     },
-    {
-      name: "Midle",
-      icon: "midle.svg",
-    },
+    // {
+    //   name: "Midle",
+    //   icon: "midle.svg",
+    // },
     {
       name: "Financial Move",
       icon: "financialmoveLogo.svg",
@@ -200,10 +200,10 @@ const WodPartners = ({ full }) => {
       name: "WeWay",
       icon: "weway.svg",
     },
-    {
-      name: "Ordify",
-      icon: "ordify.svg",
-    },
+    // {
+    //   name: "Ordify",
+    //   icon: "ordify.svg",
+    // },
     {
       name: "Finceptor",
       icon: "finceptorLogo.svg",
@@ -305,10 +305,10 @@ const WodPartners = ({ full }) => {
       name: "Gaimin",
       icon: "gaimin.svg",
     },
-    {
-      name: "Vanar",
-      icon: "vanar.svg",
-    },
+    // {
+    //   name: "Vanar",
+    //   icon: "vanar.svg",
+    // },
     {
       name: "ChangeNOW",
       icon: "changeNow.webp",
@@ -337,10 +337,10 @@ const WodPartners = ({ full }) => {
       name: "Fair3",
       icon: "fair3.png",
     },
-    {
-      name: "Tea-Fi",
-      icon: "teafi.svg",
-    },
+    // {
+    //   name: "Tea-Fi",
+    //   icon: "teafi.svg",
+    // },
     {
       name: "Melitho Ventures",
       icon: "melitho.png",

@@ -57,8 +57,8 @@ const LoyaltyProgram = ({
     taiko: { title: "Taiko", value: "taiko", checked: false },
     core: { title: "CORE", value: "core", checked: false },
     opBnb: { title: "opBNB", value: "opbnb", checked: false },
-    viction: { title: "Viction", value: "viction", checked: false },
-    vanar: { title: "Vanar", value: "vanar", checked: false },
+    // viction: { title: "Viction", value: "viction", checked: false },
+    // vanar: { title: "Vanar", value: "vanar", checked: false },
     sei: { title: "Sei", value: "sei", checked: false },
     // taraxa: { title: "Taraxa", value: "taraxa", checked: false },
   });
