@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import "./_myprofile.scss";
+import "../DypianHeist/_dypianheist.scss";
 import OutsideClickHandler from "react-outside-click-handler";
 import Clipboard from "react-clipboard.js";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
@@ -94,6 +95,7 @@ const MyProfile = ({
   onOpenBooster,
   // battleCompleted,
   openBattlePopup,
+  openDypianHeist,
   totalTreasureHuntUsd,
   isPremium,
   fightInfo,
@@ -1911,116 +1913,26 @@ const MyProfile = ({
                 </NavLink>
               </div>
               <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
-                <NavLink
-                  className="new-stake-nft-wrapper position-relative d-flex align-items-center justify-content-between p-3"
-                  to={"/account/challenges/puzzle-madness"}
-                  onClick={onEventCardClick}
+                <div
+                  className="dypian-heist-tile position-relative d-flex align-items-center justify-content-between"
+                  onClick={openDypianHeist}
                 >
-                  <div className="d-flex flex-column justify-content-between h-100">
-                    <div className="d-flex flex-column gap-2">
-                      <h6 className="leaderboards-title mb-0">
-                        PUZZLE MADNESS
-                      </h6>
-                      {/* <span
-                        className={`utcEventContent w-75`}
-                        style={{ color: "#CCE8F5" }}
-                      >
-                        Test your puzzle solving skills and boost score
-                      </span> */}
-                      {beastSiegeStatus.puzzleMadness ? (
-                        //   <div className="d-flex flex-column gap-1">
-                        //   <span className="beast-siege-ends-in">Available until:</span>
-                        //   <Countdown renderer={renderer4} date={midnight} />
-                        // </div>
-                        <>
-                          <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
-                            <div className="ready-circle-2 d-flex flex-column gap-1">
-                              <Countdown
-                                renderer={renderer4}
-                                date={puzzleMadnessTimer}
-                              />
-                            </div>
-                            <span className="new-time-remaining">
-                              Time Remaining
-                            </span>
-                          </div>
-                          <div className="d-flex d-lg-none">
-                            <Countdown
-                              renderer={renderer4}
-                              date={puzzleMadnessTimer}
-                            />
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="ready-circle d-none d-lg-flex">
-                            <span className="beast-siege-timer">Ready</span>
-                          </div>
-                          <span className="beast-siege-timer d-flex d-lg-none">
-                            Ready
-                          </span>
-                        </>
-                      )}
-                      <div
-                        className={`d-flex flex-column gap-1 infotips-holder`}
-                      >
-                        <div className="d-flex align-items-center gap-1">
-                          <div className="yellow-dot"></div>
-                          <span
-                            className="beast-siege-timer"
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: 400,
-                              color: "#fff",
-                            }}
-                          >
-                            Up to 160,000 points
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center gap-1">
-                          <div className="yellow-dot"></div>
-                          <span
-                            className="beast-siege-timer"
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: 400,
-                              color: "#fff",
-                            }}
-                          >
-                            x2-x8 multiplier
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center gap-1">
-                          <div className="yellow-dot"></div>
-                          <span
-                            className="beast-siege-timer"
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: 400,
-                              color: "#fff",
-                            }}
-                          >
-                            Multiple activations
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/puzzleMadnessArrow.svg"
-                      }
-                      height={20}
-                      width={20}
-                      alt=""
-                    />
+                  <div className="dh-tile-grid" />
+                  <div className="d-flex flex-column gap-2 position-relative">
+                    <h6 className="dh-tile-title dh-russo mb-0">DYPIAN HEIST</h6>
+                    <ul className="dh-tile-list mb-0">
+                      <li>1 free crack daily</li>
+                      <li>Points, Stars, Rewards</li>
+                      <li>Up to 25,000 points</li>
+                    </ul>
                   </div>
-                  <img
-                    src={
-                      "https://cdn.worldofdypians.com/wod/puzzleMadnessBannerProfile.webp"
-                    }
-                    className="eventbannerimg puzzle-eventbannerimg"
-                  />
-                </NavLink>
+                  <div className="d-flex align-items-center gap-3 position-relative">
+                    <div className="dh-tile-dial">
+                      <span className="dh-russo">D</span>
+                    </div>
+                    <div className="dh-tile-ready">Ready</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

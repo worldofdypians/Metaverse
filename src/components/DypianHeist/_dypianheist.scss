@@ -1,0 +1,872 @@
+$gold: #f5c542;
+$gold-light: #ffe08a;
+$gold-dark: #c98a12;
+$muted: #b7b0d8;
+
+@keyframes dhPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes dhFlicker {
+  0%,
+  92%,
+  100% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.6;
+  }
+  95% {
+    opacity: 1;
+  }
+  97% {
+    opacity: 0.75;
+  }
+}
+@keyframes dhRise {
+  from {
+    transform: translateY(14px) scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes dhRays {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes dhFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.dh-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.85);
+  pointer-events: auto;
+}
+
+.dh-popup {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: min(820px, calc(100vh - 32px));
+  border-radius: 24px;
+  overflow: hidden;
+  background: radial-gradient(120% 70% at 50% 108%, #3a145e 0%, #170d3d 45%, #0a0822 100%);
+  font-family: Poppins, "Segoe UI", system-ui, sans-serif;
+  color: #f4f1ff;
+
+  p {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 991px) {
+    height: calc(100vh - 32px);
+  }
+}
+
+.dh-russo {
+  font-family: "Russo One", Poppins, sans-serif;
+}
+
+.dh-bg,
+.dh-bg-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.dh-bg {
+  background: url("./assets/heistBg.jpg") center 30% / cover no-repeat;
+}
+.dh-bg-shade {
+  background: radial-gradient(70% 60% at 50% 45%, rgba(10, 6, 32, 0.15) 0%, rgba(10, 6, 32, 0.55) 100%),
+    linear-gradient(180deg, rgba(10, 6, 32, 0.75) 0%, rgba(10, 6, 32, 0.45) 35%, rgba(10, 6, 32, 0.55) 65%, rgba(10, 6, 32, 0.92) 100%);
+}
+
+.dh-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+
+  @media screen and (max-width: 991px) {
+    padding: 24px 18px;
+  }
+}
+
+.dh-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-right: 64px;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: 991px) {
+    gap: 12px;
+  }
+}
+
+.dh-title {
+  margin: 0;
+  font-size: 34px;
+  letter-spacing: 2px;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 0 10px #ff3d9a, 0 0 28px rgba(255, 61, 154, 0.7);
+  animation: dhFlicker 6s infinite;
+
+  @media screen and (max-width: 500px) {
+    font-size: 26px;
+  }
+}
+
+.dh-timer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(20, 14, 52, 0.8);
+  border: 1px solid rgba(160, 130, 255, 0.3);
+  font-size: 13px;
+}
+.dh-timer-value {
+  font-size: 16px;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.dh-grid {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr) 280px;
+  gap: 24px;
+  flex: 1;
+  min-height: 0;
+
+  @media screen and (max-width: 1100px) {
+    grid-template-columns: 230px minmax(0, 1fr) 240px;
+    gap: 16px;
+  }
+  @media screen and (max-width: 991px) {
+    grid-template-columns: minmax(0, 1fr);
+
+    .dh-center {
+      order: 1;
+    }
+    .dh-side {
+      order: 2;
+    }
+    .dh-stats {
+      order: 3;
+    }
+  }
+}
+
+.dh-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+.dh-card {
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(24, 16, 62, 0.78);
+  border: 1px solid rgba(160, 130, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dh-card-purple {
+  gap: 10px;
+  background: linear-gradient(160deg, rgba(123, 60, 255, 0.35), rgba(24, 16, 62, 0.85));
+  border-color: rgba(169, 123, 255, 0.45);
+}
+
+.dh-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: $muted;
+}
+.dh-muted {
+  font-size: 12px;
+  color: $muted;
+}
+
+.dh-logo {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.dh-stat-value {
+  font-size: 24px;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.dh-tier-bar {
+  width: 10px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 5px;
+}
+.dh-tier-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+.dh-tier-desc {
+  font-size: 12px;
+  color: #c9c2ec;
+}
+
+.dh-cracks {
+  font-size: 44px;
+  line-height: 1;
+  color: #fff;
+}
+.dh-streak {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+.dh-day {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  &.today {
+    border-color: $gold;
+  }
+  &.done {
+    background: $gold;
+    border-color: #ffd96b;
+  }
+}
+
+.dh-haul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 13px;
+  color: #fff;
+}
+
+// ---------- vault ----------
+.dh-center {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.dh-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 520px;
+  height: 520px;
+  margin: -300px 0 0 -260px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: dhPulse 3.2s ease-in-out infinite;
+}
+
+.dh-safe {
+  position: relative;
+  width: 392px;
+  height: 392px;
+  flex-shrink: 0;
+  perspective: 1100px;
+
+  @media screen and (max-width: 1100px) {
+    transform: scale(0.85);
+    margin: -29px;
+  }
+  @media screen and (max-width: 991px) {
+    transform: none;
+    margin: 0;
+  }
+  @media screen and (max-width: 500px) {
+    transform: scale(0.75);
+    margin: -49px;
+  }
+}
+
+.dh-safe-body {
+  position: absolute;
+  inset: 0;
+  border-radius: 40px;
+  background: linear-gradient(145deg, #4b4380 0%, #241d50 45%, #17123a 100%);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.18), inset 0 -6px 18px rgba(0, 0, 0, 0.5),
+    0 30px 60px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(169, 123, 255, 0.25);
+}
+.dh-hinge {
+  position: absolute;
+  left: 10px;
+  width: 22px;
+  height: 54px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #2a2357, #8c84c2, #2a2357);
+}
+
+.dh-interior,
+.dh-door {
+  position: absolute;
+  left: 26px;
+  top: 26px;
+  width: 340px;
+  height: 340px;
+}
+.dh-interior {
+  border-radius: 50%;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dh-tier-bg {
+  position: absolute;
+  inset: 0;
+  animation: dhFadeIn 0.6s 0.35s both ease-out;
+}
+.dh-street {
+  background: url("./assets/street.jpg") center / cover no-repeat;
+}
+.dh-crew {
+  background: url("./assets/crew.jpg") center / cover no-repeat;
+}
+.dh-vault {
+  background: url("./assets/vault.jpg") center / cover no-repeat;
+}
+.dh-kingpin {
+  background: url("./assets/kingpin.jpg") center / cover no-repeat;
+}
+.dh-tier-shade {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(8, 6, 28, 0.45) 0%, rgba(8, 6, 28, 0.15) 45%, rgba(8, 6, 28, 0.7) 100%);
+}
+.dh-rays {
+  position: absolute;
+  inset: -40%;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.07) 0deg 8deg, transparent 8deg 24deg);
+  animation: dhRays 14s linear infinite;
+}
+
+.dh-reward {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: dhRise 0.5s 0.45s both cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+.dh-reward-tier {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(8, 6, 28, 0.8);
+  border: 1px solid;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.dh-reward-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 20px 14px 16px;
+  min-width: 150px;
+  border-radius: 16px;
+  background: rgba(10, 7, 32, 0.82);
+  border: 1px solid rgba(160, 130, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.dh-door {
+  transform-origin: 0% 50%;
+  transform-style: preserve-3d;
+  transition: transform 950ms cubic-bezier(0.25, 0.9, 0.25, 1);
+}
+.dh-door-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 20deg, #3d3670, #9a92cc, #3d3670, #6f68a6, #2b2556, #a39bd6, #3d3670);
+  box-shadow: inset 0 0 0 10px rgba(16, 12, 40, 0.55), inset 0 0 0 12px rgba(255, 255, 255, 0.12),
+    0 18px 40px rgba(0, 0, 0, 0.6);
+}
+.dh-door-face {
+  position: absolute;
+  inset: 34px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #4a4386, #1f1946 75%);
+  box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.15), inset 0 -8px 20px rgba(0, 0, 0, 0.6);
+}
+.dh-bolt {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f0ecff, #7d75b4 60%, #2c2558);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+.dh-pointer {
+  position: absolute;
+  left: 162px;
+  top: 40px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 14px solid $gold;
+  filter: drop-shadow(0 0 6px rgba(245, 197, 66, 0.9));
+}
+.dh-dial {
+  position: absolute;
+  left: 80px;
+  top: 80px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  transition: transform 1500ms cubic-bezier(0.12, 0.82, 0.22, 1);
+  background: radial-gradient(circle at 40% 35%, #c9c2f0, #6e66a8 55%, #3a3370 100%);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55), inset 0 2px 0 rgba(255, 255, 255, 0.4);
+}
+.dh-tick {
+  position: absolute;
+  left: 89px;
+  width: 2px;
+}
+.dh-spoke {
+  position: absolute;
+  left: 82px;
+  top: 14px;
+  width: 16px;
+  height: 152px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #2c2558, #8a82c0, #2c2558);
+}
+.dh-knob {
+  position: absolute;
+  left: 56px;
+  top: 56px;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 1500ms cubic-bezier(0.12, 0.82, 0.22, 1);
+  background: radial-gradient(circle at 40% 35%, $gold-light, $gold 45%, #b8800c 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.6),
+    inset 0 0 0 3px rgba(120, 80, 0, 0.5);
+
+  span {
+    font-size: 22px;
+    color: #3a2400;
+  }
+}
+
+// ---------- buttons ----------
+.dh-btn {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+  }
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+  &:focus-visible {
+    outline: 3px solid #3de0ff;
+    outline-offset: 3px;
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.dh-main-btn {
+  min-width: 300px;
+  height: 60px;
+  padding: 0 32px;
+  border: 0;
+  border-radius: 16px;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: #2a1a00;
+  background: linear-gradient(180deg, $gold-light, $gold 55%, #e0a91f);
+  box-shadow: 0 6px 0 #9a6608, 0 0 30px rgba(245, 197, 66, 0.45);
+
+  &.muted {
+    background: linear-gradient(180deg, #c9b27a, #a88a3c);
+  }
+
+  @media screen and (max-width: 500px) {
+    min-width: 0;
+    width: 100%;
+    font-size: 17px;
+  }
+}
+.dh-hint {
+  font-size: 13px;
+  color: #c9c2ec;
+  text-align: center;
+}
+
+// ---------- bundles ----------
+.dh-bundles {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+
+  @media screen and (max-width: 991px) {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+.dh-bundles-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 220px;
+  flex-shrink: 0;
+  color: #fff;
+
+  @media screen and (max-width: 991px) {
+    width: auto;
+  }
+}
+.dh-bundle {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 14px 20px;
+  border-radius: 16px;
+  background: rgba(24, 16, 62, 0.82);
+  border: 1px solid rgba(160, 130, 255, 0.28);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba(245, 197, 66, 0.7);
+  }
+  &.best {
+    background: linear-gradient(135deg, rgba(245, 197, 66, 0.22), rgba(24, 16, 62, 0.9));
+    border-color: rgba(245, 197, 66, 0.45);
+  }
+  &.nudge {
+    border-color: rgba(245, 197, 66, 0.8);
+  }
+}
+.dh-bundle-qty {
+  font-size: 26px;
+  line-height: 1;
+  color: #fff;
+}
+.dh-buy-btn {
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(245, 197, 66, 0.6);
+  background: rgba(245, 197, 66, 0.12);
+  color: #ffd96b;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+// ---------- gold frame ----------
+.dh-frame,
+.dh-corner,
+.dh-notch {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+}
+.dh-frame {
+  inset: 0;
+  border-radius: 24px;
+  box-shadow: inset 0 0 0 5px $gold;
+}
+.dh-corner {
+  width: 64px;
+  height: 64px;
+  filter: drop-shadow(0 0 6px rgba(245, 197, 66, 0.8));
+
+  &.tl {
+    left: 16px;
+    top: 16px;
+    border-top: 6px solid $gold;
+    border-left: 6px solid $gold;
+    border-top-left-radius: 16px;
+  }
+  &.bl {
+    left: 16px;
+    bottom: 16px;
+    border-bottom: 6px solid $gold;
+    border-left: 6px solid $gold;
+    border-bottom-left-radius: 16px;
+  }
+  &.br {
+    right: 16px;
+    bottom: 16px;
+    border-bottom: 6px solid $gold;
+    border-right: 6px solid $gold;
+    border-bottom-right-radius: 16px;
+  }
+
+  @media screen and (max-width: 991px) {
+    display: none;
+  }
+}
+.dh-notch {
+  &.top,
+  &.bottom {
+    left: 50%;
+    width: 240px;
+    height: 13px;
+    margin-left: -120px;
+  }
+  &.top {
+    top: 0;
+    background: linear-gradient(180deg, $gold-light, $gold-dark);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 12px 100%);
+    box-shadow: 0 0 12px rgba(245, 197, 66, 0.8);
+  }
+  &.bottom {
+    bottom: 0;
+    background: linear-gradient(0deg, $gold-light, $gold-dark);
+    clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 100%, 0 100%);
+  }
+  &.left,
+  &.right {
+    top: 50%;
+    width: 13px;
+    height: 160px;
+    margin-top: -80px;
+  }
+  &.left {
+    left: 0;
+    background: linear-gradient(90deg, $gold-light, $gold-dark);
+    clip-path: polygon(0 0, 100% 12px, 100% calc(100% - 12px), 0 100%);
+  }
+  &.right {
+    right: 0;
+    background: linear-gradient(270deg, $gold-light, $gold-dark);
+    clip-path: polygon(0 12px, 100% 0, 100% 100%, 0 calc(100% - 12px));
+  }
+
+  @media screen and (max-width: 500px) {
+    &.top,
+    &.bottom {
+      width: 140px;
+      margin-left: -70px;
+    }
+  }
+}
+
+.dh-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 4;
+  width: 76px;
+  height: 62px;
+  border: 0;
+  padding: 0 0 6px 16px;
+  color: #2a1a00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, $gold-light, $gold 55%, $gold-dark);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 24px 100%);
+  box-shadow: 0 0 20px rgba(245, 197, 66, 0.6);
+}
+
+// ---------- account page tile ----------
+.dypian-heist-tile {
+  height: 155px;
+  padding: 0 24px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #5b2a7a;
+  background: linear-gradient(100deg, #170d40 0%, #241252 45%, #3a145e 75%, #4a1866 100%);
+
+  @media screen and (max-width: 786px) {
+    height: 180px;
+    padding: 0 16px;
+  }
+
+  .dh-tile-grid {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 45%;
+    pointer-events: none;
+    background: linear-gradient(rgba(180, 90, 255, 0.35), rgba(180, 90, 255, 0.35)) left 72% / 100% 1px no-repeat,
+      repeating-linear-gradient(90deg, rgba(120, 80, 255, 0.18) 0 1px, transparent 1px 28px);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 60%);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 60%);
+  }
+
+  .dh-tile-title {
+    font-size: 26px;
+    letter-spacing: 1.5px;
+    line-height: 1;
+    color: #fff;
+    text-shadow: 0 0 8px #ff3d9a, 0 0 20px rgba(255, 61, 154, 0.7);
+
+    @media screen and (max-width: 500px) {
+      font-size: 20px;
+    }
+  }
+
+  .dh-tile-list {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Poppins, sans-serif;
+      font-size: 13px;
+      color: #fff;
+
+      &::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: $gold;
+      }
+    }
+  }
+
+  .dh-tile-dial {
+    width: 86px;
+    height: 86px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: conic-gradient(from 20deg, #3d3670, #9a92cc, #3d3670, #6f68a6, #2b2556, #a39bd6, #3d3670);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+    transition: transform 0.6s cubic-bezier(0.12, 0.82, 0.22, 1);
+
+    span {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #3a2400;
+      transform: rotate(-15deg);
+      background: radial-gradient(circle at 40% 35%, $gold-light, $gold 45%, #e0a91f 100%);
+    }
+
+    @media screen and (max-width: 500px) {
+      width: 64px;
+      height: 64px;
+
+      span {
+        width: 34px;
+        height: 34px;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .dh-tile-ready {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid $gold;
+    background: radial-gradient(circle, rgba(90, 30, 120, 0.6), transparent 75%);
+    font-family: Poppins, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #ffd96b;
+    transition: box-shadow 0.25s;
+
+    @media screen and (max-width: 500px) {
+      width: 58px;
+      height: 58px;
+      font-size: 13px;
+    }
+  }
+
+  &:hover {
+    .dh-tile-dial {
+      transform: rotate(90deg);
+    }
+    .dh-tile-ready {
+      box-shadow: 0 0 20px gold;
+    }
+  }
+}

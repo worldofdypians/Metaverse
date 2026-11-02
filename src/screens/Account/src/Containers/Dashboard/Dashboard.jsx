@@ -72,6 +72,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserProgress } from "../../../../../redux/slices/userSlice";
 import { useQuery as useReactQuery } from "@tanstack/react-query";
 import { fighters } from "../../../../../components/BattlePopup/battleInfo";
+import DypianHeist from "../../../../../components/DypianHeist/DypianHeist";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -310,6 +311,7 @@ function Dashboard({
   const [showDailyQuestion, setShowDailyQuestion] = useState(false);
   const [booster, setBooster] = useState(false);
   const [battlePopup, setbattlePopup] = useState(false);
+  const [dypianHeist, setDypianHeist] = useState(false);
 
   const [tooltip, setTooltip] = useState(false);
 
@@ -6786,6 +6788,7 @@ function Dashboard({
               openBattlePopup={() => {
                 setbattlePopup(true);
               }}
+              openDypianHeist={() => setDypianHeist(true)}
               // battleCompleted={false}
               openKickstarter={openKickstarter}
               aiQuestionCompleted={aiQuestionCompleted}
@@ -7391,6 +7394,15 @@ function Dashboard({
               />
             </div>
           </OutsideClickHandler>
+        )}
+
+        {(dypianHeist || hashValue === "#dypian-heist") && (
+          <DypianHeist
+            onClose={() => {
+              setDypianHeist(false);
+              window.location.hash = "";
+            }}
+          />
         )}
 
         {(battlePopup || hashValue === "#single-strike") && (
