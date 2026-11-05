@@ -57,7 +57,7 @@ const ExplorerGrid = ({
         <div className="row">
           <div className="col-12 col-lg-4 mb-3 mb-lg-0">
             <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center position-relative gap-2">
-              <a
+              {/* <a
                 href="https://dappradar.com/dapp/world-of-dypians?range-ds=30d"
                 className="dappRadar-full"
                 target="_blank"
@@ -67,7 +67,7 @@ const ExplorerGrid = ({
                   className="w-100"
                   alt=""
                 />
-              </a>
+              </a> */}
               <h6 className="mb-0 new-stats-value">
                 {" "}
                 {getFormattedNumber(monthlyPlayers, 0)}
