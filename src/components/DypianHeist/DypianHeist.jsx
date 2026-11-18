@@ -7,14 +7,7 @@ const TIERS = [
   { id: "vault", tier: "Vault Score", color: "#ff6fb5", interior: "#6a1048", glow: "rgba(255,79,163,.45)", odds: "10%", w: 10, desc: "25,000 Points + 50 Stars", points: 25000, stars: 50, wod: 0 },
   { id: "kingpin", tier: "Kingpin Jackpot", color: "#f5c542", interior: "#6a4a05", glow: "rgba(245,197,66,.5)", odds: "2%", w: 2, desc: "$100", points: 0, stars: 0, wod: 100 },
 ];
-const BUNDLES = [
-  { n: 1, label: "1 Crack", price: "1 WOD" },
-  { n: 5, label: "5 Cracks", price: "5 WOD" },
-  { n: 10, label: "10 Cracks", price: "10 WOD" },
-];
-const DAYS = ["M", "T", "W", "T", "F", "S", "S"];
-const FREE_CRACKS = 1;
-const DAILY_CAP = 10;
+const DAILY_CRACKS = 10;
 
 const fmt = (n) => Number(n).toLocaleString("en-US");
 
@@ -78,11 +71,9 @@ const DypianHeist = ({ onClose }) => {
   const [phase, setPhase] = useState("idle"); // idle | spinning | open
   const [dialAngle, setDialAngle] = useState(0);
   const [used, setUsed] = useState(0);
-  const [bought, setBought] = useState(0);
   const [take, setTake] = useState({ points: 0, stars: 0, wod: 0 });
   const [reward, setReward] = useState(null);
   const [history, setHistory] = useState([]);
-  const [nudge, setNudge] = useState(false);
   const [countdown, setCountdown] = useState(untilUtcMidnight());
   const timers = useRef([]);
 
@@ -94,17 +85,14 @@ const DypianHeist = ({ onClose }) => {
     };
   }, []);
 
-  const left = Math.max(0, Math.min(FREE_CRACKS + bought - used, FREE_CRACKS + DAILY_CAP - used));
-  const freeLeft = Math.max(0, FREE_CRACKS - used);
-  const capped = used >= FREE_CRACKS + DAILY_CAP;
+  const left = Math.max(0, DAILY_CRACKS - used);
   const isOpen = phase === "open";
 
   const crack = () => {
-    if (left <= 0) return setNudge(true);
+    if (left <= 0) return;
     setPhase("spinning");
     setDialAngle((a) => a + 1080 + Math.floor(Math.random() * 360));
     setUsed((u) => u + 1);
-    setNudge(false);
     timers.current.push(
       setTimeout(() => {
         const t = pickTier();
@@ -124,15 +112,10 @@ const DypianHeist = ({ onClose }) => {
   };
 
   let btnLabel = "CRACK THE VAULT";
-  let btnHint =
-    freeLeft > 0
-      ? "Free daily crack ready"
-      : left > 0
-      ? `${left} paid ${left === 1 ? "crack" : "cracks"} left`
-      : "Out of cracks. Grab a bundle below.";
-  if (capped && phase === "idle") {
+  let btnHint = `${left} of ${DAILY_CRACKS} daily cracks left`;
+  if (left === 0 && phase === "idle") {
     btnLabel = `UNLOCKS IN ${countdown}`;
-    btnHint = "Daily limit reached. Your free crack and bundles unlock at reset.";
+    btnHint = "Daily limit reached. Your cracks reset at 00:00 UTC.";
   }
   if (phase === "spinning") {
     btnLabel = "CRACKING...";
@@ -142,9 +125,8 @@ const DypianHeist = ({ onClose }) => {
     btnLabel = left > 0 ? "CRACK AGAIN" : "LOCK IT UP";
     btnHint = "Added to your account";
   }
-  const btnMuted = phase === "spinning" || (capped && phase === "idle");
+  const btnMuted = phase === "spinning" || (left === 0 && phase === "idle");
 
-  const todayIdx = (new Date().getDay() + 6) % 7;
   const rewardRows = reward
     ? reward.wod
       ? [{ icon: <CashIcon />, value: `$${fmt(reward.wod)}`, label: "Rewards" }]
@@ -162,15 +144,15 @@ const DypianHeist = ({ onClose }) => {
 
         <div className="dh-content">
           <header className="dh-header">
-            <h1 className="dh-title dh-russo">DYPIAN HEIST</h1>
+            <h1 className="dh-title dh-russo">HEIST GTA VI</h1>
             {left === 0 && phase !== "spinning" && (
               <div className="dh-timer">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5c542" strokeWidth="2" strokeLinecap="round">
                   <circle cx="12" cy="12" r="9" />
                   <path d="M12 7v5l3 2" />
                 </svg>
-                <span style={{ color: capped ? "#ffd96b" : "#c9c2ec" }}>
-                  {capped ? "Vault locked. Unlocks in" : "Free crack resets in"}
+                <span style={{ color: "#ffd96b" }}>
+                  Vault locked. Cracks reset in
                 </span>
                 <span className="dh-russo dh-timer-value">{countdown}</span>
               </div>
@@ -227,9 +209,9 @@ const DypianHeist = ({ onClose }) => {
                   <div className="dh-rays" />
                   {isOpen && reward && (
                     <div className="dh-reward">
-                      <span className="dh-reward-tier" style={{ borderColor: reward.color, color: reward.color }}>
+                      {/* <span className="dh-reward-tier" style={{ borderColor: reward.color, color: reward.color }}>
                         {reward.tier}
-                      </span>
+                      </span> */}
                       <div className="dh-reward-box">
                         {rewardRows.map((w) => (
                           <Stat key={w.label} icon={w.icon} value={w.value} label={w.label} />
@@ -273,86 +255,42 @@ const DypianHeist = ({ onClose }) => {
 
             <section className="dh-col dh-side">
               <div className="dh-card dh-card-purple">
-                <p className="dh-label" style={{ color: "#d6ccff" }}>Cracks available</p>
+                <div className="d-flex justify-content-between align-items-baseline">
+                  <p className="dh-label" style={{ color: "#d6ccff" }}>Daily cracks</p>
+                  <span style={{ fontSize: 13, color: "#d6ccff" }}>Resets {countdown}</span>
+                </div>
                 <div className="d-flex align-items-baseline gap-2">
                   <span className="dh-russo dh-cracks">{left}</span>
-                  <span style={{ fontSize: 13, color: "#d6ccff" }}>free crack</span>
+                  <span style={{ fontSize: 13, color: "#d6ccff" }}>of {DAILY_CRACKS} left today</span>
                 </div>
                 <div className="dh-streak">
-                  {DAYS.map((d, k) => {
-                    const done = k === todayIdx && history.length > 0;
+                  {Array.from({ length: DAILY_CRACKS }, (_, k) => {
+                    const done = k < used;
                     return (
-                      <div key={k} className="d-flex flex-column align-items-center gap-1">
-                        <div className={`dh-day ${done ? "done" : ""} ${k === todayIdx ? "today" : ""}`}>
-                          {done && (
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2a1a00" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M5 12l5 5L20 7" />
-                            </svg>
-                          )}
-                        </div>
-                        <span style={{ fontSize: 10, color: "#c9c2ec" }}>{d}</span>
+                      <div key={k} className={`dh-day ${done ? "done" : ""} ${k === used ? "today" : ""}`}>
+                        {done && (
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2a1a00" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12l5 5L20 7" />
+                          </svg>
+                        )}
                       </div>
                     );
                   })}
                 </div>
-                <p className="mb-0" style={{ fontSize: 12, color: "#c9c2ec" }}>Your daily streak this week</p>
               </div>
 
-              {history.length > 0 && (
-                <div className="dh-card flex-grow-1">
-                  <p className="dh-label">Your recent hauls</p>
-                  {history.map((h, i) => (
-                    <div key={i} className="dh-haul">
-                      <span style={{ color: h.color, fontWeight: 600 }}>{h.tier}</span>
-                      <span>{h.desc}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className="dh-card flex-grow-1">
+                <p className="dh-label">Your recent hauls</p>
+                {history.length === 0 && <p className="dh-muted">Crack the vault to see your hauls here.</p>}
+                {history.map((h, i) => (
+                  <div key={i} className="dh-haul">
+                    <span style={{ color: h.color, fontWeight: 600 }}>{h.tier}</span>
+                    <span>{h.desc}</span>
+                  </div>
+                ))}
+              </div>
             </section>
           </div>
-
-          <section className="dh-bundles">
-            <div className="dh-bundles-intro">
-              <p className="dh-russo mb-0" style={{ fontSize: 20 }}>Need more cracks?</p>
-              <p className="mb-0" style={{ fontSize: 13, color: nudge ? "#ffd96b" : "#c9c2ec" }}>
-                {capped
-                  ? "Locked until reset."
-                  : nudge
-                  ? "Out of cracks. Pick a bundle to keep going."
-                  : `1 WOD per crack. Max ${DAILY_CAP} extra a day.`}
-              </p>
-            </div>
-            {BUNDLES.map((b, k) => {
-              const disabled = bought + b.n > DAILY_CAP;
-              return (
-                <div
-                  key={b.n}
-                  className={`dh-bundle ${k === 2 ? "best" : ""} ${nudge ? "nudge" : ""}`}
-                  style={{ opacity: disabled ? 0.4 : 1 }}
-                >
-                  <div className="d-flex flex-column gap-1">
-                    <span className="dh-russo dh-bundle-qty">x{b.n}</span>
-                    <span style={{ fontSize: 12, color: "#d6ccff" }}>{b.label}</span>
-                  </div>
-                  <button
-                    className="dh-btn dh-buy-btn"
-                    disabled={disabled}
-                    onClick={() => {
-                      setBought((v) => v + b.n);
-                      setNudge(false);
-                    }}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                      <circle cx="12" cy="12" r="9" />
-                      <path d="M8 12h8M12 8v8" />
-                    </svg>
-                    {b.price}
-                  </button>
-                </div>
-              );
-            })}
-          </section>
         </div>
 
         <div className="dh-frame" />

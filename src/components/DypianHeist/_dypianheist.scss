@@ -70,7 +70,9 @@ $muted: #b7b0d8;
   position: relative;
   width: 100%;
   max-width: 1200px;
-  height: min(820px, calc(100vh - 32px));
+  // fit the content instead of stretching to 820px
+  height: auto;
+  max-height: calc(100vh - 32px);
   border-radius: 24px;
   overflow: hidden;
   background: radial-gradient(120% 70% at 50% 108%, #3a145e 0%, #170d3d 45%, #0a0822 100%);
@@ -108,6 +110,7 @@ $muted: #b7b0d8;
   position: relative;
   z-index: 2;
   height: 100%;
+  max-height: calc(100vh - 32px);
   box-sizing: border-box;
   padding: 28px 32px;
   display: flex;
@@ -117,6 +120,11 @@ $muted: #b7b0d8;
 
   @media screen and (max-width: 991px) {
     padding: 24px 18px;
+
+    // let content scroll instead of squashing sections on top of each other
+    > * {
+      flex-shrink: 0;
+    }
   }
 }
 
@@ -176,6 +184,7 @@ $muted: #b7b0d8;
   }
   @media screen and (max-width: 991px) {
     grid-template-columns: minmax(0, 1fr);
+    flex: none;
 
     .dh-center {
       order: 1;
@@ -192,8 +201,13 @@ $muted: #b7b0d8;
 .dh-col {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   min-height: 0;
+
+  // last card fills the column so both side columns end at the same line
+  > .dh-card:last-child {
+    flex-grow: 1;
+  }
 }
 
 .dh-card {
@@ -258,12 +272,12 @@ $muted: #b7b0d8;
 }
 .dh-streak {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
 }
 .dh-day {
-  width: 24px;
-  height: 24px;
+  width: 100%;
+  height: 34px;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -320,6 +334,9 @@ $muted: #b7b0d8;
   height: 392px;
   flex-shrink: 0;
   perspective: 1100px;
+  // bigger vault on desktop; margin makes room for the extra 20% (392 * 0.2 / 2)
+  transform: scale(1.2);
+  margin: 39px;
 
   @media screen and (max-width: 1100px) {
     transform: scale(0.85);
@@ -398,7 +415,13 @@ $muted: #b7b0d8;
 }
 
 .dh-reward {
-  position: relative;
+  // sit in the lower part of the circle where it is wide enough for 2-3 rewards
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 48px;
+  padding: 0 24px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -417,11 +440,28 @@ $muted: #b7b0d8;
 }
 .dh-reward-box {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 14px 20px 14px 16px;
-  min-width: 150px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  padding: 10px 16px;
+  max-width: 100%;
+  align-items: center;
   border-radius: 16px;
+
+  .dh-logo {
+    width: 28px;
+    height: 28px;
+  }
+  .dh-stat-value {
+    font-size: 16px;
+  }
+  .dh-muted {
+    font-size: 10px;
+  }
+  > div {
+    gap: 8px !important;
+  }
   background: rgba(10, 7, 32, 0.82);
   border: 1px solid rgba(160, 130, 255, 0.3);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -838,11 +878,13 @@ $muted: #b7b0d8;
     }
   }
 
+  // compact outlined status (Ready / Live), replaces the old dial + circle
   .dh-tile-ready {
-    width: 72px;
-    height: 72px;
+    width: auto;
+    height: auto;
+    padding: 4px 14px;
     flex-shrink: 0;
-    border-radius: 50%;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -855,16 +897,11 @@ $muted: #b7b0d8;
     transition: box-shadow 0.25s;
 
     @media screen and (max-width: 500px) {
-      width: 58px;
-      height: 58px;
       font-size: 13px;
     }
   }
 
   &:hover {
-    .dh-tile-dial {
-      transform: rotate(90deg);
-    }
     .dh-tile-ready {
       box-shadow: 0 0 20px gold;
     }

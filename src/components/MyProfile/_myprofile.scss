@@ -1182,6 +1182,30 @@
   overflow: hidden;
 }
 
+// compact status (timer/ready) for the active daily event card
+.compact-status {
+  .ready-circle-2-position,
+  .ready-circle {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    top: auto;
+    left: auto;
+    align-items: flex-start !important;
+  }
+  .ready-circle,
+  .ready-circle-2 {
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    padding: 2px 12px;
+  }
+  .new-time-remaining {
+    display: none;
+  }
+}
+
 .premium-badge-profile-enabled:hover,
 .premium-badge-profile:hover {
   filter: drop-shadow(0px 0px 10px #c09645);

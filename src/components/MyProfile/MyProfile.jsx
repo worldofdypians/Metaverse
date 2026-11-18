@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import "./_myprofile.scss";
 import "../DypianHeist/_dypianheist.scss";
+import BuildGta from "../BuildGta/BuildGta";
 import OutsideClickHandler from "react-outside-click-handler";
 import Clipboard from "react-clipboard.js";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
@@ -104,6 +105,7 @@ const MyProfile = ({
   const userProgress = useSelector((state) => state.user.userProgress);
 
   const totalClaimedChests = allClaimedChests;
+  const [gtaPopup, setGtaPopup] = useState(false);
   const [rankDropdown, setRankDropdown] = useState(false);
   const [tooltip, setTooltip] = useState(false);
   const [cooldown, setCooldown] = useState(null);
@@ -1771,7 +1773,7 @@ const MyProfile = ({
                   </div>
                 </div>
               </div> */}
-              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <NavLink
                   to={dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.link}
                   onClick={onEventCardClick}
@@ -1779,7 +1781,7 @@ const MyProfile = ({
                   <div
                     className={`${
                       dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.class
-                    } profile-banner-class-thing position-relative p-3 d-flex`}
+                    } profile-banner-class-thing compact-status position-relative p-3 d-flex`}
                   >
                     <div
                       className=" d-flex flex-column justify-content-between gap-2 "
@@ -1912,28 +1914,40 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
+                <div
+                  className="gta-tile dypian-heist-tile position-relative d-flex align-items-center justify-content-between"
+                  onClick={() => setGtaPopup(true)}
+                >
+                  <div className="d-flex flex-column gap-2 position-relative">
+                    <h6 className="dh-tile-title dh-russo mb-0">BUILD YOUR GTA VI</h6>
+                    <ul className="dh-tile-list mb-0">
+                      <li>Collect 14 GTA VI pieces</li>
+                      <li>Points &amp; Stars on BNB Chain</li>
+                      <li>Up to 50,000 points</li>
+                    </ul>
+                  </div>
+                  <div className="dh-tile-ready position-relative">Live</div>
+                </div>
+              </div>
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <div
                   className="dypian-heist-tile position-relative d-flex align-items-center justify-content-between"
                   onClick={openDypianHeist}
                 >
                   <div className="dh-tile-grid" />
                   <div className="d-flex flex-column gap-2 position-relative">
-                    <h6 className="dh-tile-title dh-russo mb-0">DYPIAN HEIST</h6>
+                    <h6 className="dh-tile-title dh-russo mb-0">HEIST GTA VI</h6>
                     <ul className="dh-tile-list mb-0">
-                      <li>1 free crack daily</li>
+                      <li>10 daily cracks</li>
                       <li>Points, Stars, Rewards</li>
                       <li>Up to 25,000 points</li>
                     </ul>
                   </div>
-                  <div className="d-flex align-items-center gap-3 position-relative">
-                    <div className="dh-tile-dial">
-                      <span className="dh-russo">D</span>
-                    </div>
-                    <div className="dh-tile-ready">Ready</div>
-                  </div>
+                  <div className="dh-tile-ready dh-tile-ready-sm position-relative">Ready</div>
                 </div>
               </div>
+              {gtaPopup && <BuildGta onClose={() => setGtaPopup(false)} />}
             </div>
           </div>
         </div>
