@@ -7398,6 +7398,9 @@ function Dashboard({
 
         {(dypianHeist || hashValue === "#dypian-heist") && (
           <DypianHeist
+            coinbase={coinbase}
+            wallet={userWallet}
+            chainId={chainId}
             onClose={() => {
               setDypianHeist(false);
               window.location.hash = "";

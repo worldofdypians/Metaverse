@@ -1,5 +1,30 @@
 import { useEffect, useRef, useState } from "react";
+import { bsc } from "wagmi/chains";
+import {
+  readContract,
+  writeContract,
+  waitForTransactionReceipt,
+  switchChain,
+  getConnection,
+} from "@wagmi/core";
+import { wagmiClient } from "../../wagmiConnectors";
 import "./_dypianheist.scss";
+
+const APPROVE_CRACKS = 100n; // one-time approval covers 100 cracks (10 days at the daily limit)
+
+const read = (address, abi, functionName, args = []) =>
+  readContract(wagmiClient, { address, abi, functionName, args, chainId: bsc.id });
+
+const write = async (address, abi, functionName, args = []) => {
+  const account = getConnection(wagmiClient);
+  if (account?.chainId !== bsc.id) await switchChain(wagmiClient, { chainId: bsc.id });
+  const hash = await writeContract(wagmiClient, {
+    address, abi, functionName, args, account: account?.address, chainId: bsc.id,
+  });
+  const receipt = await waitForTransactionReceipt(wagmiClient, { hash, chainId: bsc.id });
+  if (receipt.status !== "success") throw new Error("Transaction reverted");
+  return hash;
+};
 
 const TIERS = [
   { id: "street", tier: "Street Haul", color: "#3de0ff", interior: "#0f4a66", glow: "rgba(61,224,255,.35)", odds: "60%", w: 60, desc: "2,500 Points", points: 2500, stars: 0, wod: 0 },
@@ -65,17 +90,34 @@ const Stat = ({ icon, value, label }) => (
   </div>
 );
 
-// ponytail: all state is local to the popup — rolls, cracks, bundles and the
-// streak reset on reload and nothing is credited. Wire to backend + WOD payment before launch.
-const DypianHeist = ({ onClose }) => {
-  const [phase, setPhase] = useState("idle"); // idle | spinning | open
+// ponytail: the WOD payment (crackVault) is real, but the reward is rolled client-side
+// with pickTier and nothing is credited. Send the tx hash to the backend once the API exists.
+const DypianHeist = ({ onClose, coinbase, wallet, chainId }) => {
+  const [phase, setPhase] = useState("idle"); // idle | approving | confirming | spinning | open
   const [dialAngle, setDialAngle] = useState(0);
-  const [used, setUsed] = useState(0);
+  const [limit, setLimit] = useState(DAILY_CRACKS);
+  const [left, setLeft] = useState(null); // null until read from the contract
   const [take, setTake] = useState({ points: 0, stars: 0, wod: 0 });
   const [reward, setReward] = useState(null);
   const [history, setHistory] = useState([]);
   const [countdown, setCountdown] = useState(untilUtcMidnight());
   const timers = useRef([]);
+
+  const refreshCracks = () => {
+    if (!coinbase) return;
+    const heist = window.config.dypians_heist_address;
+    Promise.all([
+      read(heist, window.DYPIANS_HEIST_ABI, "getRemainingCracks", [coinbase]),
+      read(heist, window.DYPIANS_HEIST_ABI, "DAILY_LIMIT"),
+    ])
+      .then(([r, l]) => {
+        setLeft(Number(r));
+        setLimit(Number(l));
+      })
+      .catch(console.error);
+  };
+
+  useEffect(refreshCracks, [coinbase]);
 
   useEffect(() => {
     const id = setInterval(() => setCountdown(untilUtcMidnight()), 1000);
@@ -85,14 +127,44 @@ const DypianHeist = ({ onClose }) => {
     };
   }, []);
 
-  const left = Math.max(0, DAILY_CRACKS - used);
+  const used = left === null ? 0 : limit - left;
   const isOpen = phase === "open";
+  const busy = ["approving", "confirming", "spinning"].includes(phase);
+  const wrongWallet = !!coinbase && !!wallet && coinbase.toLowerCase() !== wallet.toLowerCase();
+  const wrongChain = !!coinbase && chainId !== bsc.id;
 
-  const crack = () => {
-    if (left <= 0) return;
+  const switchToBnb = () =>
+    switchChain(wagmiClient, { chainId: bsc.id }).catch((e) =>
+      window.alertify?.error(e?.shortMessage || e?.message)
+    );
+
+  const crack = async () => {
+    if (!coinbase || wrongWallet || !left) return;
+    const heist = window.config.dypians_heist_address;
+    const wod = window.config.wod_token_address;
+    try {
+      setPhase("confirming");
+      const [cost, allowance] = await Promise.all([
+        read(heist, window.DYPIANS_HEIST_ABI, "COST_PER_CRACK"),
+        read(wod, window.TOKEN_ABI, "allowance", [coinbase, heist]),
+      ]);
+      if (allowance < cost) {
+        setPhase("approving");
+        await write(wod, window.TOKEN_ABI, "approve", [heist, cost * APPROVE_CRACKS]);
+        setPhase("confirming");
+      }
+      await write(heist, window.DYPIANS_HEIST_ABI, "crackVault");
+      // TODO: POST tx hash to backend for the real reward once the API is ready
+    } catch (e) {
+      console.error(e);
+      window.alertify?.error(e?.shortMessage || e?.message);
+      setPhase("idle");
+      return;
+    }
+    setLeft((l) => l - 1);
+    refreshCracks();
     setPhase("spinning");
     setDialAngle((a) => a + 1080 + Math.floor(Math.random() * 360));
-    setUsed((u) => u + 1);
     timers.current.push(
       setTimeout(() => {
         const t = pickTier();
@@ -105,17 +177,37 @@ const DypianHeist = ({ onClose }) => {
   };
 
   const onMain = () => {
-    if (phase === "spinning") return;
-    if (!isOpen) return crack();
+    if (busy || wrongWallet) return;
+    if (!isOpen) return wrongChain ? switchToBnb() : crack();
     setPhase("idle");
     if (left > 0) timers.current.push(setTimeout(crack, 700));
   };
 
   let btnLabel = "CRACK THE VAULT";
-  let btnHint = `${left} of ${DAILY_CRACKS} daily cracks left`;
-  if (left === 0 && phase === "idle") {
+  let btnHint = `${left} of ${limit} daily cracks left · 1 WOD per crack`;
+  if (!coinbase) {
+    btnLabel = "CONNECT WALLET";
+    btnHint = "Connect your wallet to crack the vault";
+  } else if (wrongWallet) {
+    btnLabel = "WRONG WALLET";
+    btnHint = "Use the wallet linked to your game profile";
+  } else if (wrongChain && !isOpen) {
+    btnLabel = "SWITCH TO BNB CHAIN";
+    btnHint = "The heist runs on BNB Chain";
+  } else if (left === null) {
+    btnLabel = "LOADING...";
+    btnHint = "Checking your daily cracks";
+  } else if (left === 0 && phase === "idle") {
     btnLabel = `UNLOCKS IN ${countdown}`;
     btnHint = "Daily limit reached. Your cracks reset at 00:00 UTC.";
+  }
+  if (phase === "approving") {
+    btnLabel = "APPROVING WOD...";
+    btnHint = "One-time approval, confirm in your wallet";
+  }
+  if (phase === "confirming") {
+    btnLabel = "CONFIRMING...";
+    btnHint = "Confirm the 1 WOD transaction in your wallet";
   }
   if (phase === "spinning") {
     btnLabel = "CRACKING...";
@@ -125,7 +217,7 @@ const DypianHeist = ({ onClose }) => {
     btnLabel = left > 0 ? "CRACK AGAIN" : "LOCK IT UP";
     btnHint = "Added to your account";
   }
-  const btnMuted = phase === "spinning" || (left === 0 && phase === "idle");
+  const btnMuted = busy || wrongWallet || (phase === "idle" && !left && !wrongChain);
 
   const rewardRows = reward
     ? reward.wod
@@ -260,11 +352,11 @@ const DypianHeist = ({ onClose }) => {
                   <span style={{ fontSize: 13, color: "#d6ccff" }}>Resets {countdown}</span>
                 </div>
                 <div className="d-flex align-items-baseline gap-2">
-                  <span className="dh-russo dh-cracks">{left}</span>
-                  <span style={{ fontSize: 13, color: "#d6ccff" }}>of {DAILY_CRACKS} left today</span>
+                  <span className="dh-russo dh-cracks">{left ?? "-"}</span>
+                  <span style={{ fontSize: 13, color: "#d6ccff" }}>of {limit} left today</span>
                 </div>
                 <div className="dh-streak">
-                  {Array.from({ length: DAILY_CRACKS }, (_, k) => {
+                  {Array.from({ length: limit }, (_, k) => {
                     const done = k < used;
                     return (
                       <div key={k} className={`dh-day ${done ? "done" : ""} ${k === used ? "today" : ""}`}>
