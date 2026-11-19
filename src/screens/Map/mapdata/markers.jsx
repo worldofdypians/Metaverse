@@ -11,6 +11,7 @@ const iconData = [
     size: 32,
     chain: false,
   },
+ 
   {
     name: "bearMarker",
     url: "https://cdn.worldofdypians.com/wod/bearIcon.svg",
@@ -28,6 +29,12 @@ const iconData = [
     url: "https://cdn.worldofdypians.com/wod/deerIcon.svg",
     size: 32,
     chain: false,
+  },
+   {
+    name: "gtaMarker",
+    url: "https://cdn.worldofdypians.com/wod/gtaIcon.svg",
+    size: 24,
+    chain: true,
   },
   {
     name: "bnbMarker",

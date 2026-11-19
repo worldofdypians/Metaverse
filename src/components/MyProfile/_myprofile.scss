@@ -1182,6 +1182,30 @@
   overflow: hidden;
 }
 
+// compact status (timer/ready) for the active daily event card
+.compact-status {
+  .ready-circle-2-position,
+  .ready-circle {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    top: auto;
+    left: auto;
+    align-items: flex-start !important;
+  }
+  .ready-circle,
+  .ready-circle-2 {
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    padding: 2px 12px;
+  }
+  .new-time-remaining {
+    display: none;
+  }
+}
+
 .premium-badge-profile-enabled:hover,
 .premium-badge-profile:hover {
   filter: drop-shadow(0px 0px 10px #c09645);
@@ -1456,4 +1480,31 @@ left: 30px;
 .cmc-diamond-hand{
   position: relative;
   right: -2px;
+}
+// outlined pill status, same look as the Build your GTA VI "Live" badge
+.ready-circle.ready-pill,
+.ready-circle-2.ready-pill {
+  width: fit-content;
+  height: fit-content;
+  padding: 4px 14px;
+  border-radius: 8px;
+  border: 2px solid #f5c542;
+  background: radial-gradient(circle, rgba(90, 30, 120, 0.6), transparent 75%);
+
+  .beast-siege-timer,
+  span {
+    color: #ffd96b;
+    font-weight: 700;
+  }
+}
+
+// pin the pill top-right, clear of the title and bullet list
+.ready-circle.ready-pill,
+.ready-circle-2-position.ready-pill-position {
+  left: auto;
+  bottom: auto;
+  top: 16px;
+  right: 16px;
+  margin: 0;
+  z-index: 1;
 }

@@ -2,6 +2,75 @@ import { activeMarkers, markers } from "./markers";
 
 const chainAreas = [
   {
+    title: "GTA VI Area",
+    marker: markers.gtaMarker,
+    activeMarker: activeMarkers.gtaMarker,
+    icon: "https://cdn.worldofdypians.com/wod/gtaIcon.svg",
+    location: [-0.06815491499548088, 0.08614182472229005],
+    banner: "gtaBanner.png",
+    events: [
+      {
+        title: "Build Your GTA vI",
+        image: "https://cdn.worldofdypians.com/wod/buildYourGtaInfo.png",
+        link: "/account/challenges/build-gta-VI",
+      },
+    
+    ],
+    pastEvents: [
+    
+    ],
+    socials: [
+      {
+        link: "https://x.com/RockstarGames",
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+      },
+      {
+        link: "https://t.me/rockstargames",
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+      },
+      {
+        link: "https://discord.com/invite/rockstargames",
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+      },
+      {
+        link: "https://www.rockstargames.com/VI",
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+      },
+    ],
+    city: "Dypians",
+    size: "500x500",
+    rewards: "N/A",
+    desc: "Grand Theft Auto VI is the next game in Rockstar Games’ Grand Theft Auto series. It is set in Leonida, a state inspired by Florida that includes Vice City. ",
+    benefits: [
+      "Collect 14 hidden GTA VI logo pieces",
+      "Build the full GTA VI logo",
+      "Earn between up to 150,000 points on BNB Chain",
+      "Play again every 24 hours after you complete the logo",
+      "Explore a new themed area on the map",
+    ],
+
+    area: [
+    [
+    [
+        -0.06790278752580421,
+        0.08566439151763917
+    ],
+    [
+        -0.06863771227416586,
+        0.0858360528945923
+    ],
+    [
+        -0.06843386453487035,
+        0.08654952049255372
+    ],
+    [
+        -0.06771503302624994,
+        0.08636713027954103
+    ]
+]
+    ],
+  },
+  {
     title: "BNB Chain Area",
     marker: markers.bnbMarker,
     activeMarker: activeMarkers.bnbMarker,
