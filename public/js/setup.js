@@ -101,6 +101,7 @@ window.config = {
   daily_question_bnb_address: "0xE7DA7750f4604cdcA598726bF6631A9A463A8Ba9",
   daily_question_opbnb_address: "0xfcCEC27EeAe7B2497A430459A1b3D3E7B5F96087",
   single_strike_address: "0xe851e377C676C43d04dd4AEd4808BcC00642Bd41",
+  dypians_heist_address:"0xf8ab5f8c351c019e01d1a0cb2eb1482336337020",
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
 
   weth_address: "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7", // LOWERCASE! avax
@@ -13675,6 +13676,8 @@ window.SINGLE_STRIKE_ABI = [
     type: "function",
   },
 ];
+
+window.DYPIANS_HEIST_ABI = [{"inputs":[{"internalType":"address","name":"_wod","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"VaultCracked","type":"event"},{"inputs":[],"name":"COST_PER_CRACK","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DAILY_LIMIT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"active","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"crackVault","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"cracksToday","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getRemainingCracks","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"lastDay","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"lifetimeCracks","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bool","name":"_active","type":"bool"}],"name":"setActive","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdrawWOD","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"wod","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"}]
 
 window.DAILY_BONUS_BNB_ABI = [
   {

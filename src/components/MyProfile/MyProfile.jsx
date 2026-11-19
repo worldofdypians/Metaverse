@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import "./_myprofile.scss";
+import "../DypianHeist/_dypianheist.scss";
+import BuildGta from "../BuildGta/BuildGta";
 import OutsideClickHandler from "react-outside-click-handler";
 import Clipboard from "react-clipboard.js";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
@@ -94,6 +96,7 @@ const MyProfile = ({
   onOpenBooster,
   // battleCompleted,
   openBattlePopup,
+  openDypianHeist,
   totalTreasureHuntUsd,
   isPremium,
   fightInfo,
@@ -102,6 +105,7 @@ const MyProfile = ({
   const userProgress = useSelector((state) => state.user.userProgress);
 
   const totalClaimedChests = allClaimedChests;
+  const [gtaPopup, setGtaPopup] = useState(false);
   const [rankDropdown, setRankDropdown] = useState(false);
   const [tooltip, setTooltip] = useState(false);
   const [cooldown, setCooldown] = useState(null);
@@ -128,12 +132,12 @@ const MyProfile = ({
       ? 7
       : utcDayIndex
     : utcHours === 0
-    ? utcDayIndex === 0
-      ? 6
-      : utcDayIndex - 1
-    : utcDayIndex === 0
-    ? 7
-    : utcDayIndex;
+      ? utcDayIndex === 0
+        ? 6
+        : utcDayIndex - 1
+      : utcDayIndex === 0
+        ? 7
+        : utcDayIndex;
 
   const html = document.querySelector("html");
   // console.log(userDailyBundles);
@@ -170,7 +174,7 @@ const MyProfile = ({
   const checkTwitter = async () => {
     try {
       const res = await axios.get(
-        `https://api.worldofdypians.com/api/website-account/${address}`
+        `https://api.worldofdypians.com/api/website-account/${address}`,
       );
 
       const data = res.data;
@@ -198,12 +202,12 @@ const MyProfile = ({
           });
 
           return acc;
-        }, {})
+        }, {}),
       );
 
       // 6) Incomplete count
       const incompleteCount = data.twitterTasks.filter(
-        (t) => t.completed === false && t.verified === false
+        (t) => t.completed === false && t.verified === false,
       ).length;
 
       setTaskCount(incompleteCount);
@@ -218,13 +222,13 @@ const MyProfile = ({
     setSeenPosts(allIds);
     localStorage.setItem("seenPosts", JSON.stringify(allIds));
     setNewCount(
-      twitterTasks.filter((p) => !seenPosts.includes(p.tweetId)).length
+      twitterTasks.filter((p) => !seenPosts.includes(p.tweetId)).length,
     );
   };
 
   useEffect(() => {
     setNewCount(
-      twitterTasks.filter((p) => !seenPosts.includes(p.tweetId)).length
+      twitterTasks.filter((p) => !seenPosts.includes(p.tweetId)).length,
     );
   }, [handleRemove, popup]);
 
@@ -517,8 +521,8 @@ const MyProfile = ({
                                 {email !== undefined && address
                                   ? shortAddress(address)
                                   : coinbase
-                                  ? shortAddress(coinbase)
-                                  : "--"}
+                                    ? shortAddress(coinbase)
+                                    : "--"}
                               </span>
                               <Clipboard
                                 component="div"
@@ -528,8 +532,8 @@ const MyProfile = ({
                                   email !== undefined && address
                                     ? address
                                     : coinbase
-                                    ? coinbase
-                                    : address
+                                      ? coinbase
+                                      : address
                                 }
                                 className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
                               >
@@ -688,10 +692,10 @@ const MyProfile = ({
                           {syncStatus === "initial"
                             ? "Synchronize"
                             : syncStatus === "loading"
-                            ? "Synchronising..."
-                            : syncStatus === "success"
-                            ? "Success"
-                            : "Error"}
+                              ? "Synchronising..."
+                              : syncStatus === "success"
+                                ? "Success"
+                                : "Error"}
                         </button>
                       ) : email &&
                         username &&
@@ -711,10 +715,10 @@ const MyProfile = ({
                           {syncStatus === "initial"
                             ? "Link Wallet"
                             : syncStatus === "loading"
-                            ? "In Progress..."
-                            : syncStatus === "success"
-                            ? "Success"
-                            : "Error"}
+                              ? "In Progress..."
+                              : syncStatus === "success"
+                                ? "Success"
+                                : "Error"}
                         </button>
                       ) : coinbase && email && !address && !username ? (
                         <NavLink
@@ -773,7 +777,7 @@ const MyProfile = ({
                       {getFormattedNumber(
                         liveRewards +
                           Number(treasureRewardMoney) +
-                          Number(totalTreasureHuntUsd)
+                          Number(totalTreasureHuntUsd),
                       )}
                     </span>
                   </div>
@@ -1155,8 +1159,8 @@ const MyProfile = ({
                       chestPercentage >= 50 && chestPercentage < 100
                         ? "https://cdn.worldofdypians.com/wod/mageGoing.png"
                         : chestPercentage === 100
-                        ? "https://cdn.worldofdypians.com/wod/mageFinish.png"
-                        : "https://cdn.worldofdypians.com/wod/mageStarter.png"
+                          ? "https://cdn.worldofdypians.com/wod/mageFinish.png"
+                          : "https://cdn.worldofdypians.com/wod/mageStarter.png"
                     }
                     className={`${"daily-rewards-img"}`}
                     alt=""
@@ -1273,8 +1277,8 @@ const MyProfile = ({
                               userProgress.totalStars === 0
                                 ? "---"
                                 : userProgress.globalMonthly
-                                ? userProgress.globalMonthly
-                                : "---"}
+                                  ? userProgress.globalMonthly
+                                  : "---"}
                             </span>
                           </div>
                           <span className="user-data-item-left">
@@ -1286,7 +1290,7 @@ const MyProfile = ({
                             <span className="user-data-item-right">
                               {getFormattedNumber(
                                 userProgress.totalStars ?? "---",
-                                0
+                                0,
                               )}
                             </span>
                           </div>
@@ -1769,7 +1773,7 @@ const MyProfile = ({
                   </div>
                 </div>
               </div> */}
-              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <NavLink
                   to={dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.link}
                   onClick={onEventCardClick}
@@ -1777,7 +1781,7 @@ const MyProfile = ({
                   <div
                     className={`${
                       dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.class
-                    } profile-banner-class-thing position-relative p-3 d-flex`}
+                    } profile-banner-class-thing compact-status position-relative p-3 d-flex`}
                   >
                     <div
                       className=" d-flex flex-column justify-content-between gap-2 "
@@ -1910,7 +1914,45 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
+                <NavLink
+                  className="gta-tile dypian-heist-tile position-relative d-flex align-items-center justify-content-between"
+                  // onClick={() => setGtaPopup(true)}
+                  to={"/account/challenges/build-gta-VI"}
+                >
+                  <div className="d-flex flex-column gap-2 position-relative">
+                    <h6 className="dh-tile-title dh-russo mb-0">
+                      BUILD YOUR GTA VI
+                    </h6>
+                    <ul className="dh-tile-list mb-0">
+                      <li>Collect 14 GTA VI pieces</li>
+                      <li>Points on BNB Chain</li>
+                      <li>Up to 150,000 points</li>
+                    </ul>
+                  </div>
+                  <div className="dh-tile-ready position-relative">Live</div>
+                </NavLink>
+              </div>
+              {/* Dypian Heist tile — replaced by Puzzle Madness
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
+                <div
+                  className="dypian-heist-tile position-relative d-flex align-items-center justify-content-between"
+                  onClick={openDypianHeist}
+                >
+                  <div className="dh-tile-grid" />
+                  <div className="d-flex flex-column gap-2 position-relative">
+                    <h6 className="dh-tile-title dh-russo mb-0">HEIST GTA VI</h6>
+                    <ul className="dh-tile-list mb-0">
+                      <li>10 daily cracks</li>
+                      <li>Points, Stars, Rewards</li>
+                      <li>Up to 25,000 points</li>
+                    </ul>
+                  </div>
+                  <div className="dh-tile-ready dh-tile-ready-sm position-relative">Ready</div>
+                </div>
+              </div>
+              */}
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <NavLink
                   className="new-stake-nft-wrapper position-relative d-flex align-items-center justify-content-between p-3"
                   to={"/account/challenges/puzzle-madness"}
@@ -1933,8 +1975,8 @@ const MyProfile = ({
                         //   <Countdown renderer={renderer4} date={midnight} />
                         // </div>
                         <>
-                          <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
-                            <div className="ready-circle-2 d-flex flex-column gap-1">
+                          <div className="ready-circle-2-position ready-pill-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
+                            <div className="ready-circle-2 ready-pill d-flex flex-column gap-1">
                               <Countdown
                                 renderer={renderer4}
                                 date={puzzleMadnessTimer}
@@ -1953,7 +1995,7 @@ const MyProfile = ({
                         </>
                       ) : (
                         <>
-                          <div className="ready-circle d-none d-lg-flex">
+                          <div className="ready-circle ready-pill d-none d-lg-flex">
                             <span className="beast-siege-timer">Ready</span>
                           </div>
                           <span className="beast-siege-timer d-flex d-lg-none">
@@ -2022,6 +2064,7 @@ const MyProfile = ({
                   />
                 </NavLink>
               </div>
+              {gtaPopup && <BuildGta onClose={() => setGtaPopup(false)} />}
             </div>
           </div>
         </div>
