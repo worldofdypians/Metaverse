@@ -1918,7 +1918,7 @@ const MyProfile = ({
                 <NavLink
                   className="gta-tile dypian-heist-tile position-relative d-flex align-items-center justify-content-between"
                   // onClick={() => setGtaPopup(true)}
-                  to={"/account/challenges/build-gta"}
+                  to={"/account/challenges/build-gta-VI"}
                 >
                   <div className="d-flex flex-column gap-2 position-relative">
                     <h6 className="dh-tile-title dh-russo mb-0">

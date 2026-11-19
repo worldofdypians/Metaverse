@@ -2663,7 +2663,7 @@ const NewEvents = ({
   };
 
   const buildGtaInfo = {
-    id: "build-gta",
+    id: "build-gta-VI",
     image: gtaTopBanner,
     topBanner: gtaTopBanner,
     class: "build-gta-card",
@@ -2676,15 +2676,13 @@ const NewEvents = ({
       "Put the pieces together to build the full GTA VI logo.",
       "Complete the logo to earn up to 150,000 points on BNB Chain.",
       "After you complete it, the event resets in 24 hours. Then you can collect the pieces and build the logo again.",
-
     ],
     tips: [
       "Search the GTA VI area. All 14 pieces are hidden there.",
       "Use mounts or movement speed boosts to cover the area quickly.",
       "Remember which spots you already searched so you don’t check the same place twice.",
-
     ],
-    link: "/account/challenges/build-gta",
+    link: "/account/challenges/build-gta-VI",
   };
 
   const criticalHitInfos = {
@@ -2822,7 +2820,7 @@ const NewEvents = ({
       eventId !== "explorer-hunt" &&
       eventId !== "critical-hit" &&
       eventId !== "puzzle-madness" &&
-      eventId !== "build-gta"
+      eventId !== "build-gta-VI"
     ) {
       setActiveEvent(
         eventinfos.find((item) => {
@@ -2851,7 +2849,7 @@ const NewEvents = ({
       setActiveEvent(criticalHitInfos);
     } else if (eventId !== "" && eventId === "puzzle-madness") {
       setActiveEvent(puzzleMadnessInfo);
-    } else if (eventId === "build-gta") {
+    } else if (eventId === "build-gta-VI") {
       setActiveEvent(buildGtaInfo);
     }
     //  else if (eventId !== "" && eventId === "golden-pass") {
@@ -2953,7 +2951,7 @@ const NewEvents = ({
                                 eventId !== undefined) ||
                                 (eventId === undefined && adjustedDay !== 5)) &&
                               eventId !== "puzzle-madness" &&
-                              eventId !== "build-gta"
+                              eventId !== "build-gta-VI"
                                 ? "active-challenge-item"
                                 : "challenge-item"
                             } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
@@ -3001,16 +2999,16 @@ const NewEvents = ({
                         </div>
                       )}
                       <div className="d-flex flex-column">
-                        <NavLink to="/account/challenges/build-gta">
+                        <NavLink to="/account/challenges/build-gta-VI">
                           <div
                             className={`${
-                              challenge === "build-gta" ||
-                              selectedEvent === "build-gta"
+                              challenge === "build-gta-VI" ||
+                              selectedEvent === "build-gta-VI"
                                 ? "active-challenge-item"
                                 : "challenge-item"
                             } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
                             onClick={() => {
-                              setChallenge("build-gta");
+                              setChallenge("build-gta-VI");
                               setActiveEvent(buildGtaInfo);
                             }}
                           >
@@ -5870,7 +5868,7 @@ const NewEvents = ({
                       challenge === "great-collection" ||
                       challenge === "explorer-hunt" ||
                       challenge === "critical-hit" ||
-                      challenge === "build-gta" ||
+                      challenge === "build-gta-VI" ||
                       //  || challenge === "golden-pass"
                       challenge === "puzzle-madness" ? (
                       <div className="d-flex flex-column gap-3">
@@ -5919,7 +5917,7 @@ const NewEvents = ({
                               className="event-top-banner"
                               alt=""
                             />
-                            {activeEvent.id === "build-gta" && (
+                            {activeEvent.id === "build-gta-VI" && (
                               <img
                                 src={gtaTitle}
                                 className="build-gta-title"
@@ -5986,7 +5984,7 @@ const NewEvents = ({
                                         <span className="beast-siege-sub">
                                           Defend the Partners
                                         </span>
-                                      ) : activeEvent.id === "build-gta" ? (
+                                      ) : activeEvent.id === "build-gta-VI" ? (
                                         <span className="beast-siege-sub">
                                           Collect the Pieces
                                         </span>
@@ -6114,7 +6112,7 @@ const NewEvents = ({
                                         </div>
                                         <div style={{ height: "38px" }}></div>
                                       </>
-                                    ) : activeEvent.id === "build-gta" ? (
+                                    ) : activeEvent.id === "build-gta-VI" ? (
                                       <>
                                         <div className="d-flex flex-column gap-1">
                                           <span
@@ -6440,7 +6438,7 @@ const NewEvents = ({
                                       <></>
                                     )}
                                   </div>
-                                  {activeEvent.id !== "build-gta" && (
+                                  {activeEvent.id !== "build-gta-VI" && (
                                     <div className="col-12 mt-2">
                                       <span
                                         className="statusText"

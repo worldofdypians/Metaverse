@@ -786,11 +786,14 @@ background: rgba(2, 85, 108, 0.80);
   position: absolute;
   inset: 0;
   background-image: url("../DypianHeist/assets/Grand_Theft_Auto_VI_logo.svg");
-  background-size: contain;
+  background-size: 50%;
   background-repeat: no-repeat;
   background-position: bottom right;
   pointer-events: none;
   z-index: -1;
+    @media screen and (max-width: 786px) {
+   background-size: 30%;
+  }
 }
 .build-gta-info {
   background: url("../DypianHeist/assets/buildSideBg.png") center / cover;
