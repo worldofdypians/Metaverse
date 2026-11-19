@@ -1481,3 +1481,30 @@ left: 30px;
   position: relative;
   right: -2px;
 }
+// outlined pill status, same look as the Build your GTA VI "Live" badge
+.ready-circle.ready-pill,
+.ready-circle-2.ready-pill {
+  width: fit-content;
+  height: fit-content;
+  padding: 4px 14px;
+  border-radius: 8px;
+  border: 2px solid #f5c542;
+  background: radial-gradient(circle, rgba(90, 30, 120, 0.6), transparent 75%);
+
+  .beast-siege-timer,
+  span {
+    color: #ffd96b;
+    font-weight: 700;
+  }
+}
+
+// pin the pill top-right, clear of the title and bullet list
+.ready-circle.ready-pill,
+.ready-circle-2-position.ready-pill-position {
+  left: auto;
+  bottom: auto;
+  top: 16px;
+  right: 16px;
+  margin: 0;
+  z-index: 1;
+}

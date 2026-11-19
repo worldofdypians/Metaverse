@@ -54,6 +54,8 @@ import Countdown from "react-countdown";
 import { useBinancePay } from "../../hooks/useBinancePay";
 import "../../screens/Game/_game.scss";
 import { bsc } from "wagmi/chains";
+import gtaTopBanner from "../DypianHeist/assets/buildTopBanner.png";
+import gtaTitle from "../DypianHeist/assets/build-your-gta-vi-eventBanner.svg";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -2660,6 +2662,31 @@ const NewEvents = ({
     link: "/account/challenges/explorer-hunt",
   };
 
+  const buildGtaInfo = {
+    id: "build-gta",
+    image: gtaTopBanner,
+    topBanner: gtaTopBanner,
+    class: "build-gta-card",
+    infoClass: "build-gta-info",
+    desc: "Collect 14 GTA VI pieces in the game and earn points on BNB Chain.",
+    title: "Build your GTA VI",
+    workList: [
+      "Log in to World of Dypians with your account.",
+      "Find and collect all 14 GTA VI logo pieces hidden in the game.",
+      "Put the pieces together to build the full GTA VI logo.",
+      "Complete the logo to earn up to 150,000 points on BNB Chain.",
+      "After you complete it, the event resets in 24 hours. Then you can collect the pieces and build the logo again.",
+
+    ],
+    tips: [
+      "Search the GTA VI area. All 14 pieces are hidden there.",
+      "Use mounts or movement speed boosts to cover the area quickly.",
+      "Remember which spots you already searched so you don’t check the same place twice.",
+
+    ],
+    link: "/account/challenges/build-gta",
+  };
+
   const criticalHitInfos = {
     id: "critical",
     image: "https://cdn.worldofdypians.com/wod/criticalHitBannerNewEvents.webp",
@@ -2794,7 +2821,8 @@ const NewEvents = ({
       eventId !== "great-collection" &&
       eventId !== "explorer-hunt" &&
       eventId !== "critical-hit" &&
-      eventId !== "puzzle-madness"
+      eventId !== "puzzle-madness" &&
+      eventId !== "build-gta"
     ) {
       setActiveEvent(
         eventinfos.find((item) => {
@@ -2823,6 +2851,8 @@ const NewEvents = ({
       setActiveEvent(criticalHitInfos);
     } else if (eventId !== "" && eventId === "puzzle-madness") {
       setActiveEvent(puzzleMadnessInfo);
+    } else if (eventId === "build-gta") {
+      setActiveEvent(buildGtaInfo);
     }
     //  else if (eventId !== "" && eventId === "golden-pass") {
     //   setActiveEvent(goldenPassInfo);
@@ -2922,7 +2952,8 @@ const NewEvents = ({
                               ((challenge !== "maze-day" &&
                                 eventId !== undefined) ||
                                 (eventId === undefined && adjustedDay !== 5)) &&
-                              eventId !== "puzzle-madness"
+                              eventId !== "puzzle-madness" &&
+                              eventId !== "build-gta"
                                 ? "active-challenge-item"
                                 : "challenge-item"
                             } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
@@ -2969,6 +3000,25 @@ const NewEvents = ({
                           <div className="sidebar-separator2"></div>
                         </div>
                       )}
+                      <div className="d-flex flex-column">
+                        <NavLink to="/account/challenges/build-gta">
+                          <div
+                            className={`${
+                              challenge === "build-gta" ||
+                              selectedEvent === "build-gta"
+                                ? "active-challenge-item"
+                                : "challenge-item"
+                            } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
+                            onClick={() => {
+                              setChallenge("build-gta");
+                              setActiveEvent(buildGtaInfo);
+                            }}
+                          >
+                            <h6 className="mb-0">Build your GTA VI</h6>
+                          </div>
+                        </NavLink>
+                        <div className="sidebar-separator2"></div>
+                      </div>
                       <div className="d-flex flex-column">
                         <NavLink to="/account/challenges/treasure-hunt">
                           <div
@@ -5820,6 +5870,7 @@ const NewEvents = ({
                       challenge === "great-collection" ||
                       challenge === "explorer-hunt" ||
                       challenge === "critical-hit" ||
+                      challenge === "build-gta" ||
                       //  || challenge === "golden-pass"
                       challenge === "puzzle-madness" ? (
                       <div className="d-flex flex-column gap-3">
@@ -5868,6 +5919,13 @@ const NewEvents = ({
                               className="event-top-banner"
                               alt=""
                             />
+                            {activeEvent.id === "build-gta" && (
+                              <img
+                                src={gtaTitle}
+                                className="build-gta-title"
+                                alt="Build your GTA VI"
+                              />
+                            )}
                             <div className="sidebar-separator2 my-2"></div>
                             <div className="w-100">
                               <div className="row gap-3 gap-xxl-0 mt-2">
@@ -5927,6 +5985,10 @@ const NewEvents = ({
                                         "Explorer Hunt" ? (
                                         <span className="beast-siege-sub">
                                           Defend the Partners
+                                        </span>
+                                      ) : activeEvent.id === "build-gta" ? (
+                                        <span className="beast-siege-sub">
+                                          Collect the Pieces
                                         </span>
                                       ) : activeEvent.title ===
                                         "The Great Collection" ? (
@@ -6048,6 +6110,22 @@ const NewEvents = ({
                                           </div>
                                           <span className="beast-siege-event-price">
                                             Partners Saved
+                                          </span>
+                                        </div>
+                                        <div style={{ height: "38px" }}></div>
+                                      </>
+                                    ) : activeEvent.id === "build-gta" ? (
+                                      <>
+                                        <div className="d-flex flex-column gap-1">
+                                          <span
+                                            className="beast-siege-wod-price"
+                                            style={{ color: "#FF5CC4" }}
+                                          >
+                                            Up to 150,000 Points
+                                          </span>
+                                          <span className="beast-siege-event-price">
+                                            14 GTA VI pieces · Points on BNB
+                                            Chain
                                           </span>
                                         </div>
                                         <div style={{ height: "38px" }}></div>
@@ -6362,17 +6440,19 @@ const NewEvents = ({
                                       <></>
                                     )}
                                   </div>
-                                  <div className="col-12 mt-2">
-                                    <span
-                                      className="statusText"
-                                      style={{
-                                        color: statusColor,
-                                        width: "fit-content",
-                                      }}
-                                    >
-                                      {status}
-                                    </span>
-                                  </div>
+                                  {activeEvent.id !== "build-gta" && (
+                                    <div className="col-12 mt-2">
+                                      <span
+                                        className="statusText"
+                                        style={{
+                                          color: statusColor,
+                                          width: "fit-content",
+                                        }}
+                                      >
+                                        {status}
+                                      </span>
+                                    </div>
+                                  )}
                                 </div>
                                 <div className="col-12 col-xxl-6">
                                   <div
