@@ -2672,15 +2672,17 @@ const NewEvents = ({
     title: "Build your GTA VI",
     workList: [
       "Log in to World of Dypians with your account.",
-      "Find and collect all 14 GTA VI logo pieces hidden in the game.",
-      "Put the pieces together to build the full GTA VI logo.",
-      "Complete the logo to earn up to 150,000 points on BNB Chain.",
-      "After you complete it, the event resets in 24 hours. Then you can collect the pieces and build the logo again.",
+      "Find and collect all 14 GTA VI pieces hidden in the game.",
+      "Put the pieces together to build the full GTA VI.",
+      "Complete the build to earn up to 150,000 points on BNB Chain.",
+      "To claim the points, you must return to the GTA VI area.",
+      "After you complete it, the event resets in 24 hours. Then you can collect the pieces and build the GTA VI again.",
+
     ],
     tips: [
       "Search the GTA VI area. All 14 pieces are hidden there.",
       "Use mounts or movement speed boosts to cover the area quickly.",
-      "Remember which spots you already searched so you don’t check the same place twice.",
+      "Remember which spots you already searched so you don't check the same place twice.",
     ],
     link: "/account/challenges/build-gta-VI",
   };
