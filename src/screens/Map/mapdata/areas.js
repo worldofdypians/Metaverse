@@ -42,10 +42,11 @@ const chainAreas = [
     rewards: "N/A",
     desc: "Grand Theft Auto VI is the next game in Rockstar Games’ Grand Theft Auto series. It is set in Leonida, a state inspired by Florida that includes Vice City. ",
     benefits: [
-      "Collect 14 hidden GTA VI logo pieces",
-      "Build the full GTA VI logo",
+      "Collect 14 hidden GTA VI pieces",
+      "Build the full GTA VI",
       "Earn between up to 150,000 points on BNB Chain",
-      "Play again every 24 hours after you complete the logo",
+      "To claim the points, you must return to the GTA VI area.",
+      "Play again every 24 hours after you complete the build",
       "Explore a new themed area on the map",
     ],
 
